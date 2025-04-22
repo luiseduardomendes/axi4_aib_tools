@@ -14,9 +14,7 @@ add_files -fileset sim_1 [list \
 set_property file_type {SystemVerilog} [get_files ${SIM_DIR}/tb_mh2.1_sh1_d64/top_tb.v]
 
 # Add Verilog/SystemVerilog source files
-# ==== maybe wrong ====
-source ${TOOLS_ROOT}/flists/full_examples/tb_mh2.1_sh1_d64.tcl
-# =====================
+source ${TOOLS_ROOT}/flists/full_examples/tb_axi_mm_mh2.1_sh1_d64.tcl
 source ${TOOLS_ROOT}/flists/axi4-mm/axi_mm_d64.tcl
 source ${TOOLS_ROOT}/flists/llink.tcl
 source ${TOOLS_ROOT}/flists/ca.tcl
@@ -28,24 +26,22 @@ source ${TOOLS_ROOT}/flists/others.tcl
 source ${TOOLS_ROOT}/flists/agent.tcl
 
 add_files -fileset sim_1 [list \
-# ==== maybe wrong ====
-    ${SIM_DIR}/../common/top_h2h_aib.sv \
-    ${SIM_DIR}/../common/axist_aib_h2h_top.v \
-# =====================
-    ${SIM_DIR}/../common/reset_control.v \
+    ${SIM_DIR}/../common/top_aib.sv \
+    ${SIM_DIR}/../common/aximm_aib_top.v \
     ${tbench_dir}/top_tb.v \
 ]
 
 set_property file_type {SystemVerilog} [get_files *.v]
 
-source ${TOOLS_ROOT}/include/full_examples/tb_axi_mm_mh2.1_sh1_d64.tcl
+source ${TOOLS_ROOT}/include/full_examples/tb_mh2.1_sh1_d64.tcl
 
-source ${TOOLS_ROOT}/define/full_examples/tb_axi_mm_mh2.1_sh1_d64.tcl
+source ${TOOLS_ROOT}/define/full_examples/tb_mh2.1_sh1_d64.tcl
 
 set_property top top_tb [get_filesets sim_1]
 
 set_property -name {xsim.simulate.runtime} -value {1000ns} -objects [get_filesets sim_1]
 set_property -name {xsim.simulate.log_all_signals} -value {true} -objects [get_filesets sim_1]
+
 
 launch_simulation -simset [get_filesets sim_1] \
     -mode behavioral \
