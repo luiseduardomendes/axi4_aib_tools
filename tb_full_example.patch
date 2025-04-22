@@ -1,0 +1,251 @@
+diff --git a/axi4-mm/full_examples/common/top_aib.sv b/axi4-mm/full_examples/common/top_aib.sv
+index cbe6e4a..d1052aa 100644
+--- a/axi4-mm/full_examples/common/top_aib.sv
++++ b/axi4-mm/full_examples/common/top_aib.sv
+@@ -148,7 +148,8 @@ bit [1023:0] status;
+     reg         ms1_dbi_en;
+     reg         sl1_dbi_en;
+ 
+-`include "../../common/agent.sv"
++//`include "../../common/agent.sv"
++`include "agent.sv"
+ 
+ //------------------------------------------------------------------------------------------
+ // Clock generation.
+@@ -608,11 +609,11 @@ bit [1023:0] status;
+ `ifdef VCS
+    initial
+    begin
+-     $vcdpluson;
++     //$vcdpluson;
+    end
+ `endif
+-   `include "../../common/test.inc"
+-
++   //`include "../../common/test.inc"
++   `include "test.inc"
+ 	assign usermode_en = dut_slave1.u_maib_0.usermode_in;
+ 
+ 
+diff --git a/axi4-mm/full_examples/sims/tb_mh2.1_sh1_d64/makefile b/axi4-mm/full_examples/sims/tb_mh2.1_sh1_d64/makefile
+index c030ce8..43bc29e 100644
+--- a/axi4-mm/full_examples/sims/tb_mh2.1_sh1_d64/makefile
++++ b/axi4-mm/full_examples/sims/tb_mh2.1_sh1_d64/makefile
+@@ -75,15 +75,15 @@ compile_aibrtl:
+ 	 ${VLOG_COMM} -sverilog +v2k -full64 -timescale=1ps/1ps -work WORK -ntb_opts uvm -f ${AIBV1_DV_ROOT}/flist/ms.cf -l compile_aib2v1.log
+ 	 ${VLOG_COMM} -sverilog +v2k -full64 -timescale=1ps/1ps +define+AIB_MODEL +define+VCS+SL_AIB_GEN1+MAIB_REV1DOT1+MS_AIB_BCA +define+SIM_DIR=${SIM_DIR} -work WORK -ntb_opts uvm -f ${SIM_DIR}/../flist/axi_mm_d128_h2h.f -l compile_aximm.log
+ 	 ${VLOG_COMM} -sverilog +v2k -full64 -timescale=1ps/1ps +define+TIMESCALE_EN+VCS+BEHAVIORAL+MAIB_PIN96+ALTR_HPS_INTEL_MACROS_OFF -f ${AIB2v1_1_RTL_ROOT}/../../dv/flist/maib_rev1.1.cf -l compile_maibv1_1.log
+-	 ${VLOG_COMM} -sverilog  +v2k -full64  -timescale=1ps/1ps +define+VCS+SL_AIB_GEN1+MAIB_REV1DOT1 +define+AIB_MODEL -work WORK -f ${SIM_DIR}/../flist/tb_rtl.cf -l compile_tb.log
++	 ${VLOG_COMM} -sverilog +v2k -full64 -timescale=1ps/1ps +define+VCS+SL_AIB_GEN1+MAIB_REV1DOT1 +define+AIB_MODEL -work WORK -f ${SIM_DIR}/../flist/tb_rtl.cf -l compile_tb.log
+ 	 ${VCS} -debug_acc+all -full64 +lint=TFIPC-L +error+100 +lint=PCWM -top top_tb -l vcs.log
+ 
+ compile:
+ 	 
+ 	 ${VLOG_COMM} -sverilog +v2k -full64 -timescale=1ps/1ps -work WORK -ntb_opts uvm -f ${AIBV1_DV_ROOT}/flist/ms.cf -l compile_aib2v1.log
+ 	 ${VLOG_COMM} -sverilog +v2k -full64 -timescale=1ps/1ps +define+VCS+SL_AIB_GEN1 +define+SIM_DIR=${SIM_DIR} +define+AIB_MODEL -work WORK -ntb_opts uvm -f ${SIM_DIR}/../flist/axi_mm_d128_h2h.f -l compile_aximm.log
+-	 ${VLOG_COMM} -sverilog  +v2k -full64 -timescale=1ps/1ps +define+FOR_SIM_ONLY +define+TIMESCALE_EN+VCS+BEHAVIORAL+MAIB_PIN96+ALTR_HPS_INTEL_MACROS_OFF  -work WORK -ntb_opts uvm -f ${AIBV1_DV_ROOT}/flist/sl_v1.cf -l compile_maib1_0.log
+-	 ${VLOG_COMM} -sverilog  +v2k -full64  -timescale=1ps/1ps +define+VCS+SL_AIB_GEN1+MAIB_REV1DOT1 +define+AIB_MODEL -work WORK -f ${SIM_DIR}/../flist/tb_rtl.cf -l compile_tb.log
++	 ${VLOG_COMM} -sverilog +v2k -full64 -timescale=1ps/1ps +define+FOR_SIM_ONLY +define+TIMESCALE_EN+VCS+BEHAVIORAL+MAIB_PIN96+ALTR_HPS_INTEL_MACROS_OFF  -work WORK -ntb_opts uvm -f ${AIBV1_DV_ROOT}/flist/sl_v1.cf -l compile_maib1_0.log
++	 ${VLOG_COMM} -sverilog +v2k -full64 -timescale=1ps/1ps +define+VCS+SL_AIB_GEN1+MAIB_REV1DOT1 +define+AIB_MODEL -work WORK -f ${SIM_DIR}/../flist/tb_rtl.cf -l compile_tb.log
+ 	 ${VCS} -debug_acc+all -full64 +lint=TFIPC-L +error+100 +lint=PCWM -top top_tb -l vcs.log
+ 
+ 
+diff --git a/axi4-mm/full_examples/sims/tb_mh2.1_sh1_d64/top_tb.v b/axi4-mm/full_examples/sims/tb_mh2.1_sh1_d64/top_tb.v
+index ad5f715..9424331 100644
+--- a/axi4-mm/full_examples/sims/tb_mh2.1_sh1_d64/top_tb.v
++++ b/axi4-mm/full_examples/sims/tb_mh2.1_sh1_d64/top_tb.v
+@@ -370,7 +370,7 @@ end
+ `ifdef VCS
+    initial
+    begin
+-     $vcdpluson;
++     //	$vcdpluson;
+    end
+ `endif
+ endmodule
+diff --git a/axi4-st/full_examples/common/axi_st_multichannel_h2h_simplex_top.sv b/axi4-st/full_examples/common/axi_st_multichannel_h2h_simplex_top.sv
+index 170ce48..40f1a31 100644
+--- a/axi4-st/full_examples/common/axi_st_multichannel_h2h_simplex_top.sv
++++ b/axi4-st/full_examples/common/axi_st_multichannel_h2h_simplex_top.sv
+@@ -429,7 +429,7 @@ assign axist_slave_tx_online = &{slave_sl_tx_transfer_en,slave_ms_tx_transfer_en
+ 	assign s_wr_clk = s_wr_clk_in;
+ 
+ 
+-   axi_st_master_top axi_st_master_top_i
++   axi_st_d64_master_top axi_st_master_top_i
+      (
+       .tx_phy0				(master_ll2ca_0[79:0]),	
+       `ifdef FOUR_CHNL
+@@ -461,7 +461,7 @@ assign axist_slave_tx_online = &{slave_sl_tx_transfer_en,slave_ms_tx_transfer_en
+ 	);
+ 
+   
+-   axi_st_slave_top axi_st_slave_top_i
++   axi_st_d64_slave_top axi_st_slave_top_i
+     (
+      .tx_phy0				(slave_ll2ca_0[79:0]),	
+      `ifdef FOUR_CHNL
+diff --git a/axi4-st/full_examples/common/test_h2h.inc b/axi4-st/full_examples/common/test_h2h.inc
+index 43d8014..1411aeb 100644
+--- a/axi4-st/full_examples/common/test_h2h.inc
++++ b/axi4-st/full_examples/common/test_h2h.inc
+@@ -64,22 +64,22 @@ integer i_m1, i_s1;
+       $display("////////////////////////////////////////////////////////////////////////////\n");
+ 
+       link_up ();
+-      //status = "Starting data transmission";
++      status = "Starting data transmission";
+ 
+-      //$display("\n////////////////////////////////////////////////////////////////////////////");
+-      //$display("%0t: Starting data transmission", $time);
+-      //$display("////////////////////////////////////////////////////////////////////////////\n");
++      $display("\n////////////////////////////////////////////////////////////////////////////");
++      $display("%0t: Starting data transmission", $time);
++      $display("////////////////////////////////////////////////////////////////////////////\n");
+       
+-//    init_wa_toggle ();
+-      // fork
+-         // ms1_gen1toaib1_f1f2_xmit ();
+-         // sl1_aib1togen1_f2f1_xmit ();
+-         // ms1_gen1_fifomod_rcv ();
+-         // sl1_aib1_fifomod_rcv ();
+-      // join
++      init_wa_toggle ();
++      fork
++        ms1_gen1toaib1_f1f2_xmit ();
++        sl1_aib1togen1_f2f1_xmit ();
++        ms1_gen1_fifomod_rcv ();
++        sl1_aib1_fifomod_rcv ();
++      join
+ 
+-      // status = "Finishing data transmission";
+-      // Finish ();
++      status = "Finishing data transmission";
++      Finish ();
+     end
+   end
+ 
+diff --git a/axi4-st/full_examples/common/top_aib.sv b/axi4-st/full_examples/common/top_aib.sv
+index 961d5a7..234a996 100644
+--- a/axi4-st/full_examples/common/top_aib.sv
++++ b/axi4-st/full_examples/common/top_aib.sv
+@@ -147,7 +147,8 @@ bit [1023:0] status;
+     reg         ms1_dbi_en;
+     reg         sl1_dbi_en;
+ 
+-`include "../../common/agent.sv"
++//`include "../../common/agent.sv"
++`include "agent.sv"
+ 
+ //------------------------------------------------------------------------------------------
+ // Clock generation.
+@@ -609,10 +610,11 @@ bit [1023:0] status;
+ `ifdef VCS
+    initial
+    begin
+-     $vcdpluson;
++     //$vcdpluson;
+    end
+ `endif
+-   `include "../../common/test.inc"
++   //`include "../../common/test.inc"
++   `include "test.inc"
+ 
+ 	assign usermode_en = dut_slave1.u_maib_0.usermode_in;
+ endmodule 
+diff --git a/axi4-st/full_examples/common/top_h2h_aib.sv b/axi4-st/full_examples/common/top_h2h_aib.sv
+index 185a6b8..f2d9f04 100644
+--- a/axi4-st/full_examples/common/top_h2h_aib.sv
++++ b/axi4-st/full_examples/common/top_h2h_aib.sv
+@@ -148,8 +148,8 @@ bit [1023:0] status;
+     reg         ms1_dbi_en;
+     reg         sl1_dbi_en;
+ 
+-`include "../../common/agent.sv"
+-
++//`include "../../common/agent.sv"
++`include "agent.sv"
+ //------------------------------------------------------------------------------------------
+ // Clock generation.
+ //------------------------------------------------------------------------------------------
+@@ -612,9 +612,24 @@ bit [1023:0] status;
+ `ifdef VCS
+    initial
+    begin
+-     $vcdpluson;
++     //$vcdpluson;
+    end
+ `endif
+-   `include "../../common/test_h2h.inc"
++   //`include "../../common/test_h2h.inc"
++   assign run_for_n_wa_cycle = 'd10;
++   task init_wa_toggle ();
++       static int toggle_gen = 0;
++        bit [79:0] data = 0;
++
++        while (toggle_gen < run_for_n_wa_cycle) begin
++            $display ("[%t] ms1 Generating data[%d] for naddar alignemnt  = %x \n", $time, toggle_gen, data);
++
++            @(posedge intf_m1.m_ns_fwd_clk);
++            intf_m1.data_in[39:0] <= data;
++            toggle_gen++;
++            data[39] = ~data[39];
++        end
++  endtask
++   `include "test_h2h.inc"
+ 	assign usermode_en = dut_slave1.u_maib_0.usermode_in;
+ endmodule 
+diff --git a/axi4-st/full_examples/sims/tb_mh2.1_sh1_d256/top_tb.v b/axi4-st/full_examples/sims/tb_mh2.1_sh1_d256/top_tb.v
+index 4ef4748..00c9e23 100644
+--- a/axi4-st/full_examples/sims/tb_mh2.1_sh1_d256/top_tb.v
++++ b/axi4-st/full_examples/sims/tb_mh2.1_sh1_d256/top_tb.v
+@@ -423,7 +423,7 @@ end
+ 
+    initial
+    begin
+-     $vcdpluson;
++     //$vcdpluson;
+    end
+ 
+ endmodule
+diff --git a/axi4-st/full_examples/sims/tb_mh2.1_sh1_d64/top_tb.v b/axi4-st/full_examples/sims/tb_mh2.1_sh1_d64/top_tb.v
+index 968f03f..618df84 100644
+--- a/axi4-st/full_examples/sims/tb_mh2.1_sh1_d64/top_tb.v
++++ b/axi4-st/full_examples/sims/tb_mh2.1_sh1_d64/top_tb.v
+@@ -383,7 +383,7 @@ end
+ 
+    initial
+    begin
+-     $vcdpluson;
++     //$vcdpluson;
+    end
+ 
+ endmodule
+diff --git a/llink/rtl/ll_auto_sync.sv b/llink/rtl/ll_auto_sync.sv
+index 5183fee..d889448 100644
+--- a/llink/rtl/ll_auto_sync.sv
++++ b/llink/rtl/ll_auto_sync.sv
+@@ -50,8 +50,8 @@ module ll_auto_sync #(parameter MARKER_WIDTH=1, PERSISTENT_MARKER=1'b1, PERSISTE
+ 
+   );
+ 
+-  parameter DISABLE_TX_AUTOSYNC = 1'b0;
+-  parameter DISABLE_RX_AUTOSYNC = 1'b0;
++  localparam DISABLE_TX_AUTOSYNC = 1'b0;
++  localparam DISABLE_RX_AUTOSYNC = 1'b0;
+ 
+   logic tx_online_delay_z_w_strobe;
+ ////////////////////////////////////////////////////////////
+diff --git a/spi-aib/dv/tb/top_tb.sv b/spi-aib/dv/tb/top_tb.sv
+index 0a5dfd8..09ba6c6 100644
+--- a/spi-aib/dv/tb/top_tb.sv
++++ b/spi-aib/dv/tb/top_tb.sv
+@@ -164,7 +164,7 @@ parameter PAD_NUM_HI  = 102;
+ `ifdef VCS
+    initial
+    begin
+-     $vcdpluson;
++     //$vcdpluson;
+    end
+ `endif
+ 
