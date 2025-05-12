@@ -100,8 +100,8 @@ module top_aib_axi_bridge_master #(
             
             input  [NBR_CHNLS-1:0]  ms_rx_dcc_dll_lock_req, // Calibration init
             input  [NBR_CHNLS-1:0]  ms_tx_dcc_dll_lock_req, // Calibration init
-            input  [NBR_CHNLS-1:0]  sl_tx_dcc_dll_lock_req, // Calibration init
-            input  [NBR_CHNLS-1:0]  sl_rx_dcc_dll_lock_req, // Calibration init
+            //input  [NBR_CHNLS-1:0]  sl_tx_dcc_dll_lock_req, // Calibration init
+            //input  [NBR_CHNLS-1:0]  sl_rx_dcc_dll_lock_req, // Calibration init
             
             output [MS_SSR_LEN*NBR_CHNLS-1:0] sr_ms_tomac, // Leader  sideband data
             output [SL_SSR_LEN*NBR_CHNLS-1:0] sr_sl_tomac, // Follower  sideband data    
@@ -116,13 +116,13 @@ module top_aib_axi_bridge_master #(
             input                 clk_wr              ,
             input                 rst_wr_n            ,
             
-            input                 clk_rd              ,
-            input                 rst_rd_n            ,
+            //input                 clk_rd              ,
+            //input                 rst_rd_n            ,
         // *****************************************
           
         // ********** Control signals **************
-            input                 tx_online           ,
-            input                 rx_online           ,
+            //input                 tx_online           ,
+            //input                 rx_online           ,
           
             input   [7:0]         init_ar_credit      ,
             input   [7:0]         init_aw_credit      ,
@@ -290,10 +290,10 @@ module top_aib_axi_bridge_master #(
         .fs_fwd_clk_div(),
         .ns_fwd_clk(),
         .fs_fwd_clk(),
-        .vddc1(HI),
-        .vddc2(HI),
-        .vddtx(HI),
-        .vss(LO),
+        .vddc1(1'b1),
+        .vddc2(1'b1),
+        .vddtx(1'b1),
+        .vss(1'b0),
         */
 
         //JTAG ports

@@ -133,10 +133,10 @@ module top_aib_axi_bridge_slave #(
         // *****************************************
           
         // ********* Debug Status Outputs **********
-            output  [31:0]        tx_ar_debug_status  ,
-            output  [31:0]        tx_aw_debug_status  ,
-            output  [31:0]        tx_w_debug_status   ,
-            output  [31:0]        rx_r_debug_status   ,
+            output  [31:0]        rx_ar_debug_status  ,
+            output  [31:0]        rx_aw_debug_status  ,
+            output  [31:0]        rx_w_debug_status   ,
+            output  [31:0]        tx_r_debug_status   ,
             output  [31:0]        rx_b_debug_status   ,
         // *****************************************
           
@@ -374,11 +374,11 @@ module top_aib_axi_bridge_slave #(
         .user_bvalid         (user_axi_if.bvalid  ),
         .user_bready         (user_axi_if.bready  ),
         
-        .tx_ar_lite_debug_status  (tx_ar_debug_status),
-        .tx_aw_lite_debug_status  (tx_aw_debug_status),
-        .tx_w_lite_debug_status   (tx_w_debug_status),
-        .rx_r_lite_debug_status   (rx_r_debug_status),
-        .rx_b_lite_debug_status   (rx_b_debug_status),
+        .rx_ar_lite_debug_status  (rx_ar_debug_status),
+        .rx_aw_lite_debug_status  (rx_aw_debug_status),
+        .rx_w_lite_debug_status   (rx_w_debug_status),
+        .tx_r_lite_debug_status   (tx_r_debug_status),
+        .tx_b_lite_debug_status   (tx_b_debug_status),
 
         .m_gen2_mode         (1'b1),
         .delay_x_value       (delay_x_value),

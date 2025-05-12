@@ -40,8 +40,8 @@ module aib_axi_bridge_tb;
     // Debug outputs
     wire [31:0] m_tx_ar_debug_status, m_tx_aw_debug_status, m_tx_w_debug_status;
     wire [31:0] m_rx_r_debug_status, m_rx_b_debug_status;
-    wire [31:0] s_tx_ar_debug_status, s_tx_aw_debug_status, s_tx_w_debug_status;
-    wire [31:0] s_rx_r_debug_status, s_rx_b_debug_status;
+    wire [31:0] s_rx_ar_debug_status, s_rx_aw_debug_status, s_rx_w_debug_status;
+    wire [31:0] s_tx_r_debug_status, s_tx_b_debug_status;
     
     // AXI interfaces
     axi_if m_user_axi_if();
@@ -81,11 +81,11 @@ module aib_axi_bridge_tb;
         .m_init_aw_credit(m_init_aw_credit),
         .m_init_w_credit(m_init_w_credit),
         .m_user_axi_if(m_user_axi_if),
-        //.m_tx_ar_debug_status(m_tx_ar_debug_status),
-        //.m_tx_aw_debug_status(m_tx_aw_debug_status),
-        //.m_tx_w_debug_status(m_tx_w_debug_status),
-        //.m_rx_r_debug_status(m_rx_r_debug_status),
-        //.m_rx_b_debug_status(m_rx_b_debug_status),
+        .m_tx_ar_debug_status(m_tx_ar_debug_status),
+        .m_tx_aw_debug_status(m_tx_aw_debug_status),
+        .m_tx_w_debug_status(m_tx_w_debug_status),
+        .m_rx_r_debug_status(m_rx_r_debug_status),
+        .m_rx_b_debug_status(m_rx_b_debug_status),
         .m_delay_x_value(m_delay_x_value),
         .m_delay_y_value(m_delay_y_value),
         .m_delay_z_value(m_delay_z_value),
@@ -100,11 +100,11 @@ module aib_axi_bridge_tb;
         .s_init_r_credit(s_init_r_credit),
         .s_init_b_credit(s_init_b_credit),
         .s_user_axi_if(s_user_axi_if),
-        //.s_tx_ar_debug_status(s_tx_ar_debug_status),
-        //.s_tx_aw_debug_status(s_tx_aw_debug_status),
-        //.s_tx_w_debug_status(s_tx_w_debug_status),
-        //.s_rx_r_debug_status(s_rx_r_debug_status),
-        //.s_rx_b_debug_status(s_rx_b_debug_status),
+        .s_rx_ar_debug_status(s_rx_ar_debug_status),
+        .s_rx_aw_debug_status(s_rx_aw_debug_status),
+        .s_rx_w_debug_status(s_rx_w_debug_status),
+        .s_tx_r_debug_status(s_tx_r_debug_status),
+        .s_tx_b_debug_status(s_tx_b_debug_status),
         .s_delay_x_value(s_delay_x_value),
         .s_delay_y_value(s_delay_y_value),
         .s_delay_z_value(s_delay_z_value),
