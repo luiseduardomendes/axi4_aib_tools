@@ -22,7 +22,9 @@ module top_aib_axi_bridge_master #(
     parameter NBR_LANES = 40,       // Number of lanes
     parameter MS_SSR_LEN = 81,      // Data size for leader side band
     parameter SL_SSR_LEN = 73,      // Data size for follower side band
-    parameter DWIDTH = 40
+    parameter DWIDTH = 40,
+    parameter AXI_CHNL_NUM = 1,     // Number of AXI channels
+    parameter ADDRWIDTH = 32        // Address width
         
 ) (
 
@@ -71,8 +73,8 @@ module top_aib_axi_bridge_master #(
             input                   avmm_clk,     // Avalon MM clock
             input                   avmm_rst_n,   // Avalon MM reset 
 
-            input  [NBR_CHNLS-1:0]  m_ns_fwd_clk, 
-            input  [NBR_CHNLS-1:0]  m_ns_rcv_clk, 
+            //input  [NBR_CHNLS-1:0]  m_ns_fwd_clk, // should be defined by the axi master
+            //input  [NBR_CHNLS-1:0]  m_ns_rcv_clk, // should be defined by the axi master
             output [NBR_CHNLS-1:0]  m_fs_rcv_clk, // shall not be used in Gen2 Mode
             output [NBR_CHNLS-1:0]  m_fs_fwd_clk,
             
@@ -83,7 +85,7 @@ module top_aib_axi_bridge_master #(
             input  m_rd_clk,    
             output m_fwd_clk,      
         // ****************************************
-        
+
         // ************ data signals **************
             //input  [NBR_LANES*NBR_PHASES*2*NBR_CHNLS-1 :0]  data_in_f,      // FIFO mode input
             input  [NBR_LANES*2*NBR_CHNLS-1 :0]             data_in,        // Register mode data input
@@ -161,11 +163,15 @@ module top_aib_axi_bridge_master #(
     // *************************************************************************
 );
 
+
     // AIB to AXI signals
     wire [NBR_CHNLS-1:0]    m1_ms_tx_transfer_en;
     wire [NBR_CHNLS-1:0]    m1_ms_rx_transfer_en;
     wire [NBR_CHNLS-1:0]    m1_sl_tx_transfer_en;
     wire [NBR_CHNLS-1:0]    m1_sl_rx_transfer_en;
+
+    assign por_in = por_out;
+    assign wr_rst_n = ~por_in & rst_wr_n;
 
     wire [2*DWIDTH-1:0]     data_in_f;
     wire [2*DWIDTH-1:0]     data_out_f;
@@ -174,8 +180,8 @@ module top_aib_axi_bridge_master #(
     wire [  2*DWIDTH-1:   0]   tx_phy0             ;
     wire [  2*DWIDTH-1:   0]   rx_phy0             ;
 
-    assign tx_phy0 = data_in_f;
-    assign data_out_f = rx_phy0;
+    assign rx_phy0 = data_out_f;
+    assign data_in_f = tx_phy0;
 
     dut_if_mac #(.DWIDTH (DWIDTH)) intf_m1 (
         .wr_clk(m_wr_clk), 
@@ -188,8 +194,8 @@ module top_aib_axi_bridge_master #(
     assign intf_m1.ns_mac_rdy = ns_mac_rdy;
     assign intf_m1.fs_mac_rdy = fs_mac_rdy;
     assign intf_m1.i_conf_done = i_conf_done;
-    assign intf_m1.ms_rx_dcc_dll_lock_req = ms_rx_dcc_dll_lock_req;
-    assign intf_m1.ms_tx_dcc_dll_lock_req = ms_tx_dcc_dll_lock_req;
+    assign intf_m1.ms_rx_dcc_dll_lock_req = ~m1_ms_rx_transfer_en;
+    assign intf_m1.ms_tx_dcc_dll_lock_req = ~m1_ms_tx_transfer_en;
     assign intf_m1.ms_sideband = sr_ms_tomac;
     assign intf_m1.sl_sideband = sr_sl_tomac;
     assign intf_m1.m_rx_align_done = m_rx_align_done;
@@ -238,16 +244,24 @@ module top_aib_axi_bridge_master #(
     
         .iopad_device_detect(iopad_device_detect),
         .iopad_power_on_reset(iopad_power_on_reset),
+
+        //Aux channel signals from MAC
+        .m_por_ovrd(1'b1),
+        .m_device_detect(),
+        .m_device_detect_ovrd(1'b0),
+        .i_m_power_on_reset(1'b0),
+        .o_m_power_on_reset(por_out),
+
         
         .data_in_f(data_in_f),						
         .data_out_f(data_out_f),                     
-        .data_in(data_in), //output data to pad      
-        .data_out(data_out),                         
+        .data_in(data_in_f), //output data to pad      
+        .data_out(data_out_f),                         
                 
-        .m_ns_fwd_clk(m_ns_fwd_clk), //output data clock	 
-        .m_ns_rcv_clk(m_ns_rcv_clk),                         
-        // .m_fs_rcv_clk(m_fs_rcv_clk), // shall not be used in Gen2 Mode
-        .m_fs_fwd_clk(m_fs_fwd_clk),                         
+        .m_ns_fwd_clk(clk_wr), //output data clock	 
+        .m_ns_rcv_clk(clk_wr),                         
+        .m_fs_rcv_clk(m_fs_rcv_clk), // shall not be used in Gen2 Mode
+        .m_fs_fwd_clk(m_fs_fwd_clk), // should go to axi master
                                                             
         .m_wr_clk(m_wr_clk),                              
         .m_rd_clk(m_rd_clk),
@@ -257,8 +271,8 @@ module top_aib_axi_bridge_master #(
         .fs_mac_rdy(intf_m1.fs_mac_rdy),             
 
         .i_conf_done(intf_m1.i_conf_done),
-        .ms_rx_dcc_dll_lock_req(intf_m1.ms_rx_dcc_dll_lock_req),			
-        .ms_tx_dcc_dll_lock_req(intf_m1.ms_tx_dcc_dll_lock_req),         
+        .ms_rx_dcc_dll_lock_req(/*{24{1'b1}}*/intf_m1.ms_rx_dcc_dll_lock_req),			
+        .ms_tx_dcc_dll_lock_req(/*{24{1'b1}}*/intf_m1.ms_tx_dcc_dll_lock_req),         
         .sl_rx_dcc_dll_lock_req({24{1'b1}}),                        
         .sl_tx_dcc_dll_lock_req({24{1'b1}}),                        
         .ms_tx_transfer_en(m1_ms_tx_transfer_en),                   
@@ -268,10 +282,10 @@ module top_aib_axi_bridge_master #(
         .sr_ms_tomac(intf_m1.ms_sideband),			
         .sr_sl_tomac(intf_m1.sl_sideband),           
         .m_rx_align_done(intf_m1.m_rx_align_done),   
-        .dual_mode_select(1'b1),
         .m_gen2_mode(1'b1),
         .i_osc_clk(i_osc_clk),   //Only for master mode	
-        
+
+        //AVMM interface
         .i_cfg_avmm_clk(avmm_if_m1.clk),
         .i_cfg_avmm_rst_n(avmm_if_m1.rst_n),
         .i_cfg_avmm_addr(avmm_if_m1.address),
@@ -283,7 +297,6 @@ module top_aib_axi_bridge_master #(
         .o_cfg_avmm_rdatavld(avmm_if_m1.readdatavalid),
         .o_cfg_avmm_rdata(avmm_if_m1.readdata),
         .o_cfg_avmm_waitreq(avmm_if_m1.waitrequest),
-
 
         /*
         .ns_fwd_clk_div(),
@@ -314,24 +327,25 @@ module top_aib_axi_bridge_master #(
         .i_scan_clk_1000m(1'b0),
         .i_scan_en(1'b0),
         .i_scan_mode(1'b0),
-        //.i_scan_din({24{200'b0}}),
-        .i_scan_din({241'b0}),
+        //.i_scan_din({241'b0}),
+        .i_scan_din({24{200'b0}}),
         .i_scan_dout(),
-
 
         .sl_external_cntl_26_0({24{27'b0}}),
         .sl_external_cntl_30_28({24{3'b0}}),
         .sl_external_cntl_57_32({24{26'b0}}),
-
+    
         .ms_external_cntl_4_0({24{5'b0}}),
-        .ms_external_cntl_65_8({24{58'b0}})
+        .ms_external_cntl_65_8({24{58'b0}}),
+
+        .dual_mode_select(1'b1)
     );
 
     axi_lite_a32_d32_master_top  aximm_leader(
         .clk_wr              (clk_wr ),
         .rst_wr_n            (rst_wr_n),
-        .tx_online           (&{m1_sl_tx_transfer_en,m1_ms_tx_transfer_en}),
-        .rx_online           (&{m1_sl_tx_transfer_en,m1_ms_tx_transfer_en}),
+        .tx_online           (&{m1_sl_tx_transfer_en[0],m1_ms_tx_transfer_en[0]}),
+        .rx_online           (&{m1_sl_tx_transfer_en[0],m1_ms_tx_transfer_en[0]}),
         .init_ar_lite_credit (init_ar_credit),
         .init_aw_lite_credit (init_aw_credit),
         .init_w_lite_credit  (init_w_credit ),

@@ -80,3 +80,16 @@ read_verilog ${AIB2_ROOT}/rev1/rtl/dll.sv
 
 # Avalon Files
 read_verilog ${AIB2_ROOT}/rev1/dv/interface/avalon_mm_if.sv
+
+read_verilog -sv ${PROJ_DIR}/axi4-mm/full_examples/common/axi_mm_csr.v
+read_verilog -sv ${PROJ_DIR}/axi4-mm/full_examples/common/axi_mm_patchkr_top.v
+read_verilog -sv ${PROJ_DIR}/axi4-mm/full_examples/common/axi_mm_patgen_top.v
+read_verilog -sv ${PROJ_DIR}/axi4-mm/full_examples/common/aximm_aib_top.v
+read_verilog -sv ${PROJ_DIR}/axi4-mm/full_examples/common/aximm_d128_h2h_wrapper_top.v
+read_verilog -sv ${PROJ_DIR}/axi4-mm/full_examples/common/aximm_follower_app.v
+read_verilog -sv ${PROJ_DIR}/axi4-mm/full_examples/common/aximm_incr_gen.v
+read_verilog -sv ${PROJ_DIR}/axi4-mm/full_examples/common/aximm_leader_app.v
+read_verilog -sv ${PROJ_DIR}/axi4-mm/full_examples/common/aximm_rand_gen.v
+read_verilog -sv ${PROJ_DIR}/axi4-mm/full_examples/common/aximm_wr_ctrl.v
+read_verilog -sv ${PROJ_DIR}/axi4-mm/full_examples/common/jtag2avmm_bridge.v
+read_verilog -sv ${PROJ_DIR}/axi4-mm/full_examples/common/mm_csr_ctrl.v

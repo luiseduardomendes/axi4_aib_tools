@@ -12,6 +12,8 @@ read_verilog ${TOOLS_DIR}/rtl/full_examples/aib_axi_top.v
 
 read_verilog ${TOOLS_DIR}/rtl/interfaces/axi_if.v
 
+read_verilog -sv ${AIB2_ROOT}/rev1/dv/test/task/agent.sv
+
 source $flist
 
 set_property file_type SystemVerilog [get_files *.v]

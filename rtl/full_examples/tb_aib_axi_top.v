@@ -3,7 +3,7 @@
 module aib_axi_bridge_tb;
 
     // Parameters from the design
-    parameter NBR_CHNLS = 24;
+    parameter NBR_CHNLS = 1;
     parameter NBR_BUMPS = 102;
     parameter NBR_PHASES = 4;
     parameter NBR_LANES = 40;
@@ -26,8 +26,8 @@ module aib_axi_bridge_tb;
     wire iopad_power_on_reset;
     
     // Online signals
-    reg m_tx_online, m_rx_online;
-    reg s_tx_online, s_rx_online;
+    //reg m_tx_online, m_rx_online;
+    //reg s_tx_online, s_rx_online;
     
     // Credit signals
     reg [7:0] m_init_ar_credit, m_init_aw_credit, m_init_w_credit;
@@ -43,6 +43,7 @@ module aib_axi_bridge_tb;
     wire [31:0] s_rx_ar_debug_status, s_rx_aw_debug_status, s_rx_w_debug_status;
     wire [31:0] s_tx_r_debug_status, s_tx_b_debug_status;
     
+    //`include "agent.sv"
     // AXI interfaces
     axi_if m_user_axi_if();
     axi_if s_user_axi_if();
@@ -75,8 +76,8 @@ module aib_axi_bridge_tb;
         .m_rst_wr_n(m_rst_wr_n),
         .m_clk_rd(m_clk_rd),
         .m_rst_rd_n(m_rst_rd_n),
-        .m_tx_online(m_tx_online),
-        .m_rx_online(m_rx_online),
+        //.m_tx_online(m_tx_online),
+        //.m_rx_online(m_rx_online),
         .m_init_ar_credit(m_init_ar_credit),
         .m_init_aw_credit(m_init_aw_credit),
         .m_init_w_credit(m_init_w_credit),
@@ -89,14 +90,17 @@ module aib_axi_bridge_tb;
         .m_delay_x_value(m_delay_x_value),
         .m_delay_y_value(m_delay_y_value),
         .m_delay_z_value(m_delay_z_value),
-        
+
+        .m_ns_mac_rdy(m_rst_wr_n & m_rst_rd_n),
+        .m_fs_mac_rdy(s_rst_wr_n & s_rst_rd_n),
+    
         // Slave AXI Interface
         .s_clk_wr(s_clk_wr),
         .s_rst_wr_n(s_rst_wr_n),
         .s_clk_rd(s_clk_rd),
         .s_rst_rd_n(s_rst_rd_n),
-        .s_tx_online(s_tx_online),
-        .s_rx_online(s_rx_online),
+        //.s_tx_online(s_tx_online),
+        //.s_rx_online(s_rx_online),
         .s_init_r_credit(s_init_r_credit),
         .s_init_b_credit(s_init_b_credit),
         .s_user_axi_if(s_user_axi_if),
@@ -152,10 +156,10 @@ module aib_axi_bridge_tb;
         
         // Configuration signals
         i_conf_done = 0;
-        m_tx_online = 0;
-        m_rx_online = 0;
-        s_tx_online = 0;
-        s_rx_online = 0;
+        //m_tx_online = 0;
+        //m_rx_online = 0;
+        //s_tx_online = 0;
+        //s_rx_online = 0;
         
         // Credit initialization
         m_init_ar_credit = 8'h8;
@@ -182,10 +186,10 @@ module aib_axi_bridge_tb;
         // Set configuration done and online signals
         #20;
         i_conf_done = 1;
-        m_tx_online = 1;
-        m_rx_online = 1;
-        s_tx_online = 1;
-        s_rx_online = 1;
+        //m_tx_online = 1;
+        //m_rx_online = 1;
+        //s_tx_online = 1;
+        //s_rx_online = 1;
     end
     
     // Test sequence
@@ -253,85 +257,93 @@ module aib_axi_bridge_tb;
     endtask
     // Test single write transaction for AXI Lite
     task test_axi_write_transaction;
-    reg [31:0] addr = 32'h0000_1000;
-    reg [31:0] data = 32'h1234_5678;
-    begin
-        $display("Starting AXI Lite write transaction test...");
-        
-        // AW channel
-        @(posedge m_clk_wr);
-        m_user_axi_if.awvalid = 1;
-        m_user_axi_if.awaddr = addr;
-        
-        // W channel
-        m_user_axi_if.wvalid = 1;
-        m_user_axi_if.wdata = data;
-        m_user_axi_if.wstrb = 8'hFF; // All bytes valid
-        
-        // Wait for handshakes
-        fork
-            begin
-                wait(m_user_axi_if.awready);
-                @(posedge m_clk_wr);
-                m_user_axi_if.awvalid = 0;
-            end
-            begin
-                wait(m_user_axi_if.wready);
-                @(posedge m_clk_wr);
-                m_user_axi_if.wvalid = 0;
-            end
-        join
-        
-        // Generate B response from slave
-        @(posedge s_clk_wr);
-        s_user_axi_if.bvalid = 1;
-        s_user_axi_if.bresp = 2'b00; // OKAY
-        
-        wait(m_user_axi_if.bready);
-        @(posedge s_clk_wr);
-        s_user_axi_if.bvalid = 0;
-        
-        $display("AXI Lite write transaction completed. Addr: 0x%h, Data: 0x%h", addr, data);
-    end
+        reg [31:0] addr = 32'h0000_1000;
+        reg [31:0] data = 32'hABCD_1234;
+        begin
+            $display("Starting AXI write transaction test...");
+
+            // Write Address Channel
+            @(posedge m_clk_wr);
+            m_user_axi_if.awvalid <= 1;
+            m_user_axi_if.awaddr  <= addr;
+            m_user_axi_if.awid    <= 0;
+            m_user_axi_if.awlen   <= 0;
+            m_user_axi_if.awsize  <= 3;
+            m_user_axi_if.awburst <= 1;
+
+            wait (m_user_axi_if.awready === 1);
+            @(posedge m_clk_wr);
+            m_user_axi_if.awvalid <= 0;
+
+            // Write Data Channel
+            @(posedge m_clk_wr);
+            m_user_axi_if.wvalid <= 1;
+            m_user_axi_if.wdata  <= data;
+            m_user_axi_if.wstrb  <= 4'hF;
+            m_user_axi_if.wlast  <= 1;
+
+            wait (m_user_axi_if.wready === 1);
+            @(posedge m_clk_wr);
+            m_user_axi_if.wvalid <= 0;
+            m_user_axi_if.wlast  <= 0;
+
+            // Wait for response
+            wait (m_user_axi_if.bvalid === 1);
+            @(posedge m_clk_wr);
+            if (m_user_axi_if.bresp !== 2'b00)
+                $error("AXI write error response: %b", m_user_axi_if.bresp);
+            else
+                $display("AXI write transaction successful. Addr: 0x%h, Data: 0x%h", addr, data);
+
+            m_user_axi_if.bready <= 1;
+            @(posedge m_clk_wr);
+            m_user_axi_if.bready <= 0;
+        end
     endtask
+
 
     // Test single read transaction for AXI Lite
     task test_axi_read_transaction;
-    reg [31:0] addr = 32'h0000_2000;
-    reg [31:0] expected_data = 32'h9ABC_DEF0;
-    begin
-        $display("Starting AXI Lite read transaction test...");
-        
-        // AR channel
-        @(posedge m_clk_rd);
-        m_user_axi_if.arvalid = 1;
-        m_user_axi_if.araddr = addr;
-        
-        // Wait for handshake
-        wait(m_user_axi_if.arready);
-        @(posedge m_clk_rd);
-        m_user_axi_if.arvalid = 0;
-        
-        // Generate R response from slave
-        @(posedge s_clk_rd);
-        s_user_axi_if.rvalid = 1;
-        s_user_axi_if.rdata = expected_data;
-        s_user_axi_if.rresp = 2'b00; // OKAY
-        
-        wait(m_user_axi_if.rready);
-        @(posedge s_clk_rd);
-        s_user_axi_if.rvalid = 0;
-        
-        // Check received data
-        if (m_user_axi_if.rdata !== expected_data) begin
-            $error("Read data mismatch! Expected: 0x%h, Received: 0x%h", 
-                expected_data, m_user_axi_if.rdata);
-        end else begin
-            $display("AXI Lite read transaction completed. Addr: 0x%h, Data: 0x%h", 
-                    addr, expected_data);
+        reg [31:0] addr = 32'h0000_2000;
+        reg [31:0] expected_data = 32'hDEAD_BEEF;
+        begin
+            $display("Starting AXI Lite read transaction test...");
+
+            // AR channel
+            @(posedge s_clk_rd);
+            s_user_axi_if.arvalid = 1;
+            s_user_axi_if.araddr = addr;
+            s_user_axi_if.arid = 0;
+            s_user_axi_if.arlen = 0;
+            s_user_axi_if.arsize = 3;
+            s_user_axi_if.arburst = 1;
+
+            wait(m_user_axi_if.arvalid);
+            @(posedge m_clk_rd);
+            m_user_axi_if.arready = 1;
+            @(posedge m_clk_rd);
+            m_user_axi_if.arready = 0;
+
+            @(posedge m_clk_rd);
+            m_user_axi_if.rvalid = 1;
+            m_user_axi_if.rdata = expected_data;
+            m_user_axi_if.rresp = 2'b00;
+            m_user_axi_if.rid = 0;
+            m_user_axi_if.rlast = 1;
+
+            wait(s_user_axi_if.rready);
+            @(posedge m_clk_rd);
+            m_user_axi_if.rvalid = 0;
+
+            // Check received data on s_user_axi_if
+            if (s_user_axi_if.rdata !== expected_data) begin
+                $error("Read data mismatch! Expected: 0x%h, Got: 0x%h", expected_data, s_user_axi_if.rdata);
+            end else begin
+                $display("AXI Lite read transaction successful. Addr: 0x%h, Data: 0x%h", addr, expected_data);
+            end
         end
-    end
     endtask
+
     
     // Monitor for any errors
     always @(posedge m_clk_wr) begin

@@ -22,7 +22,9 @@ module top_aib_axi_bridge_slave #(
     parameter NBR_LANES = 40,       // Number of lanes
     parameter MS_SSR_LEN = 81,      // Data size for leader side band
     parameter SL_SSR_LEN = 73,      // Data size for follower side band
-    parameter DWIDTH = 40
+    parameter DWIDTH = 40,
+    parameter AXI_CHNL_NUM = 1,     // Number of AXI channels
+    parameter ADDRWIDTH = 32   
         
 ) (
 
@@ -73,8 +75,8 @@ module top_aib_axi_bridge_slave #(
 
             input  [NBR_CHNLS-1:0]  m_ns_fwd_clk, 
             input  [NBR_CHNLS-1:0]  m_ns_rcv_clk, // ignored in Gen2 Mode
-            output [NBR_CHNLS-1:0]  m_fs_rcv_clk, // shall not be used in Gen2 Mode
-            output [NBR_CHNLS-1:0]  m_fs_fwd_clk,
+            //output [NBR_CHNLS-1:0]  m_fs_rcv_clk, // shall not be used in Gen2 Mode
+            //output [NBR_CHNLS-1:0]  m_fs_fwd_clk,
             
             //input  [NBR_CHNLS-1:0]  m_wr_clk,     
             //input  [NBR_CHNLS-1:0]  m_rd_clk,    
@@ -100,8 +102,8 @@ module top_aib_axi_bridge_slave #(
             
             input  [NBR_CHNLS-1:0]  ms_rx_dcc_dll_lock_req, // Calibration init
             input  [NBR_CHNLS-1:0]  ms_tx_dcc_dll_lock_req, // Calibration init
-            input  [NBR_CHNLS-1:0]  sl_tx_dcc_dll_lock_req, // Calibration init
-            input  [NBR_CHNLS-1:0]  sl_rx_dcc_dll_lock_req, // Calibration init
+            //input  [NBR_CHNLS-1:0]  sl_tx_dcc_dll_lock_req, // Calibration init
+            //input  [NBR_CHNLS-1:0]  sl_rx_dcc_dll_lock_req, // Calibration init
             
             output [MS_SSR_LEN*NBR_CHNLS-1:0] sr_ms_tomac, // Leader  sideband data
             output [SL_SSR_LEN*NBR_CHNLS-1:0] sr_sl_tomac, // Follower  sideband data    
@@ -116,13 +118,13 @@ module top_aib_axi_bridge_slave #(
             input                 clk_wr              ,
             input                 rst_wr_n            ,
             
-            input                 clk_rd              ,
+            //input                 clk_rd              ,
             input                 rst_rd_n            ,
         // *****************************************
           
         // ********** Control signals **************
-            input                 tx_online           ,
-            input                 rx_online           ,
+            //input                 tx_online           ,
+            //input                 rx_online           ,
           
             input   [7:0]         init_r_credit      ,
             input   [7:0]         init_b_credit      ,
@@ -137,7 +139,7 @@ module top_aib_axi_bridge_slave #(
             output  [31:0]        rx_aw_debug_status  ,
             output  [31:0]        rx_w_debug_status   ,
             output  [31:0]        tx_r_debug_status   ,
-            output  [31:0]        rx_b_debug_status   ,
+            output  [31:0]        tx_b_debug_status   ,
         // *****************************************
           
         // ************* Configuration *************          
@@ -169,16 +171,17 @@ module top_aib_axi_bridge_slave #(
     wire [2*DWIDTH-1:0]     data_in_f;
     wire [2*DWIDTH-1:0]     data_out_f;
 
+    //output [NBR_CHNLS-1:0]  m_fs_rcv_clk, // shall not be used in Gen2 Mode
+        //output [NBR_CHNLS-1:0]  m_fs_fwd_clk,
+
     // PHY Interconnect ( USING AXI LITE INTERFACE )
     wire [  2*DWIDTH-1:   0]   tx_phy0             ;
     wire [  2*DWIDTH-1:   0]   rx_phy0             ;
 
-    assign tx_phy0 = data_in_f;
-    assign data_out_f = rx_phy0;
+    assign rx_phy0 = data_out_f;
+    assign data_in_f = tx_phy0;
 
-    dut_if_mac #(
-        .DWIDTH (40)
-    ) intf_s1 (
+    dut_if_mac #(.DWIDTH (DWIDTH)) intf_s1 (
         .wr_clk(m_wr_clk), 
         .rd_clk(m_rd_clk), 
         .fwd_clk(m_fwd_clk), 
@@ -195,11 +198,8 @@ module top_aib_axi_bridge_slave #(
     assign intf_s1.sl_sideband = sr_sl_tomac;
     assign intf_s1.m_rx_align_done = m_rx_align_done;
 
-    avalon_mm_if #(
-        .AVMM_WIDTH(32),
-        .BYTE_WIDTH(4)
-    ) avmm_if_s1 (
-        .clk(avmm_clk)
+    avalon_mm_if #(.AVMM_WIDTH(32), .BYTE_WIDTH(4)) avmm_if_s1 (
+        .clk    (avmm_clk)
     );
 
     assign avmm_if_s1.rst_n = avmm_rst_n;
@@ -243,14 +243,22 @@ module top_aib_axi_bridge_slave #(
         .iopad_device_detect(iopad_device_detect),
         .iopad_power_on_reset(iopad_power_on_reset),
         
+        //Aux channel signals from MAC
+        .m_por_ovrd(1'b1),
+        .m_device_detect(),
+        .m_device_detect_ovrd(1'b0),
+        .i_m_power_on_reset(1'b0),
+        .o_m_power_on_reset(por_out),
+
+        
         .data_in_f(data_in_f),						
         .data_out_f(data_out_f),                     
-        .data_in(data_in), //output data to pad      
-        .data_out(data_out),                         
+        .data_in(data_in_f), //output data to pad      
+        .data_out(data_out_f),                         
                 
-        .m_ns_fwd_clk(m_ns_fwd_clk), //output data clock	 
-        //.m_ns_rcv_clk(m_ns_rcv_clk), // ignored in Gen2 Mode
-        //.m_fs_rcv_clk(m_fs_rcv_clk), // shall not be used in Gen2 Mode
+        .m_ns_fwd_clk(clk_wr), //output data clock	 
+        .m_ns_rcv_clk(clk_wr),  // ignored in Gen2 Mode
+        .m_fs_rcv_clk(m_fs_rcv_clk), // shall not be used in Gen2 Mode
         .m_fs_fwd_clk(m_fs_fwd_clk),                         
                                                             
         .m_wr_clk(m_wr_clk),                              
@@ -261,8 +269,8 @@ module top_aib_axi_bridge_slave #(
         .fs_mac_rdy(intf_s1.fs_mac_rdy),             
 
         .i_conf_done(intf_s1.i_conf_done),
-        .ms_rx_dcc_dll_lock_req(intf_s1.ms_rx_dcc_dll_lock_req),			
-        .ms_tx_dcc_dll_lock_req(intf_s1.ms_tx_dcc_dll_lock_req),         
+        .ms_rx_dcc_dll_lock_req(/*{24{1'b1}}*/intf_s1.ms_rx_dcc_dll_lock_req),			
+        .ms_tx_dcc_dll_lock_req(/*{24{1'b1}}*/intf_s1.ms_tx_dcc_dll_lock_req),         
         .sl_rx_dcc_dll_lock_req({24{1'b1}}),                        
         .sl_tx_dcc_dll_lock_req({24{1'b1}}),                        
         .ms_tx_transfer_en(m1_ms_tx_transfer_en),                   
@@ -272,19 +280,7 @@ module top_aib_axi_bridge_slave #(
         .sr_ms_tomac(intf_s1.ms_sideband),			
         .sr_sl_tomac(intf_s1.sl_sideband),           
         .m_rx_align_done(intf_s1.m_rx_align_done),   
-        .dual_mode_select(1'b1),
         .m_gen2_mode(1'b1),	
-        /*
-        .ns_fwd_clk_div(),
-        .fs_fwd_clk_div(),
-        .ns_fwd_clk(),
-        .fs_fwd_clk(),
-        .vddc1(HI),
-        .vddc2(HI),
-        .vddtx(HI),
-        .vss(LO),
-        */
-
         //AVMM interface
         .i_cfg_avmm_clk(avmm_if_s1.clk),
         .i_cfg_avmm_rst_n(avmm_if_s1.rst_n),
@@ -298,6 +294,17 @@ module top_aib_axi_bridge_slave #(
         .o_cfg_avmm_rdata(avmm_if_s1.readdata),
         .o_cfg_avmm_waitreq(avmm_if_s1.waitrequest),
 
+        /*
+        .ns_fwd_clk_div(),
+        .fs_fwd_clk_div(),
+        .ns_fwd_clk(),
+        .fs_fwd_clk(),
+        .vddc1(HI),
+        .vddc2(HI),
+        .vddtx(HI),
+        .vss(LO),
+        */
+
         //JTAG ports
         .i_jtag_clkdr(1'b0),
         .i_jtag_clksel(1'b0),
@@ -310,30 +317,31 @@ module top_aib_axi_bridge_slave #(
         .i_jtag_weakpu(1'b0),
         .i_jtag_tx_scanen(1'b0),
         .i_jtag_tdi(1'b0),
-        //ATPG
+    //ATPG
         .i_scan_clk(1'b0),
         .i_scan_clk_500m(1'b0),
         .i_scan_clk_1000m(1'b0),
         .i_scan_en(1'b0),
         .i_scan_mode(1'b0),
-        //.i_scan_din({24{200'b0}}),
-        .i_scan_din({241'b0}),
+        
+        .i_scan_din({24{200'b0}}),
         .i_scan_dout(),
-
 
         .sl_external_cntl_26_0({24{27'b0}}),
         .sl_external_cntl_30_28({24{3'b0}}),
         .sl_external_cntl_57_32({24{26'b0}}),
 
         .ms_external_cntl_4_0({24{5'b0}}),
-        .ms_external_cntl_65_8({24{58'b0}})
+        .ms_external_cntl_65_8({24{58'b0}}),
+        
+        .dual_mode_select(1'b0)
     );
 
     axi_lite_a32_d32_slave_top  aximm_follower(
         .clk_wr              (clk_wr ),
         .rst_wr_n            (rst_wr_n),
-        .tx_online           (&{slave_sl_tx_transfer_en,slave_ms_tx_transfer_en})  ,
-        .rx_online           (&{slave_sl_tx_transfer_en,slave_ms_tx_transfer_en})  ,
+        .tx_online           (&{m1_sl_tx_transfer_en[0],m1_ms_tx_transfer_en[0]}),
+        .rx_online           (&{m1_sl_tx_transfer_en[0],m1_ms_tx_transfer_en[0]}),
         .init_r_lite_credit  (init_r_credit)  ,
         .init_b_lite_credit  (init_b_credit)  ,
         .tx_phy0             (tx_phy0),

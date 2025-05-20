@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="840.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="1,154.501 ns"></ZoomEndTime>
-      <Cursor1Time time="990.000 ns"></Cursor1Time>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="1,447.221 ns"></ZoomEndTime>
+      <Cursor1Time time="1,000.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="276"></NameColumnWidth>
-      <ValueColumnWidth column_width="120"></ValueColumnWidth>
+      <NameColumnWidth column_width="217"></NameColumnWidth>
+      <ValueColumnWidth column_width="60"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="5" />
+   <WVObjectSize size="10" />
    <wvobject type="logic" fp_name="/aib_axi_bridge_tb/i_osc_clk">
       <obj_property name="ElementShortName">i_osc_clk</obj_property>
       <obj_property name="ObjectShortName">i_osc_clk</obj_property>
@@ -31,6 +31,7 @@
    <wvobject type="group" fp_name="group150">
       <obj_property name="label">Testbench Top</obj_property>
       <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
       <wvobject type="group" fp_name="group147">
          <obj_property name="label">master</obj_property>
          <obj_property name="DisplayName">label</obj_property>
@@ -61,14 +62,6 @@
          <wvobject type="array" fp_name="/aib_axi_bridge_tb/m_init_aw_credit">
             <obj_property name="ElementShortName">m_init_aw_credit[7:0]</obj_property>
             <obj_property name="ObjectShortName">m_init_aw_credit[7:0]</obj_property>
-         </wvobject>
-         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/m_rx_online">
-            <obj_property name="ElementShortName">m_rx_online</obj_property>
-            <obj_property name="ObjectShortName">m_rx_online</obj_property>
-         </wvobject>
-         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/m_tx_online">
-            <obj_property name="ElementShortName">m_tx_online</obj_property>
-            <obj_property name="ObjectShortName">m_tx_online</obj_property>
          </wvobject>
          <wvobject type="array" fp_name="/aib_axi_bridge_tb/m_delay_x_value">
             <obj_property name="ElementShortName">m_delay_x_value[15:0]</obj_property>
@@ -134,14 +127,6 @@
             <obj_property name="ElementShortName">s_clk_wr</obj_property>
             <obj_property name="ObjectShortName">s_clk_wr</obj_property>
          </wvobject>
-         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/s_tx_online">
-            <obj_property name="ElementShortName">s_tx_online</obj_property>
-            <obj_property name="ObjectShortName">s_tx_online</obj_property>
-         </wvobject>
-         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/s_rx_online">
-            <obj_property name="ElementShortName">s_rx_online</obj_property>
-            <obj_property name="ObjectShortName">s_rx_online</obj_property>
-         </wvobject>
          <wvobject type="array" fp_name="/aib_axi_bridge_tb/s_init_r_credit">
             <obj_property name="ElementShortName">s_init_r_credit[7:0]</obj_property>
             <obj_property name="ObjectShortName">s_init_r_credit[7:0]</obj_property>
@@ -199,6 +184,7 @@
       <wvobject type="group" fp_name="group404">
          <obj_property name="label">Master</obj_property>
          <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
          <wvobject type="group" fp_name="group483">
             <obj_property name="label">Master Clk</obj_property>
             <obj_property name="DisplayName">label</obj_property>
@@ -218,14 +204,6 @@
                <obj_property name="ElementShortName">m_fs_fwd_clk[23:0]</obj_property>
                <obj_property name="ObjectShortName">m_fs_fwd_clk[23:0]</obj_property>
             </wvobject>
-            <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/m_wr_clk">
-               <obj_property name="ElementShortName">m_wr_clk[23:0]</obj_property>
-               <obj_property name="ObjectShortName">m_wr_clk[23:0]</obj_property>
-            </wvobject>
-            <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/m_rd_clk">
-               <obj_property name="ElementShortName">m_rd_clk[23:0]</obj_property>
-               <obj_property name="ObjectShortName">m_rd_clk[23:0]</obj_property>
-            </wvobject>
             <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/m_fwd_clk">
                <obj_property name="ElementShortName">m_fwd_clk[23:0]</obj_property>
                <obj_property name="ObjectShortName">m_fwd_clk[23:0]</obj_property>
@@ -234,21 +212,23 @@
          <wvobject type="group" fp_name="group484">
             <obj_property name="label">Master Data</obj_property>
             <obj_property name="DisplayName">label</obj_property>
-            <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/m_data_in_f">
-               <obj_property name="ElementShortName">m_data_in_f[7679:0]</obj_property>
-               <obj_property name="ObjectShortName">m_data_in_f[7679:0]</obj_property>
-            </wvobject>
             <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/m_data_in">
                <obj_property name="ElementShortName">m_data_in[1919:0]</obj_property>
                <obj_property name="ObjectShortName">m_data_in[1919:0]</obj_property>
             </wvobject>
-            <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/m_data_out_f">
-               <obj_property name="ElementShortName">m_data_out_f[1535:0]</obj_property>
-               <obj_property name="ObjectShortName">m_data_out_f[1535:0]</obj_property>
-            </wvobject>
             <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/m_data_out">
                <obj_property name="ElementShortName">m_data_out[383:0]</obj_property>
                <obj_property name="ObjectShortName">m_data_out[383:0]</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/data_in_f">
+               <obj_property name="ElementShortName">data_in_f[7679:0]</obj_property>
+               <obj_property name="ObjectShortName">data_in_f[7679:0]</obj_property>
+               <obj_property name="Reversed">false</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/data_in">
+               <obj_property name="ElementShortName">data_in[1919:0]</obj_property>
+               <obj_property name="ObjectShortName">data_in[1919:0]</obj_property>
+               <obj_property name="isExpanded"></obj_property>
             </wvobject>
          </wvobject>
          <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/m_ns_adapter_rstn">
@@ -401,141 +381,152 @@
             <wvobject type="group" fp_name="group439">
                <obj_property name="label">AR</obj_property>
                <obj_property name="DisplayName">label</obj_property>
-               <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/arid">
-                  <obj_property name="ElementShortName">arid[3:0]</obj_property>
-                  <obj_property name="ObjectShortName">arid[3:0]</obj_property>
-               </wvobject>
+               <obj_property name="isExpanded"></obj_property>
                <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/arsize">
                   <obj_property name="ElementShortName">arsize[2:0]</obj_property>
                   <obj_property name="ObjectShortName">arsize[2:0]</obj_property>
+                  <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/arlen">
                   <obj_property name="ElementShortName">arlen[7:0]</obj_property>
                   <obj_property name="ObjectShortName">arlen[7:0]</obj_property>
-               </wvobject>
-               <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/arburst">
-                  <obj_property name="ElementShortName">arburst[1:0]</obj_property>
-                  <obj_property name="ObjectShortName">arburst[1:0]</obj_property>
+                  <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/araddr">
                   <obj_property name="ElementShortName">araddr[31:0]</obj_property>
                   <obj_property name="ObjectShortName">araddr[31:0]</obj_property>
+                  <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/arvalid">
                   <obj_property name="ElementShortName">arvalid</obj_property>
                   <obj_property name="ObjectShortName">arvalid</obj_property>
+                  <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/arready">
                   <obj_property name="ElementShortName">arready</obj_property>
                   <obj_property name="ObjectShortName">arready</obj_property>
+                  <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
             </wvobject>
             <wvobject type="group" fp_name="group440">
                <obj_property name="label">AW</obj_property>
                <obj_property name="DisplayName">label</obj_property>
-               <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/awid">
-                  <obj_property name="ElementShortName">awid[3:0]</obj_property>
-                  <obj_property name="ObjectShortName">awid[3:0]</obj_property>
-               </wvobject>
+               <obj_property name="isExpanded"></obj_property>
                <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/awsize">
                   <obj_property name="ElementShortName">awsize[2:0]</obj_property>
                   <obj_property name="ObjectShortName">awsize[2:0]</obj_property>
+                  <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/awlen">
                   <obj_property name="ElementShortName">awlen[7:0]</obj_property>
                   <obj_property name="ObjectShortName">awlen[7:0]</obj_property>
-               </wvobject>
-               <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/awburst">
-                  <obj_property name="ElementShortName">awburst[1:0]</obj_property>
-                  <obj_property name="ObjectShortName">awburst[1:0]</obj_property>
+                  <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/awaddr">
                   <obj_property name="ElementShortName">awaddr[31:0]</obj_property>
                   <obj_property name="ObjectShortName">awaddr[31:0]</obj_property>
+                  <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/awvalid">
                   <obj_property name="ElementShortName">awvalid</obj_property>
                   <obj_property name="ObjectShortName">awvalid</obj_property>
+                  <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/awready">
                   <obj_property name="ElementShortName">awready</obj_property>
                   <obj_property name="ObjectShortName">awready</obj_property>
+                  <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
             </wvobject>
             <wvobject type="group" fp_name="group441">
                <obj_property name="label">W</obj_property>
                <obj_property name="DisplayName">label</obj_property>
-               <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/wid">
-                  <obj_property name="ElementShortName">wid[3:0]</obj_property>
-                  <obj_property name="ObjectShortName">wid[3:0]</obj_property>
-               </wvobject>
+               <obj_property name="isExpanded"></obj_property>
                <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/wdata">
                   <obj_property name="ElementShortName">wdata[127:0]</obj_property>
                   <obj_property name="ObjectShortName">wdata[127:0]</obj_property>
+                  <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/wstrb">
                   <obj_property name="ElementShortName">wstrb[15:0]</obj_property>
                   <obj_property name="ObjectShortName">wstrb[15:0]</obj_property>
-               </wvobject>
-               <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/wlast">
-                  <obj_property name="ElementShortName">wlast</obj_property>
-                  <obj_property name="ObjectShortName">wlast</obj_property>
+                  <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/wvalid">
                   <obj_property name="ElementShortName">wvalid</obj_property>
                   <obj_property name="ObjectShortName">wvalid</obj_property>
+                  <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/wready">
                   <obj_property name="ElementShortName">wready</obj_property>
                   <obj_property name="ObjectShortName">wready</obj_property>
+                  <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
             </wvobject>
             <wvobject type="group" fp_name="group442">
                <obj_property name="label">R</obj_property>
                <obj_property name="DisplayName">label</obj_property>
-               <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/rid">
-                  <obj_property name="ElementShortName">rid[3:0]</obj_property>
-                  <obj_property name="ObjectShortName">rid[3:0]</obj_property>
-               </wvobject>
+               <obj_property name="isExpanded"></obj_property>
                <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/rdata">
                   <obj_property name="ElementShortName">rdata[127:0]</obj_property>
                   <obj_property name="ObjectShortName">rdata[127:0]</obj_property>
-               </wvobject>
-               <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/rlast">
-                  <obj_property name="ElementShortName">rlast</obj_property>
-                  <obj_property name="ObjectShortName">rlast</obj_property>
+                  <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/rresp">
                   <obj_property name="ElementShortName">rresp[1:0]</obj_property>
                   <obj_property name="ObjectShortName">rresp[1:0]</obj_property>
+                  <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/rvalid">
                   <obj_property name="ElementShortName">rvalid</obj_property>
                   <obj_property name="ObjectShortName">rvalid</obj_property>
+                  <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/rready">
                   <obj_property name="ElementShortName">rready</obj_property>
                   <obj_property name="ObjectShortName">rready</obj_property>
+                  <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
             </wvobject>
             <wvobject type="group" fp_name="group443">
                <obj_property name="label">B</obj_property>
                <obj_property name="DisplayName">label</obj_property>
-               <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/bid">
-                  <obj_property name="ElementShortName">bid[3:0]</obj_property>
-                  <obj_property name="ObjectShortName">bid[3:0]</obj_property>
-               </wvobject>
+               <obj_property name="isExpanded"></obj_property>
                <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/bresp">
                   <obj_property name="ElementShortName">bresp[1:0]</obj_property>
                   <obj_property name="ObjectShortName">bresp[1:0]</obj_property>
+                  <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/bvalid">
                   <obj_property name="ElementShortName">bvalid</obj_property>
                   <obj_property name="ObjectShortName">bvalid</obj_property>
+                  <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/m_user_axi_if/bready">
                   <obj_property name="ElementShortName">bready</obj_property>
                   <obj_property name="ObjectShortName">bready</obj_property>
+                  <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
             </wvobject>
          </wvobject>
@@ -578,17 +569,10 @@
          <wvobject type="group" fp_name="group485">
             <obj_property name="label">Slave Data</obj_property>
             <obj_property name="DisplayName">label</obj_property>
-            <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/s_data_in_f">
-               <obj_property name="ElementShortName">s_data_in_f[7679:0]</obj_property>
-               <obj_property name="ObjectShortName">s_data_in_f[7679:0]</obj_property>
-            </wvobject>
+            <obj_property name="isExpanded"></obj_property>
             <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/s_data_in">
                <obj_property name="ElementShortName">s_data_in[1919:0]</obj_property>
                <obj_property name="ObjectShortName">s_data_in[1919:0]</obj_property>
-            </wvobject>
-            <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/s_data_out_f">
-               <obj_property name="ElementShortName">s_data_out_f[1535:0]</obj_property>
-               <obj_property name="ObjectShortName">s_data_out_f[1535:0]</obj_property>
             </wvobject>
             <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/s_data_out">
                <obj_property name="ElementShortName">s_data_out[383:0]</obj_property>
@@ -745,144 +729,602 @@
             <wvobject type="group" fp_name="group475">
                <obj_property name="label">AR</obj_property>
                <obj_property name="DisplayName">label</obj_property>
-               <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/arid">
-                  <obj_property name="ElementShortName">arid[3:0]</obj_property>
-                  <obj_property name="ObjectShortName">arid[3:0]</obj_property>
-               </wvobject>
-               <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/arsize">
-                  <obj_property name="ElementShortName">arsize[2:0]</obj_property>
-                  <obj_property name="ObjectShortName">arsize[2:0]</obj_property>
-               </wvobject>
-               <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/arlen">
-                  <obj_property name="ElementShortName">arlen[7:0]</obj_property>
-                  <obj_property name="ObjectShortName">arlen[7:0]</obj_property>
-               </wvobject>
-               <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/arburst">
-                  <obj_property name="ElementShortName">arburst[1:0]</obj_property>
-                  <obj_property name="ObjectShortName">arburst[1:0]</obj_property>
-               </wvobject>
+               <obj_property name="isExpanded"></obj_property>
                <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/araddr">
                   <obj_property name="ElementShortName">araddr[31:0]</obj_property>
                   <obj_property name="ObjectShortName">araddr[31:0]</obj_property>
+                  <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/arvalid">
                   <obj_property name="ElementShortName">arvalid</obj_property>
                   <obj_property name="ObjectShortName">arvalid</obj_property>
+                  <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/arready">
                   <obj_property name="ElementShortName">arready</obj_property>
                   <obj_property name="ObjectShortName">arready</obj_property>
+                  <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
             </wvobject>
             <wvobject type="group" fp_name="group476">
                <obj_property name="label">AW</obj_property>
                <obj_property name="DisplayName">label</obj_property>
-               <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/awid">
-                  <obj_property name="ElementShortName">awid[3:0]</obj_property>
-                  <obj_property name="ObjectShortName">awid[3:0]</obj_property>
-               </wvobject>
-               <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/awsize">
-                  <obj_property name="ElementShortName">awsize[2:0]</obj_property>
-                  <obj_property name="ObjectShortName">awsize[2:0]</obj_property>
-               </wvobject>
-               <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/awlen">
-                  <obj_property name="ElementShortName">awlen[7:0]</obj_property>
-                  <obj_property name="ObjectShortName">awlen[7:0]</obj_property>
-               </wvobject>
-               <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/awburst">
-                  <obj_property name="ElementShortName">awburst[1:0]</obj_property>
-                  <obj_property name="ObjectShortName">awburst[1:0]</obj_property>
-               </wvobject>
+               <obj_property name="isExpanded"></obj_property>
                <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/awaddr">
                   <obj_property name="ElementShortName">awaddr[31:0]</obj_property>
                   <obj_property name="ObjectShortName">awaddr[31:0]</obj_property>
+                  <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/awvalid">
                   <obj_property name="ElementShortName">awvalid</obj_property>
                   <obj_property name="ObjectShortName">awvalid</obj_property>
+                  <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/awready">
                   <obj_property name="ElementShortName">awready</obj_property>
                   <obj_property name="ObjectShortName">awready</obj_property>
+                  <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
             </wvobject>
             <wvobject type="group" fp_name="group477">
                <obj_property name="label">W</obj_property>
                <obj_property name="DisplayName">label</obj_property>
-               <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/wid">
-                  <obj_property name="ElementShortName">wid[3:0]</obj_property>
-                  <obj_property name="ObjectShortName">wid[3:0]</obj_property>
-               </wvobject>
+               <obj_property name="isExpanded"></obj_property>
                <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/wdata">
                   <obj_property name="ElementShortName">wdata[127:0]</obj_property>
                   <obj_property name="ObjectShortName">wdata[127:0]</obj_property>
+                  <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/wstrb">
                   <obj_property name="ElementShortName">wstrb[15:0]</obj_property>
                   <obj_property name="ObjectShortName">wstrb[15:0]</obj_property>
-               </wvobject>
-               <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/wlast">
-                  <obj_property name="ElementShortName">wlast</obj_property>
-                  <obj_property name="ObjectShortName">wlast</obj_property>
+                  <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/wvalid">
                   <obj_property name="ElementShortName">wvalid</obj_property>
                   <obj_property name="ObjectShortName">wvalid</obj_property>
+                  <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/wready">
                   <obj_property name="ElementShortName">wready</obj_property>
                   <obj_property name="ObjectShortName">wready</obj_property>
+                  <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
             </wvobject>
             <wvobject type="group" fp_name="group478">
                <obj_property name="label">R</obj_property>
                <obj_property name="DisplayName">label</obj_property>
-               <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/rid">
-                  <obj_property name="ElementShortName">rid[3:0]</obj_property>
-                  <obj_property name="ObjectShortName">rid[3:0]</obj_property>
-               </wvobject>
+               <obj_property name="isExpanded"></obj_property>
                <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/rdata">
                   <obj_property name="ElementShortName">rdata[127:0]</obj_property>
                   <obj_property name="ObjectShortName">rdata[127:0]</obj_property>
-               </wvobject>
-               <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/rlast">
-                  <obj_property name="ElementShortName">rlast</obj_property>
-                  <obj_property name="ObjectShortName">rlast</obj_property>
+                  <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/rresp">
                   <obj_property name="ElementShortName">rresp[1:0]</obj_property>
                   <obj_property name="ObjectShortName">rresp[1:0]</obj_property>
+                  <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/rvalid">
                   <obj_property name="ElementShortName">rvalid</obj_property>
                   <obj_property name="ObjectShortName">rvalid</obj_property>
+                  <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/rready">
                   <obj_property name="ElementShortName">rready</obj_property>
                   <obj_property name="ObjectShortName">rready</obj_property>
+                  <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
             </wvobject>
             <wvobject type="group" fp_name="group479">
                <obj_property name="label">B</obj_property>
                <obj_property name="DisplayName">label</obj_property>
-               <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/bid">
-                  <obj_property name="ElementShortName">bid[3:0]</obj_property>
-                  <obj_property name="ObjectShortName">bid[3:0]</obj_property>
-               </wvobject>
+               <obj_property name="isExpanded"></obj_property>
                <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/bresp">
                   <obj_property name="ElementShortName">bresp[1:0]</obj_property>
                   <obj_property name="ObjectShortName">bresp[1:0]</obj_property>
+                  <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/bvalid">
                   <obj_property name="ElementShortName">bvalid</obj_property>
                   <obj_property name="ObjectShortName">bvalid</obj_property>
+                  <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
                <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/s_user_axi_if/bready">
                   <obj_property name="ElementShortName">bready</obj_property>
                   <obj_property name="ObjectShortName">bready</obj_property>
+                  <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
                </wvobject>
             </wvobject>
          </wvobject>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group9810">
+      <obj_property name="label">aib_master</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/data_in_f">
+         <obj_property name="ElementShortName">data_in_f[7679:0]</obj_property>
+         <obj_property name="ObjectShortName">data_in_f[7679:0]</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/data_out_f">
+         <obj_property name="ElementShortName">data_out_f[7679:0]</obj_property>
+         <obj_property name="ObjectShortName">data_out_f[7679:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/data_in">
+         <obj_property name="ElementShortName">data_in[1919:0]</obj_property>
+         <obj_property name="ObjectShortName">data_in[1919:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/data_out">
+         <obj_property name="ElementShortName">data_out[1919:0]</obj_property>
+         <obj_property name="ObjectShortName">data_out[1919:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group9815">
+      <obj_property name="label">aib_slave</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/aib_slave_inst/data_in_f">
+         <obj_property name="ElementShortName">data_in_f[7679:0]</obj_property>
+         <obj_property name="ObjectShortName">data_in_f[7679:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/aib_slave_inst/data_out_f">
+         <obj_property name="ElementShortName">data_out_f[7679:0]</obj_property>
+         <obj_property name="ObjectShortName">data_out_f[7679:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/aib_slave_inst/data_in">
+         <obj_property name="ElementShortName">data_in[1919:0]</obj_property>
+         <obj_property name="ObjectShortName">data_in[1919:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/aib_slave_inst/data_out">
+         <obj_property name="ElementShortName">data_out[1919:0]</obj_property>
+         <obj_property name="ObjectShortName">data_out[1919:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group1142">
+      <obj_property name="label">transfer_en</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="group" fp_name="group1117">
+         <obj_property name="label">slave_transfer_en</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/aib_slave_inst/dual_mode_select">
+            <obj_property name="ElementShortName">dual_mode_select</obj_property>
+            <obj_property name="ObjectShortName">dual_mode_select</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/m1_ms_tx_transfer_en">
+            <obj_property name="ElementShortName">m1_ms_tx_transfer_en[23:0]</obj_property>
+            <obj_property name="ObjectShortName">m1_ms_tx_transfer_en[23:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/m1_ms_rx_transfer_en">
+            <obj_property name="ElementShortName">m1_ms_rx_transfer_en[23:0]</obj_property>
+            <obj_property name="ObjectShortName">m1_ms_rx_transfer_en[23:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/m1_sl_tx_transfer_en">
+            <obj_property name="ElementShortName">m1_sl_tx_transfer_en[23:0]</obj_property>
+            <obj_property name="ObjectShortName">m1_sl_tx_transfer_en[23:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/m1_sl_rx_transfer_en">
+            <obj_property name="ElementShortName">m1_sl_rx_transfer_en[23:0]</obj_property>
+            <obj_property name="ObjectShortName">m1_sl_rx_transfer_en[23:0]</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="group" fp_name="group1107">
+         <obj_property name="label">master_transfer_en</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/dual_mode_select">
+            <obj_property name="ElementShortName">dual_mode_select</obj_property>
+            <obj_property name="ObjectShortName">dual_mode_select</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/m1_ms_tx_transfer_en">
+            <obj_property name="ElementShortName">m1_ms_tx_transfer_en[23:0]</obj_property>
+            <obj_property name="ObjectShortName">m1_ms_tx_transfer_en[23:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/m1_ms_rx_transfer_en">
+            <obj_property name="ElementShortName">m1_ms_rx_transfer_en[23:0]</obj_property>
+            <obj_property name="ObjectShortName">m1_ms_rx_transfer_en[23:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/m1_sl_tx_transfer_en">
+            <obj_property name="ElementShortName">m1_sl_tx_transfer_en[23:0]</obj_property>
+            <obj_property name="ObjectShortName">m1_sl_tx_transfer_en[23:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/m1_sl_rx_transfer_en">
+            <obj_property name="ElementShortName">m1_sl_rx_transfer_en[23:0]</obj_property>
+            <obj_property name="ObjectShortName">m1_sl_rx_transfer_en[23:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sm/mstxcal_curst">
+            <obj_property name="ElementShortName">mstxcal_curst[2:0]</obj_property>
+            <obj_property name="ObjectShortName">mstxcal_curst[2:0]</obj_property>
+         </wvobject>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group22570">
+      <obj_property name="label">EMIB</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="group" fp_name="group22571">
+         <obj_property name="label">slave</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/s_ch0_aib">
+            <obj_property name="ElementShortName">s_ch0_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">s_ch0_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/s_ch1_aib">
+            <obj_property name="ElementShortName">s_ch1_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">s_ch1_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/s_ch2_aib">
+            <obj_property name="ElementShortName">s_ch2_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">s_ch2_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/s_ch3_aib">
+            <obj_property name="ElementShortName">s_ch3_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">s_ch3_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/s_ch4_aib">
+            <obj_property name="ElementShortName">s_ch4_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">s_ch4_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/s_ch5_aib">
+            <obj_property name="ElementShortName">s_ch5_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">s_ch5_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/s_ch6_aib">
+            <obj_property name="ElementShortName">s_ch6_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">s_ch6_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/s_ch7_aib">
+            <obj_property name="ElementShortName">s_ch7_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">s_ch7_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/s_ch8_aib">
+            <obj_property name="ElementShortName">s_ch8_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">s_ch8_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/s_ch9_aib">
+            <obj_property name="ElementShortName">s_ch9_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">s_ch9_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/s_ch10_aib">
+            <obj_property name="ElementShortName">s_ch10_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">s_ch10_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/s_ch11_aib">
+            <obj_property name="ElementShortName">s_ch11_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">s_ch11_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/s_ch12_aib">
+            <obj_property name="ElementShortName">s_ch12_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">s_ch12_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/s_ch13_aib">
+            <obj_property name="ElementShortName">s_ch13_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">s_ch13_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/s_ch14_aib">
+            <obj_property name="ElementShortName">s_ch14_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">s_ch14_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/s_ch15_aib">
+            <obj_property name="ElementShortName">s_ch15_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">s_ch15_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/s_ch16_aib">
+            <obj_property name="ElementShortName">s_ch16_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">s_ch16_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/s_ch17_aib">
+            <obj_property name="ElementShortName">s_ch17_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">s_ch17_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/s_ch18_aib">
+            <obj_property name="ElementShortName">s_ch18_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">s_ch18_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/s_ch19_aib">
+            <obj_property name="ElementShortName">s_ch19_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">s_ch19_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/s_ch20_aib">
+            <obj_property name="ElementShortName">s_ch20_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">s_ch20_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/s_ch21_aib">
+            <obj_property name="ElementShortName">s_ch21_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">s_ch21_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/s_ch22_aib">
+            <obj_property name="ElementShortName">s_ch22_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">s_ch22_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/s_ch23_aib">
+            <obj_property name="ElementShortName">s_ch23_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">s_ch23_aib[101:0]</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="group" fp_name="group22572">
+         <obj_property name="label">master</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/m_ch0_aib">
+            <obj_property name="ElementShortName">m_ch0_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">m_ch0_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/m_ch1_aib">
+            <obj_property name="ElementShortName">m_ch1_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">m_ch1_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/m_ch2_aib">
+            <obj_property name="ElementShortName">m_ch2_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">m_ch2_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/m_ch3_aib">
+            <obj_property name="ElementShortName">m_ch3_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">m_ch3_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/m_ch4_aib">
+            <obj_property name="ElementShortName">m_ch4_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">m_ch4_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/m_ch5_aib">
+            <obj_property name="ElementShortName">m_ch5_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">m_ch5_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/m_ch6_aib">
+            <obj_property name="ElementShortName">m_ch6_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">m_ch6_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/m_ch7_aib">
+            <obj_property name="ElementShortName">m_ch7_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">m_ch7_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/m_ch8_aib">
+            <obj_property name="ElementShortName">m_ch8_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">m_ch8_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/m_ch9_aib">
+            <obj_property name="ElementShortName">m_ch9_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">m_ch9_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/m_ch10_aib">
+            <obj_property name="ElementShortName">m_ch10_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">m_ch10_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/m_ch11_aib">
+            <obj_property name="ElementShortName">m_ch11_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">m_ch11_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/m_ch12_aib">
+            <obj_property name="ElementShortName">m_ch12_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">m_ch12_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/m_ch13_aib">
+            <obj_property name="ElementShortName">m_ch13_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">m_ch13_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/m_ch14_aib">
+            <obj_property name="ElementShortName">m_ch14_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">m_ch14_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/m_ch15_aib">
+            <obj_property name="ElementShortName">m_ch15_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">m_ch15_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/m_ch16_aib">
+            <obj_property name="ElementShortName">m_ch16_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">m_ch16_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/m_ch17_aib">
+            <obj_property name="ElementShortName">m_ch17_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">m_ch17_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/m_ch18_aib">
+            <obj_property name="ElementShortName">m_ch18_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">m_ch18_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/m_ch19_aib">
+            <obj_property name="ElementShortName">m_ch19_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">m_ch19_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/m_ch20_aib">
+            <obj_property name="ElementShortName">m_ch20_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">m_ch20_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/m_ch21_aib">
+            <obj_property name="ElementShortName">m_ch21_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">m_ch21_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/m_ch22_aib">
+            <obj_property name="ElementShortName">m_ch22_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">m_ch22_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/m_ch23_aib">
+            <obj_property name="ElementShortName">m_ch23_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">m_ch23_aib[101:0]</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/dut_emib/ROTATE">
+         <obj_property name="ElementShortName">ROTATE[31:0]</obj_property>
+         <obj_property name="ObjectShortName">ROTATE[31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group1174">
+      <obj_property name="label">intf_m1</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/fwd_clk">
+         <obj_property name="ElementShortName">fwd_clk</obj_property>
+         <obj_property name="ObjectShortName">fwd_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/wr_clk">
+         <obj_property name="ElementShortName">wr_clk</obj_property>
+         <obj_property name="ObjectShortName">wr_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/rd_clk">
+         <obj_property name="ElementShortName">rd_clk</obj_property>
+         <obj_property name="ObjectShortName">rd_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/osc_clk">
+         <obj_property name="ElementShortName">osc_clk</obj_property>
+         <obj_property name="ObjectShortName">osc_clk</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/data_in">
+         <obj_property name="ElementShortName">data_in[1919:0]</obj_property>
+         <obj_property name="ObjectShortName">data_in[1919:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/data_out">
+         <obj_property name="ElementShortName">data_out[1919:0]</obj_property>
+         <obj_property name="ObjectShortName">data_out[1919:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/data_in_f">
+         <obj_property name="ElementShortName">data_in_f[7679:0]</obj_property>
+         <obj_property name="ObjectShortName">data_in_f[7679:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/data_out_f">
+         <obj_property name="ElementShortName">data_out_f[7679:0]</obj_property>
+         <obj_property name="ObjectShortName">data_out_f[7679:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/gen1_data_in">
+         <obj_property name="ElementShortName">gen1_data_in[959:0]</obj_property>
+         <obj_property name="ObjectShortName">gen1_data_in[959:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/gen1_data_out">
+         <obj_property name="ElementShortName">gen1_data_out[959:0]</obj_property>
+         <obj_property name="ObjectShortName">gen1_data_out[959:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/gen1_data_in_f">
+         <obj_property name="ElementShortName">gen1_data_in_f[1919:0]</obj_property>
+         <obj_property name="ObjectShortName">gen1_data_in_f[1919:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/gen1_data_out_f">
+         <obj_property name="ElementShortName">gen1_data_out_f[1919:0]</obj_property>
+         <obj_property name="ObjectShortName">gen1_data_out_f[1919:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/ms_sideband">
+         <obj_property name="ElementShortName">ms_sideband[1943:0]</obj_property>
+         <obj_property name="ObjectShortName">ms_sideband[1943:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/sl_sideband">
+         <obj_property name="ElementShortName">sl_sideband[1751:0]</obj_property>
+         <obj_property name="ObjectShortName">sl_sideband[1751:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/m_fs_fwd_clk">
+         <obj_property name="ElementShortName">m_fs_fwd_clk[23:0]</obj_property>
+         <obj_property name="ObjectShortName">m_fs_fwd_clk[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/m_ns_fwd_clk">
+         <obj_property name="ElementShortName">m_ns_fwd_clk[23:0]</obj_property>
+         <obj_property name="ObjectShortName">m_ns_fwd_clk[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/m_ns_rcv_clk">
+         <obj_property name="ElementShortName">m_ns_rcv_clk[23:0]</obj_property>
+         <obj_property name="ObjectShortName">m_ns_rcv_clk[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/m_fs_rcv_clk">
+         <obj_property name="ElementShortName">m_fs_rcv_clk[23:0]</obj_property>
+         <obj_property name="ObjectShortName">m_fs_rcv_clk[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/m_wr_clk">
+         <obj_property name="ElementShortName">m_wr_clk[23:0]</obj_property>
+         <obj_property name="ObjectShortName">m_wr_clk[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/m_rd_clk">
+         <obj_property name="ElementShortName">m_rd_clk[23:0]</obj_property>
+         <obj_property name="ObjectShortName">m_rd_clk[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/ns_adapter_rstn">
+         <obj_property name="ElementShortName">ns_adapter_rstn[23:0]</obj_property>
+         <obj_property name="ObjectShortName">ns_adapter_rstn[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/fs_adapter_rstn">
+         <obj_property name="ElementShortName">fs_adapter_rstn[23:0]</obj_property>
+         <obj_property name="ObjectShortName">fs_adapter_rstn[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/ns_mac_rdy">
+         <obj_property name="ElementShortName">ns_mac_rdy[23:0]</obj_property>
+         <obj_property name="ObjectShortName">ns_mac_rdy[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/fs_mac_rdy">
+         <obj_property name="ElementShortName">fs_mac_rdy[23:0]</obj_property>
+         <obj_property name="ObjectShortName">fs_mac_rdy[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/i_m_power_on_reset">
+         <obj_property name="ElementShortName">i_m_power_on_reset</obj_property>
+         <obj_property name="ObjectShortName">i_m_power_on_reset</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/o_m_power_on_reset">
+         <obj_property name="ElementShortName">o_m_power_on_reset</obj_property>
+         <obj_property name="ObjectShortName">o_m_power_on_reset</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/m_por_ovrd">
+         <obj_property name="ElementShortName">m_por_ovrd</obj_property>
+         <obj_property name="ObjectShortName">m_por_ovrd</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/m_device_detect">
+         <obj_property name="ElementShortName">m_device_detect</obj_property>
+         <obj_property name="ObjectShortName">m_device_detect</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/m_device_detect_ovrd">
+         <obj_property name="ElementShortName">m_device_detect_ovrd</obj_property>
+         <obj_property name="ObjectShortName">m_device_detect_ovrd</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/i_conf_done">
+         <obj_property name="ElementShortName">i_conf_done</obj_property>
+         <obj_property name="ObjectShortName">i_conf_done</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/sl_rx_dcc_dll_lock_req">
+         <obj_property name="ElementShortName">sl_rx_dcc_dll_lock_req[23:0]</obj_property>
+         <obj_property name="ObjectShortName">sl_rx_dcc_dll_lock_req[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/sl_tx_dcc_dll_lock_req">
+         <obj_property name="ElementShortName">sl_tx_dcc_dll_lock_req[23:0]</obj_property>
+         <obj_property name="ObjectShortName">sl_tx_dcc_dll_lock_req[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/ms_rx_dcc_dll_lock_req">
+         <obj_property name="ElementShortName">ms_rx_dcc_dll_lock_req[23:0]</obj_property>
+         <obj_property name="ObjectShortName">ms_rx_dcc_dll_lock_req[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/ms_tx_dcc_dll_lock_req">
+         <obj_property name="ElementShortName">ms_tx_dcc_dll_lock_req[23:0]</obj_property>
+         <obj_property name="ObjectShortName">ms_tx_dcc_dll_lock_req[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/ms_tx_transfer_en">
+         <obj_property name="ElementShortName">ms_tx_transfer_en[23:0]</obj_property>
+         <obj_property name="ObjectShortName">ms_tx_transfer_en[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/ms_rx_transfer_en">
+         <obj_property name="ElementShortName">ms_rx_transfer_en[23:0]</obj_property>
+         <obj_property name="ObjectShortName">ms_rx_transfer_en[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/sl_tx_transfer_en">
+         <obj_property name="ElementShortName">sl_tx_transfer_en[23:0]</obj_property>
+         <obj_property name="ObjectShortName">sl_tx_transfer_en[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/sl_rx_transfer_en">
+         <obj_property name="ElementShortName">sl_rx_transfer_en[23:0]</obj_property>
+         <obj_property name="ObjectShortName">sl_rx_transfer_en[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/m_rx_align_done">
+         <obj_property name="ElementShortName">m_rx_align_done[23:0]</obj_property>
+         <obj_property name="ObjectShortName">m_rx_align_done[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/intf_m1/i_osc_clk">
+         <obj_property name="ElementShortName">i_osc_clk</obj_property>
+         <obj_property name="ObjectShortName">i_osc_clk</obj_property>
       </wvobject>
    </wvobject>
 </wave_config>
