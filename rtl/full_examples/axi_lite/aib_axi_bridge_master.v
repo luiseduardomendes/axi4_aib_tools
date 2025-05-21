@@ -73,8 +73,8 @@ module top_aib_axi_bridge_master #(
             input                   avmm_clk,     // Avalon MM clock
             input                   avmm_rst_n,   // Avalon MM reset 
 
-            //input  [NBR_CHNLS-1:0]  m_ns_fwd_clk, // should be defined by the axi master
-            //input  [NBR_CHNLS-1:0]  m_ns_rcv_clk, // should be defined by the axi master
+            input  [NBR_CHNLS-1:0]  m_ns_fwd_clk, // should be defined by the axi master
+            input  [NBR_CHNLS-1:0]  m_ns_rcv_clk, // should be defined by the axi master
             output [NBR_CHNLS-1:0]  m_fs_rcv_clk, // shall not be used in Gen2 Mode
             output [NBR_CHNLS-1:0]  m_fs_fwd_clk,
             
@@ -102,8 +102,8 @@ module top_aib_axi_bridge_master #(
             
             input  [NBR_CHNLS-1:0]  ms_rx_dcc_dll_lock_req, // Calibration init
             input  [NBR_CHNLS-1:0]  ms_tx_dcc_dll_lock_req, // Calibration init
-            //input  [NBR_CHNLS-1:0]  sl_tx_dcc_dll_lock_req, // Calibration init
-            //input  [NBR_CHNLS-1:0]  sl_rx_dcc_dll_lock_req, // Calibration init
+            input  [NBR_CHNLS-1:0]  sl_tx_dcc_dll_lock_req, // Calibration init
+            input  [NBR_CHNLS-1:0]  sl_rx_dcc_dll_lock_req, // Calibration init
             
             output [MS_SSR_LEN*NBR_CHNLS-1:0] sr_ms_tomac, // Leader  sideband data
             output [SL_SSR_LEN*NBR_CHNLS-1:0] sr_sl_tomac, // Follower  sideband data    
@@ -162,6 +162,26 @@ module top_aib_axi_bridge_master #(
         // *****************************************
     // *************************************************************************
 );
+    // Calibration FSM control signals
+    wire calib_rst_n;
+    wire calib_done;
+    assign calib_rst_n = avmm_rst_n;
+
+    calib_master_fsm #(
+        .TOTAL_CHNL_NUM(NBR_CHNLS)
+    ) u_calib_fsm (
+        .clk(avmm_clk),
+        .rst_n(calib_rst_n),
+        .sl_tx_transfer_en(m1_sl_rx_transfer_en),
+        .sl_rx_transfer_en(m1_sl_rx_transfer_en),
+        
+        .calib_done(calib_done),
+        .i_conf_done(intf_m1.i_conf_done),
+        .ns_adapter_rstn    (intf_m1.ns_adapter_rstn),
+        .ns_mac_rdy         (intf_m1.ns_mac_rdy),
+        .ms_rx_dcc_dll_lock_req (intf_m1.ms_rx_dcc_dll_lock_req),
+        .ms_tx_dcc_dll_lock_req (intf_m1.ms_tx_dcc_dll_lock_req)        
+    );
 
 
     // AIB to AXI signals
@@ -190,19 +210,21 @@ module top_aib_axi_bridge_master #(
         .osc_clk(i_osc_clk)
     );
     
-    assign intf_m1.ns_adapter_rstn = ns_adapter_rstn;
-    assign intf_m1.ns_mac_rdy = ns_mac_rdy;
-    assign intf_m1.fs_mac_rdy = fs_mac_rdy;
-    assign intf_m1.i_conf_done = i_conf_done;
-    assign intf_m1.ms_rx_dcc_dll_lock_req = ~m1_ms_rx_transfer_en;
-    assign intf_m1.ms_tx_dcc_dll_lock_req = ~m1_ms_tx_transfer_en;
+    //assign intf_m1.ns_adapter_rstn = ns_adapter_rstn;
+    //assign intf_m1.ns_mac_rdy = ns_mac_rdy;
+    //assign intf_m1.fs_mac_rdy = fs_mac_rdy;
+    //assign intf_m1.i_conf_done = i_conf_done;
+    //assign intf_m1.ms_rx_dcc_dll_lock_req = ~m1_ms_rx_transfer_en;
+    //assign intf_m1.ms_tx_dcc_dll_lock_req = ~m1_ms_tx_transfer_en;
     assign intf_m1.ms_sideband = sr_ms_tomac;
     assign intf_m1.sl_sideband = sr_sl_tomac;
-    assign intf_m1.m_rx_align_done = m_rx_align_done;
+    assign intf_m1.m_rx_align_done = 1'b1;
 
     avalon_mm_if #(.AVMM_WIDTH(32), .BYTE_WIDTH(4)) avmm_if_m1  (
      .clk    (avmm_clk)
     );
+
+    
 
     assign avmm_if_m1.rst_n = avmm_rst_n;
     assign avmm_if_m1.address = i_cfg_avmm_addr;
@@ -258,8 +280,8 @@ module top_aib_axi_bridge_master #(
         .data_in(data_in_f), //output data to pad      
         .data_out(data_out_f),                         
                 
-        .m_ns_fwd_clk(clk_wr), //output data clock	 
-        .m_ns_rcv_clk(clk_wr),                         
+        .m_ns_fwd_clk(m_ns_fwd_clk), //output data clock	 
+        .m_ns_rcv_clk(m_ns_rcv_clk),                         
         .m_fs_rcv_clk(m_fs_rcv_clk), // shall not be used in Gen2 Mode
         .m_fs_fwd_clk(m_fs_fwd_clk), // should go to axi master
                                                             
@@ -399,4 +421,10 @@ module top_aib_axi_bridge_master #(
         .delay_z_value       (delay_z_value)
 
     );
+
+    initial begin
+        avmm_if_m1.cfg_write({0,11'h208}, 4'hf, 32'h0600_0000);
+        avmm_if_m1.cfg_write({0,11'h210}, 4'hf, 32'h0000_000b);      
+        avmm_if_m1.cfg_write({0,11'h218}, 4'hf, 32'h60a1_0000);
+    end
 endmodule

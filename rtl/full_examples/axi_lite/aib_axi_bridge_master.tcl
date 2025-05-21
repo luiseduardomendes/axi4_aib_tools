@@ -8,6 +8,8 @@ set flist ${TOOLS_DIR}/rtl/full_examples/axi_lite/aib_axi_bridge_master.f
 read_verilog ${TOOLS_DIR}/rtl/full_examples/axi_lite/aib_axi_bridge_master.v
 read_verilog ${TOOLS_DIR}/rtl/interfaces/axi_if.v
 
+read_verilog ${TOOLS_DIR}/rtl/full_examples/axi_lite/aib_calib_master_fsm.v
+
 source $flist
 
 set_property file_type SystemVerilog [get_files *.v]

@@ -75,8 +75,8 @@ module top_aib_axi_bridge_slave #(
 
             input  [NBR_CHNLS-1:0]  m_ns_fwd_clk, 
             input  [NBR_CHNLS-1:0]  m_ns_rcv_clk, // ignored in Gen2 Mode
-            //output [NBR_CHNLS-1:0]  m_fs_rcv_clk, // shall not be used in Gen2 Mode
-            //output [NBR_CHNLS-1:0]  m_fs_fwd_clk,
+            output [NBR_CHNLS-1:0]  m_fs_rcv_clk, // shall not be used in Gen2 Mode
+            output [NBR_CHNLS-1:0]  m_fs_fwd_clk,
             
             //input  [NBR_CHNLS-1:0]  m_wr_clk,     
             //input  [NBR_CHNLS-1:0]  m_rd_clk,    
@@ -102,8 +102,8 @@ module top_aib_axi_bridge_slave #(
             
             input  [NBR_CHNLS-1:0]  ms_rx_dcc_dll_lock_req, // Calibration init
             input  [NBR_CHNLS-1:0]  ms_tx_dcc_dll_lock_req, // Calibration init
-            //input  [NBR_CHNLS-1:0]  sl_tx_dcc_dll_lock_req, // Calibration init
-            //input  [NBR_CHNLS-1:0]  sl_rx_dcc_dll_lock_req, // Calibration init
+            input  [NBR_CHNLS-1:0]  sl_tx_dcc_dll_lock_req, // Calibration init
+            input  [NBR_CHNLS-1:0]  sl_rx_dcc_dll_lock_req, // Calibration init
             
             output [MS_SSR_LEN*NBR_CHNLS-1:0] sr_ms_tomac, // Leader  sideband data
             output [SL_SSR_LEN*NBR_CHNLS-1:0] sr_sl_tomac, // Follower  sideband data    
@@ -188,15 +188,42 @@ module top_aib_axi_bridge_slave #(
         .osc_clk(i_osc_clk)
     );
 
-    assign intf_s1.ns_adapter_rstn = ns_adapter_rstn;
-    assign intf_s1.ns_mac_rdy = ns_mac_rdy;
-    assign intf_s1.fs_mac_rdy = fs_mac_rdy;
-    assign intf_s1.i_conf_done = i_conf_done;
-    assign intf_s1.ms_rx_dcc_dll_lock_req = ms_rx_dcc_dll_lock_req;
-    assign intf_s1.ms_tx_dcc_dll_lock_req = ms_tx_dcc_dll_lock_req;
+    // Calibration FSM control signals
+    wire calib_done;
+    wire calib_en;
+    wire calib_rst_n;
+
+    assign calib_rst_n = avmm_rst_n;
+    assign calib_en = 1'b1; // Enable calibration always for now
+
+    // Instance
+    calib_slave_fsm #(
+        .NBR_CHNLS(NBR_CHNLS)
+    ) u_calib_slave_fsm (
+        .clk                (avmm_clk),
+        .rst_n              (intf_s1.ns_adapter_rstn),
+        .ms_rx_dcc_dll_lock_req (intf_s1.ms_rx_dcc_dll_lock_req),
+        .ms_tx_dcc_dll_lock_req (intf_s1.ms_tx_dcc_dll_lock_req),
+
+
+        .i_conf_done        (intf_s1.i_conf_done),
+        .ns_mac_rdy         (intf_s1.ns_mac_rdy),
+        .ns_adapter_rstn    (intf_s1.ns_adapter_rstn),
+        .sl_rx_dcc_dll_lock_req (intf_s1.sl_rx_dcc_dll_lock_req),
+        .sl_tx_dcc_dll_lock_req (intf_s1.sl_tx_dcc_dll_lock_req),
+        .sl_tx_transfer_en  (intf_s1.sl_tx_transfer_en),
+        .sl_rx_transfer_en  (intf_s1.sl_rx_transfer_en)
+    );
+
+    // assign intf_s1.ns_adapter_rstn = ns_adapter_rstn;
+    // assign intf_s1.ns_mac_rdy = ns_mac_rdy;
+    // assign intf_s1.fs_mac_rdy = fs_mac_rdy;
+    // assign intf_s1.i_conf_done = i_conf_done;
+    // assign intf_s1.ms_rx_dcc_dll_lock_req = ms_rx_dcc_dll_lock_req;
+    // assign intf_s1.ms_tx_dcc_dll_lock_req = ms_tx_dcc_dll_lock_req;
     assign intf_s1.ms_sideband = sr_ms_tomac;
     assign intf_s1.sl_sideband = sr_sl_tomac;
-    assign intf_s1.m_rx_align_done = m_rx_align_done;
+    assign intf_s1.m_rx_align_done = 1'b1;
 
     avalon_mm_if #(.AVMM_WIDTH(32), .BYTE_WIDTH(4)) avmm_if_s1 (
         .clk    (avmm_clk)
@@ -256,8 +283,8 @@ module top_aib_axi_bridge_slave #(
         .data_in(data_in_f), //output data to pad      
         .data_out(data_out_f),                         
                 
-        .m_ns_fwd_clk(clk_wr), //output data clock	 
-        .m_ns_rcv_clk(clk_wr),  // ignored in Gen2 Mode
+        .m_ns_fwd_clk(m_ns_fwd_clk), //output data clock	 
+        .m_ns_rcv_clk(m_ns_rcv_clk),  // ignored in Gen2 Mode
         .m_fs_rcv_clk(m_fs_rcv_clk), // shall not be used in Gen2 Mode
         .m_fs_fwd_clk(m_fs_fwd_clk),                         
                                                             
