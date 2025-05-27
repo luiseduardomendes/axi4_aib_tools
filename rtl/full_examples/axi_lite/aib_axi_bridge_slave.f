@@ -1,9 +1,11 @@
 read_verilog ${AIB2_ROOT}/rev1/dv/interface/dut_if_mac.sv
+read_verilog ${AIB2_ROOT}/rev1/dv/interface/avalon_mm_if.sv
 
 # Generated Files
-read_verilog ${PROJ_DIR}/axi4-mm/axi_lite_a32_d32/axi_lite_a32_d32_slave_top.sv   
-read_verilog ${PROJ_DIR}/axi4-mm/axi_lite_a32_d32/axi_lite_a32_d32_slave_concat.sv
-read_verilog ${PROJ_DIR}/axi4-mm/axi_lite_a32_d32/axi_lite_a32_d32_slave_name.sv  
+read_verilog ${TOOLS_DIR}/rtl/full_examples/axi_lite/aib_calib_slave_fsm.v
+read_verilog ${TOOLS_DIR}/rtl/axi_mm/axi_mm_slave_top.sv   
+read_verilog ${TOOLS_DIR}/rtl/axi_mm/axi_mm_slave_concat.sv
+read_verilog ${TOOLS_DIR}/rtl/axi_mm/axi_mm_slave_name.sv  
 
 # Logic Link Files
 read_verilog ${PROJ_DIR}/llink/rtl/ll_receive.sv

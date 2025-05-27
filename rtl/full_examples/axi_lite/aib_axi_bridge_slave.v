@@ -168,6 +168,11 @@ module top_aib_axi_bridge_slave #(
     wire [NBR_CHNLS-1:0]    m1_sl_tx_transfer_en;
     wire [NBR_CHNLS-1:0]    m1_sl_rx_transfer_en;
 
+    assign m1_ms_tx_transfer_en = {NBR_CHNLS{1'b1}}; // Force transfer enable for all channels
+    assign m1_ms_rx_transfer_en = {NBR_CHNLS{1'b1}}; // Force transfer enable for all channels
+    assign m1_sl_tx_transfer_en = {NBR_CHNLS{1'b1}}; // Force transfer enable for all channels
+    assign m1_sl_rx_transfer_en = {NBR_CHNLS{1'b1}}; // Force transfer enable for all channels
+
     wire [2*DWIDTH-1:0]     data_in_f;
     wire [2*DWIDTH-1:0]     data_out_f;
 
@@ -198,10 +203,10 @@ module top_aib_axi_bridge_slave #(
 
     // Instance
     calib_slave_fsm #(
-        .NBR_CHNLS(NBR_CHNLS)
+        .TOTAL_CHNL_NUM(NBR_CHNLS)
     ) u_calib_slave_fsm (
         .clk                (avmm_clk),
-        .rst_n              (intf_s1.ns_adapter_rstn),
+        .rst_n              (calib_rst_n),
         .ms_rx_dcc_dll_lock_req (intf_s1.ms_rx_dcc_dll_lock_req),
         .ms_tx_dcc_dll_lock_req (intf_s1.ms_tx_dcc_dll_lock_req),
 
@@ -219,7 +224,9 @@ module top_aib_axi_bridge_slave #(
     // assign intf_s1.ns_mac_rdy = ns_mac_rdy;
     // assign intf_s1.fs_mac_rdy = fs_mac_rdy;
     // assign intf_s1.i_conf_done = i_conf_done;
+    assign intf_s1.ms_rx_dcc_dll_lock_req = {NBR_CHNLS{1'b1}}; // Force lock request for all channels
     // assign intf_s1.ms_rx_dcc_dll_lock_req = ms_rx_dcc_dll_lock_req;
+    assign intf_s1.ms_tx_dcc_dll_lock_req = {NBR_CHNLS{1'b1}}; // Force lock request for all channels
     // assign intf_s1.ms_tx_dcc_dll_lock_req = ms_tx_dcc_dll_lock_req;
     assign intf_s1.ms_sideband = sr_ms_tomac;
     assign intf_s1.sl_sideband = sr_sl_tomac;
@@ -240,7 +247,7 @@ module top_aib_axi_bridge_slave #(
     assign o_cfg_avmm_rdata = avmm_if_s1.readdata;
     assign o_cfg_avmm_waitreq = avmm_if_s1.waitrequest;
 
-    aib_model_top aib_slave_inst (
+    aib_phy_top aib_slave_inst (
         .iopad_ch0_aib(iopad_ch0_aib), 
         .iopad_ch1_aib(iopad_ch1_aib), 
         .iopad_ch2_aib(iopad_ch2_aib), 
@@ -296,14 +303,16 @@ module top_aib_axi_bridge_slave #(
         .fs_mac_rdy(intf_s1.fs_mac_rdy),             
 
         .i_conf_done(intf_s1.i_conf_done),
-        .ms_rx_dcc_dll_lock_req(/*{24{1'b1}}*/intf_s1.ms_rx_dcc_dll_lock_req),			
-        .ms_tx_dcc_dll_lock_req(/*{24{1'b1}}*/intf_s1.ms_tx_dcc_dll_lock_req),         
+        .ms_rx_dcc_dll_lock_req(intf_s1.ms_rx_dcc_dll_lock_req),			
+        .ms_tx_dcc_dll_lock_req(intf_s1.ms_tx_dcc_dll_lock_req),         
+        
         .sl_rx_dcc_dll_lock_req({24{1'b1}}),                        
         .sl_tx_dcc_dll_lock_req({24{1'b1}}),                        
-        .ms_tx_transfer_en(m1_ms_tx_transfer_en),                   
-        .ms_rx_transfer_en(m1_ms_rx_transfer_en),                   
-        .sl_tx_transfer_en(m1_sl_tx_transfer_en),
-        .sl_rx_transfer_en(m1_sl_rx_transfer_en),
+        
+        // .ms_tx_transfer_en(m1_ms_tx_transfer_en),                   
+        // .ms_rx_transfer_en(m1_ms_rx_transfer_en),                   
+        // .sl_tx_transfer_en(m1_sl_tx_transfer_en),
+        // .sl_rx_transfer_en(m1_sl_rx_transfer_en),
         .sr_ms_tomac(intf_s1.ms_sideband),			
         .sr_sl_tomac(intf_s1.sl_sideband),           
         .m_rx_align_done(intf_s1.m_rx_align_done),   
@@ -364,56 +373,56 @@ module top_aib_axi_bridge_slave #(
         .dual_mode_select(1'b0)
     );
 
-    axi_lite_a32_d32_slave_top  aximm_follower(
+    axi_mm_slave_top  aximm_follower(
         .clk_wr              (clk_wr ),
         .rst_wr_n            (rst_wr_n),
         .tx_online           (&{m1_sl_tx_transfer_en[0],m1_ms_tx_transfer_en[0]}),
         .rx_online           (&{m1_sl_tx_transfer_en[0],m1_ms_tx_transfer_en[0]}),
-        .init_r_lite_credit  (init_r_credit)  ,
-        .init_b_lite_credit  (init_b_credit)  ,
+        .init_r_credit  (init_r_credit)  ,
+        .init_b_credit  (init_b_credit)  ,
         .tx_phy0             (tx_phy0),
         .rx_phy0             (rx_phy0),
         
-        //.user_arid           (user_axi_if.arid    ),
-        //.user_arsize         (user_axi_if.arsize  ),
-        //.user_arlen          (user_axi_if.arlen   ),
-        //.user_arburst        (user_axi_if.arburst ),
+        .user_arid           (user_axi_if.arid    ),
+        .user_arsize         (user_axi_if.arsize  ),
+        .user_arlen          (user_axi_if.arlen   ),
+        .user_arburst        (user_axi_if.arburst ),
         .user_araddr         (user_axi_if.araddr  ),
         .user_arvalid        (user_axi_if.arvalid ),
         .user_arready        (user_axi_if.arready ),
         
-        //.user_awid           (user_axi_if.awid   ),
-        //.user_awsize         (user_axi_if.awsize ),
-        //.user_awlen          (user_axi_if.awlen  ),
-        //.user_awburst        (user_axi_if.awburst),
+        .user_awid           (user_axi_if.awid   ),
+        .user_awsize         (user_axi_if.awsize ),
+        .user_awlen          (user_axi_if.awlen  ),
+        .user_awburst        (user_axi_if.awburst),
         .user_awaddr         (user_axi_if.awaddr ),
         .user_awvalid        (user_axi_if.awvalid),
         .user_awready        (user_axi_if.awready),
         
-        //.user_wid            (user_axi_if.wid     ),
+        .user_wid            (user_axi_if.wid     ),
         .user_wdata          (user_axi_if.wdata   ),
         .user_wstrb          (user_axi_if.wstrb[7:0]   ),
-        //.user_wlast          (user_axi_if.wlast   ),
+        .user_wlast          (user_axi_if.wlast   ),
         .user_wvalid         (user_axi_if.wvalid  ),
         .user_wready         (user_axi_if.wready  ),
         
-        //.user_rid            (user_axi_if.rid     ),
+        .user_rid            (user_axi_if.rid     ),
         .user_rdata          (user_axi_if.rdata   ),
-        //.user_rlast          (user_axi_if.rlast   ),
+        .user_rlast          (user_axi_if.rlast   ),
         .user_rresp          (user_axi_if.rresp   ),
         .user_rvalid         (user_axi_if.rvalid  ),
         .user_rready         (user_axi_if.rready  ),
         
-        //.user_bid            (user_axi_if.bid     ),
+        .user_bid            (user_axi_if.bid     ),
         .user_bresp          (user_axi_if.bresp   ),
         .user_bvalid         (user_axi_if.bvalid  ),
         .user_bready         (user_axi_if.bready  ),
         
-        .rx_ar_lite_debug_status  (rx_ar_debug_status),
-        .rx_aw_lite_debug_status  (rx_aw_debug_status),
-        .rx_w_lite_debug_status   (rx_w_debug_status),
-        .tx_r_lite_debug_status   (tx_r_debug_status),
-        .tx_b_lite_debug_status   (tx_b_debug_status),
+        .rx_ar_debug_status  (rx_ar_debug_status),
+        .rx_aw_debug_status  (rx_aw_debug_status),
+        .rx_w_debug_status   (rx_w_debug_status),
+        .tx_r_debug_status   (tx_r_debug_status),
+        .tx_b_debug_status   (tx_b_debug_status),
 
         .m_gen2_mode         (1'b1),
         .delay_x_value       (delay_x_value),

@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="829.581 ns"></ZoomStartTime>
-      <ZoomEndTime time="1,034.084 ns"></ZoomEndTime>
-      <Cursor1Time time="1,000.000 ns"></Cursor1Time>
+      <ZoomStartTime time="0.000000 us"></ZoomStartTime>
+      <ZoomEndTime time="7.776505 us"></ZoomEndTime>
+      <Cursor1Time time="1.000000 us"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="209"></NameColumnWidth>
-      <ValueColumnWidth column_width="60"></ValueColumnWidth>
+      <NameColumnWidth column_width="260"></NameColumnWidth>
+      <ValueColumnWidth column_width="73"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="11" />
+   <WVObjectSize size="18" />
    <wvobject type="logic" fp_name="/aib_axi_bridge_tb/i_osc_clk">
       <obj_property name="ElementShortName">i_osc_clk</obj_property>
       <obj_property name="ObjectShortName">i_osc_clk</obj_property>
@@ -31,7 +31,6 @@
    <wvobject type="group" fp_name="group150">
       <obj_property name="label">Testbench Top</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="isExpanded"></obj_property>
       <wvobject type="group" fp_name="group147">
          <obj_property name="label">master</obj_property>
          <obj_property name="DisplayName">label</obj_property>
@@ -180,7 +179,6 @@
    <wvobject type="group" fp_name="group403">
       <obj_property name="label">Top Module</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="isExpanded"></obj_property>
       <wvobject type="group" fp_name="group404">
          <obj_property name="label">Master</obj_property>
          <obj_property name="DisplayName">label</obj_property>
@@ -926,7 +924,6 @@
       <wvobject type="group" fp_name="group1107">
          <obj_property name="label">master_transfer_en</obj_property>
          <obj_property name="DisplayName">label</obj_property>
-         <obj_property name="isExpanded"></obj_property>
          <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/dual_mode_select">
             <obj_property name="ElementShortName">dual_mode_select</obj_property>
             <obj_property name="ObjectShortName">dual_mode_select</obj_property>
@@ -1328,7 +1325,6 @@
    <wvobject type="group" fp_name="group12145">
       <obj_property name="label">states_master_fsm</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="isExpanded"></obj_property>
       <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sm/msosc_curst">
          <obj_property name="ElementShortName">msosc_curst[1:0]</obj_property>
          <obj_property name="ObjectShortName">msosc_curst[1:0]</obj_property>
@@ -1376,6 +1372,1096 @@
       <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sm/sl_rx_transfer_eni">
          <obj_property name="ElementShortName">sl_rx_transfer_eni</obj_property>
          <obj_property name="ObjectShortName">sl_rx_transfer_eni</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group332">
+      <obj_property name="label">master_calib_fsm</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/u_calib_fsm/clk">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/u_calib_fsm/rst_n">
+         <obj_property name="ElementShortName">rst_n</obj_property>
+         <obj_property name="ObjectShortName">rst_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/u_calib_fsm/calib_done">
+         <obj_property name="ElementShortName">calib_done</obj_property>
+         <obj_property name="ObjectShortName">calib_done</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/u_calib_fsm/i_conf_done">
+         <obj_property name="ElementShortName">i_conf_done</obj_property>
+         <obj_property name="ObjectShortName">i_conf_done</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/u_calib_fsm/ns_mac_rdy">
+         <obj_property name="ElementShortName">ns_mac_rdy[0:0]</obj_property>
+         <obj_property name="ObjectShortName">ns_mac_rdy[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/u_calib_fsm/ns_adapter_rstn">
+         <obj_property name="ElementShortName">ns_adapter_rstn[0:0]</obj_property>
+         <obj_property name="ObjectShortName">ns_adapter_rstn[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/u_calib_fsm/ms_rx_dcc_dll_lock_req">
+         <obj_property name="ElementShortName">ms_rx_dcc_dll_lock_req[0:0]</obj_property>
+         <obj_property name="ObjectShortName">ms_rx_dcc_dll_lock_req[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/u_calib_fsm/ms_tx_dcc_dll_lock_req">
+         <obj_property name="ElementShortName">ms_tx_dcc_dll_lock_req[0:0]</obj_property>
+         <obj_property name="ObjectShortName">ms_tx_dcc_dll_lock_req[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/u_calib_fsm/sl_tx_transfer_en">
+         <obj_property name="ElementShortName">sl_tx_transfer_en[0:0]</obj_property>
+         <obj_property name="ObjectShortName">sl_tx_transfer_en[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/u_calib_fsm/sl_rx_transfer_en">
+         <obj_property name="ElementShortName">sl_rx_transfer_en[0:0]</obj_property>
+         <obj_property name="ObjectShortName">sl_rx_transfer_en[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/u_calib_fsm/state">
+         <obj_property name="ElementShortName">state[2:0]</obj_property>
+         <obj_property name="ObjectShortName">state[2:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/u_calib_fsm/next">
+         <obj_property name="ElementShortName">next[2:0]</obj_property>
+         <obj_property name="ObjectShortName">next[2:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/u_calib_fsm/TOTAL_CHNL_NUM">
+         <obj_property name="ElementShortName">TOTAL_CHNL_NUM[31:0]</obj_property>
+         <obj_property name="ObjectShortName">TOTAL_CHNL_NUM[31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group8323">
+      <obj_property name="label">slave_calib_fsm</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/u_calib_slave_fsm/clk">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/u_calib_slave_fsm/rst_n">
+         <obj_property name="ElementShortName">rst_n</obj_property>
+         <obj_property name="ObjectShortName">rst_n</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/u_calib_slave_fsm/ms_rx_dcc_dll_lock_req">
+         <obj_property name="ElementShortName">ms_rx_dcc_dll_lock_req[0:0]</obj_property>
+         <obj_property name="ObjectShortName">ms_rx_dcc_dll_lock_req[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/u_calib_slave_fsm/ms_tx_dcc_dll_lock_req">
+         <obj_property name="ElementShortName">ms_tx_dcc_dll_lock_req[0:0]</obj_property>
+         <obj_property name="ObjectShortName">ms_tx_dcc_dll_lock_req[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/u_calib_slave_fsm/i_conf_done">
+         <obj_property name="ElementShortName">i_conf_done</obj_property>
+         <obj_property name="ObjectShortName">i_conf_done</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/u_calib_slave_fsm/ns_mac_rdy">
+         <obj_property name="ElementShortName">ns_mac_rdy[0:0]</obj_property>
+         <obj_property name="ObjectShortName">ns_mac_rdy[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/u_calib_slave_fsm/ns_adapter_rstn">
+         <obj_property name="ElementShortName">ns_adapter_rstn[0:0]</obj_property>
+         <obj_property name="ObjectShortName">ns_adapter_rstn[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/u_calib_slave_fsm/sl_rx_dcc_dll_lock_req">
+         <obj_property name="ElementShortName">sl_rx_dcc_dll_lock_req[0:0]</obj_property>
+         <obj_property name="ObjectShortName">sl_rx_dcc_dll_lock_req[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/u_calib_slave_fsm/sl_tx_dcc_dll_lock_req">
+         <obj_property name="ElementShortName">sl_tx_dcc_dll_lock_req[0:0]</obj_property>
+         <obj_property name="ObjectShortName">sl_tx_dcc_dll_lock_req[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/u_calib_slave_fsm/sl_tx_transfer_en">
+         <obj_property name="ElementShortName">sl_tx_transfer_en[0:0]</obj_property>
+         <obj_property name="ObjectShortName">sl_tx_transfer_en[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/u_calib_slave_fsm/sl_rx_transfer_en">
+         <obj_property name="ElementShortName">sl_rx_transfer_en[0:0]</obj_property>
+         <obj_property name="ObjectShortName">sl_rx_transfer_en[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/u_calib_slave_fsm/s_state">
+         <obj_property name="ElementShortName">s_state[2:0]</obj_property>
+         <obj_property name="ObjectShortName">s_state[2:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/u_calib_slave_fsm/s_next">
+         <obj_property name="ElementShortName">s_next[2:0]</obj_property>
+         <obj_property name="ObjectShortName">s_next[2:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/u_calib_slave_fsm/TOTAL_CHNL_NUM">
+         <obj_property name="ElementShortName">TOTAL_CHNL_NUM[31:0]</obj_property>
+         <obj_property name="ObjectShortName">TOTAL_CHNL_NUM[31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group8769">
+      <obj_property name="label">master_sidebands</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/ms_sideband">
+         <obj_property name="ElementShortName">ms_sideband[80:0]</obj_property>
+         <obj_property name="ObjectShortName">ms_sideband[80:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/sl_sideband">
+         <obj_property name="ElementShortName">sl_sideband[72:0]</obj_property>
+         <obj_property name="ObjectShortName">sl_sideband[72:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/ms_osc_transfer_en">
+         <obj_property name="ElementShortName">ms_osc_transfer_en</obj_property>
+         <obj_property name="ObjectShortName">ms_osc_transfer_en</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group8772">
+      <obj_property name="label">slave_sidebands</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/aib_slave_inst/aib_channel0/aib_adapt/ms_sideband">
+         <obj_property name="ElementShortName">ms_sideband[80:0]</obj_property>
+         <obj_property name="ObjectShortName">ms_sideband[80:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/aib_slave_inst/aib_channel0/aib_adapt/sl_sideband">
+         <obj_property name="ElementShortName">sl_sideband[72:0]</obj_property>
+         <obj_property name="ObjectShortName">sl_sideband[72:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group8956">
+      <obj_property name="label">master_aib_sr_ms</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/osc_clk">
+         <obj_property name="ElementShortName">osc_clk</obj_property>
+         <obj_property name="ObjectShortName">osc_clk</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/ms_data_fr_core">
+         <obj_property name="ElementShortName">ms_data_fr_core[80:0]</obj_property>
+         <obj_property name="ObjectShortName">ms_data_fr_core[80:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/ms_data_to_core">
+         <obj_property name="ElementShortName">ms_data_to_core[80:0]</obj_property>
+         <obj_property name="ObjectShortName">ms_data_to_core[80:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/sr_ms_data_out">
+         <obj_property name="ElementShortName">sr_ms_data_out</obj_property>
+         <obj_property name="ObjectShortName">sr_ms_data_out</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/sr_ms_load_out">
+         <obj_property name="ElementShortName">sr_ms_load_out</obj_property>
+         <obj_property name="ObjectShortName">sr_ms_load_out</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/sr_ms_data_in">
+         <obj_property name="ElementShortName">sr_ms_data_in</obj_property>
+         <obj_property name="ObjectShortName">sr_ms_data_in</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/sr_ms_load_in">
+         <obj_property name="ElementShortName">sr_ms_load_in</obj_property>
+         <obj_property name="ObjectShortName">sr_ms_load_in</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/sr_ms_clk_in">
+         <obj_property name="ElementShortName">sr_ms_clk_in</obj_property>
+         <obj_property name="ObjectShortName">sr_ms_clk_in</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/ms_nsl">
+         <obj_property name="ElementShortName">ms_nsl</obj_property>
+         <obj_property name="ObjectShortName">ms_nsl</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/atpg_mode">
+         <obj_property name="ElementShortName">atpg_mode</obj_property>
+         <obj_property name="ObjectShortName">atpg_mode</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/reset_n">
+         <obj_property name="ElementShortName">reset_n</obj_property>
+         <obj_property name="ObjectShortName">reset_n</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/ms_count">
+         <obj_property name="ElementShortName">ms_count[6:0]</obj_property>
+         <obj_property name="ObjectShortName">ms_count[6:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/ms_load">
+         <obj_property name="ElementShortName">ms_load</obj_property>
+         <obj_property name="ObjectShortName">ms_load</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/ms_data_syncr">
+         <obj_property name="ElementShortName">ms_data_syncr[80:0]</obj_property>
+         <obj_property name="ObjectShortName">ms_data_syncr[80:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/ms_data_revr">
+         <obj_property name="ElementShortName">ms_data_revr[80:0]</obj_property>
+         <obj_property name="ObjectShortName">ms_data_revr[80:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/ms_data_capr">
+         <obj_property name="ElementShortName">ms_data_capr[80:0]</obj_property>
+         <obj_property name="ObjectShortName">ms_data_capr[80:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/ms_shift_en">
+         <obj_property name="ElementShortName">ms_shift_en</obj_property>
+         <obj_property name="ObjectShortName">ms_shift_en</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/ms_data_sync">
+         <obj_property name="ElementShortName">ms_data_sync[80:0]</obj_property>
+         <obj_property name="ObjectShortName">ms_data_sync[80:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/ms_data_syncrw">
+         <obj_property name="ElementShortName">ms_data_syncrw[80:0]</obj_property>
+         <obj_property name="ObjectShortName">ms_data_syncrw[80:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/ms_data_revrw">
+         <obj_property name="ElementShortName">ms_data_revrw[80:0]</obj_property>
+         <obj_property name="ObjectShortName">ms_data_revrw[80:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/ms_data_caprw">
+         <obj_property name="ElementShortName">ms_data_caprw[80:0]</obj_property>
+         <obj_property name="ObjectShortName">ms_data_caprw[80:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/reset_n_sync">
+         <obj_property name="ElementShortName">reset_n_sync</obj_property>
+         <obj_property name="ObjectShortName">reset_n_sync</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/reset_n_sync_rev">
+         <obj_property name="ElementShortName">reset_n_sync_rev</obj_property>
+         <obj_property name="ObjectShortName">reset_n_sync_rev</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/sr_ms_data_outw">
+         <obj_property name="ElementShortName">sr_ms_data_outw</obj_property>
+         <obj_property name="ObjectShortName">sr_ms_data_outw</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/sr_ms_load_outw">
+         <obj_property name="ElementShortName">sr_ms_load_outw</obj_property>
+         <obj_property name="ObjectShortName">sr_ms_load_outw</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/is_master">
+         <obj_property name="ElementShortName">is_master</obj_property>
+         <obj_property name="ObjectShortName">is_master</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/is_slave">
+         <obj_property name="ElementShortName">is_slave</obj_property>
+         <obj_property name="ObjectShortName">is_slave</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/aib_master_inst/aib_channel0/aib_adapt/aib_sr_ms/MS_LENGTH">
+         <obj_property name="ElementShortName">MS_LENGTH[6:0]</obj_property>
+         <obj_property name="ObjectShortName">MS_LENGTH[6:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group481">
+      <obj_property name="label">master_bridge</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="group" fp_name="group578">
+         <obj_property name="label">power</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/vddc1">
+            <obj_property name="ElementShortName">vddc1</obj_property>
+            <obj_property name="ObjectShortName">vddc1</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/vddc2">
+            <obj_property name="ElementShortName">vddc2</obj_property>
+            <obj_property name="ObjectShortName">vddc2</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/vddtx">
+            <obj_property name="ElementShortName">vddtx</obj_property>
+            <obj_property name="ObjectShortName">vddtx</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/vss">
+            <obj_property name="ElementShortName">vss</obj_property>
+            <obj_property name="ObjectShortName">vss</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="group" fp_name="group579">
+         <obj_property name="label">io pins</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/iopad_ch0_aib">
+            <obj_property name="ElementShortName">iopad_ch0_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">iopad_ch0_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/iopad_ch1_aib">
+            <obj_property name="ElementShortName">iopad_ch1_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">iopad_ch1_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/iopad_ch2_aib">
+            <obj_property name="ElementShortName">iopad_ch2_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">iopad_ch2_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/iopad_ch3_aib">
+            <obj_property name="ElementShortName">iopad_ch3_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">iopad_ch3_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/iopad_ch4_aib">
+            <obj_property name="ElementShortName">iopad_ch4_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">iopad_ch4_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/iopad_ch5_aib">
+            <obj_property name="ElementShortName">iopad_ch5_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">iopad_ch5_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/iopad_ch6_aib">
+            <obj_property name="ElementShortName">iopad_ch6_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">iopad_ch6_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/iopad_ch7_aib">
+            <obj_property name="ElementShortName">iopad_ch7_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">iopad_ch7_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/iopad_ch8_aib">
+            <obj_property name="ElementShortName">iopad_ch8_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">iopad_ch8_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/iopad_ch9_aib">
+            <obj_property name="ElementShortName">iopad_ch9_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">iopad_ch9_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/iopad_ch10_aib">
+            <obj_property name="ElementShortName">iopad_ch10_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">iopad_ch10_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/iopad_ch11_aib">
+            <obj_property name="ElementShortName">iopad_ch11_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">iopad_ch11_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/iopad_ch12_aib">
+            <obj_property name="ElementShortName">iopad_ch12_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">iopad_ch12_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/iopad_ch13_aib">
+            <obj_property name="ElementShortName">iopad_ch13_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">iopad_ch13_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/iopad_ch14_aib">
+            <obj_property name="ElementShortName">iopad_ch14_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">iopad_ch14_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/iopad_ch15_aib">
+            <obj_property name="ElementShortName">iopad_ch15_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">iopad_ch15_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/iopad_ch16_aib">
+            <obj_property name="ElementShortName">iopad_ch16_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">iopad_ch16_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/iopad_ch17_aib">
+            <obj_property name="ElementShortName">iopad_ch17_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">iopad_ch17_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/iopad_ch18_aib">
+            <obj_property name="ElementShortName">iopad_ch18_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">iopad_ch18_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/iopad_ch19_aib">
+            <obj_property name="ElementShortName">iopad_ch19_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">iopad_ch19_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/iopad_ch20_aib">
+            <obj_property name="ElementShortName">iopad_ch20_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">iopad_ch20_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/iopad_ch21_aib">
+            <obj_property name="ElementShortName">iopad_ch21_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">iopad_ch21_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/iopad_ch22_aib">
+            <obj_property name="ElementShortName">iopad_ch22_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">iopad_ch22_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/iopad_ch23_aib">
+            <obj_property name="ElementShortName">iopad_ch23_aib[101:0]</obj_property>
+            <obj_property name="ObjectShortName">iopad_ch23_aib[101:0]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/iopad_device_detect">
+            <obj_property name="ElementShortName">iopad_device_detect</obj_property>
+            <obj_property name="ObjectShortName">iopad_device_detect</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/iopad_power_on_reset">
+            <obj_property name="ElementShortName">iopad_power_on_reset</obj_property>
+            <obj_property name="ObjectShortName">iopad_power_on_reset</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="group" fp_name="group580">
+         <obj_property name="label">MAC if</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/m_ns_fwd_clk">
+            <obj_property name="ElementShortName">m_ns_fwd_clk[0:0]</obj_property>
+            <obj_property name="ObjectShortName">m_ns_fwd_clk[0:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/m_ns_rcv_clk">
+            <obj_property name="ElementShortName">m_ns_rcv_clk[0:0]</obj_property>
+            <obj_property name="ObjectShortName">m_ns_rcv_clk[0:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/m_fs_rcv_clk">
+            <obj_property name="ElementShortName">m_fs_rcv_clk[0:0]</obj_property>
+            <obj_property name="ObjectShortName">m_fs_rcv_clk[0:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/m_fs_fwd_clk">
+            <obj_property name="ElementShortName">m_fs_fwd_clk[0:0]</obj_property>
+            <obj_property name="ObjectShortName">m_fs_fwd_clk[0:0]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/m_wr_clk">
+            <obj_property name="ElementShortName">m_wr_clk</obj_property>
+            <obj_property name="ObjectShortName">m_wr_clk</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/m_rd_clk">
+            <obj_property name="ElementShortName">m_rd_clk</obj_property>
+            <obj_property name="ObjectShortName">m_rd_clk</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/ns_mac_rdy">
+            <obj_property name="ElementShortName">ns_mac_rdy[0:0]</obj_property>
+            <obj_property name="ObjectShortName">ns_mac_rdy[0:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/fs_mac_rdy">
+            <obj_property name="ElementShortName">fs_mac_rdy[0:0]</obj_property>
+            <obj_property name="ObjectShortName">fs_mac_rdy[0:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/ns_adapter_rstn">
+            <obj_property name="ElementShortName">ns_adapter_rstn[0:0]</obj_property>
+            <obj_property name="ObjectShortName">ns_adapter_rstn[0:0]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/rst_wr_n">
+            <obj_property name="ElementShortName">rst_wr_n</obj_property>
+            <obj_property name="ObjectShortName">rst_wr_n</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/rst_rd_n">
+            <obj_property name="ElementShortName">rst_rd_n</obj_property>
+            <obj_property name="ObjectShortName">rst_rd_n</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/data_in">
+            <obj_property name="ElementShortName">data_in[79:0]</obj_property>
+            <obj_property name="ObjectShortName">data_in[79:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/data_out">
+            <obj_property name="ElementShortName">data_out[79:0]</obj_property>
+            <obj_property name="ObjectShortName">data_out[79:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/data_in_f">
+            <obj_property name="ElementShortName">data_in_f[319:0]</obj_property>
+            <obj_property name="ObjectShortName">data_in_f[319:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/data_out_f">
+            <obj_property name="ElementShortName">data_out_f[319:0]</obj_property>
+            <obj_property name="ObjectShortName">data_out_f[319:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/m_rx_align_done">
+            <obj_property name="ElementShortName">m_rx_align_done[0:0]</obj_property>
+            <obj_property name="ObjectShortName">m_rx_align_done[0:0]</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="group" fp_name="group581">
+         <obj_property name="label">app if</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/por_out">
+            <obj_property name="ElementShortName">por_out</obj_property>
+            <obj_property name="ObjectShortName">por_out</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/i_conf_done">
+            <obj_property name="ElementShortName">i_conf_done</obj_property>
+            <obj_property name="ObjectShortName">i_conf_done</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/por_in">
+            <obj_property name="ElementShortName">por_in</obj_property>
+            <obj_property name="ObjectShortName">por_in</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/m_fwd_clk">
+            <obj_property name="ElementShortName">m_fwd_clk</obj_property>
+            <obj_property name="ObjectShortName">m_fwd_clk</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="group" fp_name="group582">
+         <obj_property name="label">Avalon if</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/i_cfg_avmm_addr">
+            <obj_property name="ElementShortName">i_cfg_avmm_addr[31:0]</obj_property>
+            <obj_property name="ObjectShortName">i_cfg_avmm_addr[31:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/i_cfg_avmm_byte_en">
+            <obj_property name="ElementShortName">i_cfg_avmm_byte_en[3:0]</obj_property>
+            <obj_property name="ObjectShortName">i_cfg_avmm_byte_en[3:0]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/i_cfg_avmm_read">
+            <obj_property name="ElementShortName">i_cfg_avmm_read</obj_property>
+            <obj_property name="ObjectShortName">i_cfg_avmm_read</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/i_cfg_avmm_write">
+            <obj_property name="ElementShortName">i_cfg_avmm_write</obj_property>
+            <obj_property name="ObjectShortName">i_cfg_avmm_write</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/i_cfg_avmm_wdata">
+            <obj_property name="ElementShortName">i_cfg_avmm_wdata[31:0]</obj_property>
+            <obj_property name="ObjectShortName">i_cfg_avmm_wdata[31:0]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/o_cfg_avmm_rdatavld">
+            <obj_property name="ElementShortName">o_cfg_avmm_rdatavld</obj_property>
+            <obj_property name="ObjectShortName">o_cfg_avmm_rdatavld</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/o_cfg_avmm_rdata">
+            <obj_property name="ElementShortName">o_cfg_avmm_rdata[31:0]</obj_property>
+            <obj_property name="ObjectShortName">o_cfg_avmm_rdata[31:0]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/o_cfg_avmm_waitreq">
+            <obj_property name="ElementShortName">o_cfg_avmm_waitreq</obj_property>
+            <obj_property name="ObjectShortName">o_cfg_avmm_waitreq</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/avmm_clk">
+            <obj_property name="ElementShortName">avmm_clk</obj_property>
+            <obj_property name="ObjectShortName">avmm_clk</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/avmm_rst_n">
+            <obj_property name="ElementShortName">avmm_rst_n</obj_property>
+            <obj_property name="ObjectShortName">avmm_rst_n</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="group" fp_name="group585">
+         <obj_property name="label">credits</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/init_ar_credit">
+            <obj_property name="ElementShortName">init_ar_credit[7:0]</obj_property>
+            <obj_property name="ObjectShortName">init_ar_credit[7:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/init_aw_credit">
+            <obj_property name="ElementShortName">init_aw_credit[7:0]</obj_property>
+            <obj_property name="ObjectShortName">init_aw_credit[7:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/init_w_credit">
+            <obj_property name="ElementShortName">init_w_credit[7:0]</obj_property>
+            <obj_property name="ObjectShortName">init_w_credit[7:0]</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="group" fp_name="group586">
+         <obj_property name="label">debug</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/tx_ar_debug_status">
+            <obj_property name="ElementShortName">tx_ar_debug_status[31:0]</obj_property>
+            <obj_property name="ObjectShortName">tx_ar_debug_status[31:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/tx_aw_debug_status">
+            <obj_property name="ElementShortName">tx_aw_debug_status[31:0]</obj_property>
+            <obj_property name="ObjectShortName">tx_aw_debug_status[31:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/tx_w_debug_status">
+            <obj_property name="ElementShortName">tx_w_debug_status[31:0]</obj_property>
+            <obj_property name="ObjectShortName">tx_w_debug_status[31:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/rx_r_debug_status">
+            <obj_property name="ElementShortName">rx_r_debug_status[31:0]</obj_property>
+            <obj_property name="ObjectShortName">rx_r_debug_status[31:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/rx_b_debug_status">
+            <obj_property name="ElementShortName">rx_b_debug_status[31:0]</obj_property>
+            <obj_property name="ObjectShortName">rx_b_debug_status[31:0]</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="group" fp_name="group587">
+         <obj_property name="label">delay</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/delay_x_value">
+            <obj_property name="ElementShortName">delay_x_value[15:0]</obj_property>
+            <obj_property name="ObjectShortName">delay_x_value[15:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/delay_y_value">
+            <obj_property name="ElementShortName">delay_y_value[15:0]</obj_property>
+            <obj_property name="ObjectShortName">delay_y_value[15:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/delay_z_value">
+            <obj_property name="ElementShortName">delay_z_value[15:0]</obj_property>
+            <obj_property name="ObjectShortName">delay_z_value[15:0]</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="group" fp_name="group583">
+         <obj_property name="label">Sideband if</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/i_osc_clk">
+            <obj_property name="ElementShortName">i_osc_clk</obj_property>
+            <obj_property name="ObjectShortName">i_osc_clk</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/ms_rx_dcc_dll_lock_req">
+            <obj_property name="ElementShortName">ms_rx_dcc_dll_lock_req[0:0]</obj_property>
+            <obj_property name="ObjectShortName">ms_rx_dcc_dll_lock_req[0:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/ms_tx_dcc_dll_lock_req">
+            <obj_property name="ElementShortName">ms_tx_dcc_dll_lock_req[0:0]</obj_property>
+            <obj_property name="ObjectShortName">ms_tx_dcc_dll_lock_req[0:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/sl_tx_dcc_dll_lock_req">
+            <obj_property name="ElementShortName">sl_tx_dcc_dll_lock_req[0:0]</obj_property>
+            <obj_property name="ObjectShortName">sl_tx_dcc_dll_lock_req[0:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/sl_rx_dcc_dll_lock_req">
+            <obj_property name="ElementShortName">sl_rx_dcc_dll_lock_req[0:0]</obj_property>
+            <obj_property name="ObjectShortName">sl_rx_dcc_dll_lock_req[0:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/sr_ms_tomac">
+            <obj_property name="ElementShortName">sr_ms_tomac[80:0]</obj_property>
+            <obj_property name="ObjectShortName">sr_ms_tomac[80:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/sr_sl_tomac">
+            <obj_property name="ElementShortName">sr_sl_tomac[72:0]</obj_property>
+            <obj_property name="ObjectShortName">sr_sl_tomac[72:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/m1_ms_tx_transfer_en">
+            <obj_property name="ElementShortName">m1_ms_tx_transfer_en[0:0]</obj_property>
+            <obj_property name="ObjectShortName">m1_ms_tx_transfer_en[0:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/m1_ms_rx_transfer_en">
+            <obj_property name="ElementShortName">m1_ms_rx_transfer_en[0:0]</obj_property>
+            <obj_property name="ObjectShortName">m1_ms_rx_transfer_en[0:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/m1_sl_tx_transfer_en">
+            <obj_property name="ElementShortName">m1_sl_tx_transfer_en[0:0]</obj_property>
+            <obj_property name="ObjectShortName">m1_sl_tx_transfer_en[0:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/m1_sl_rx_transfer_en">
+            <obj_property name="ElementShortName">m1_sl_rx_transfer_en[0:0]</obj_property>
+            <obj_property name="ObjectShortName">m1_sl_rx_transfer_en[0:0]</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="group" fp_name="group588">
+         <obj_property name="label">axi_to_aib</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/rx_phy0">
+            <obj_property name="ElementShortName">rx_phy0[79:0]</obj_property>
+            <obj_property name="ObjectShortName">rx_phy0[79:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/tx_phy0">
+            <obj_property name="ElementShortName">tx_phy0[79:0]</obj_property>
+            <obj_property name="ObjectShortName">tx_phy0[79:0]</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="group" fp_name="group584">
+         <obj_property name="label">parameters</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/NBR_CHNLS">
+            <obj_property name="ElementShortName">NBR_CHNLS[31:0]</obj_property>
+            <obj_property name="ObjectShortName">NBR_CHNLS[31:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/NBR_BUMPS">
+            <obj_property name="ElementShortName">NBR_BUMPS[31:0]</obj_property>
+            <obj_property name="ObjectShortName">NBR_BUMPS[31:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/NBR_PHASES">
+            <obj_property name="ElementShortName">NBR_PHASES[31:0]</obj_property>
+            <obj_property name="ObjectShortName">NBR_PHASES[31:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/NBR_LANES">
+            <obj_property name="ElementShortName">NBR_LANES[31:0]</obj_property>
+            <obj_property name="ObjectShortName">NBR_LANES[31:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/MS_SSR_LEN">
+            <obj_property name="ElementShortName">MS_SSR_LEN[31:0]</obj_property>
+            <obj_property name="ObjectShortName">MS_SSR_LEN[31:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/SL_SSR_LEN">
+            <obj_property name="ElementShortName">SL_SSR_LEN[31:0]</obj_property>
+            <obj_property name="ObjectShortName">SL_SSR_LEN[31:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/DWIDTH">
+            <obj_property name="ElementShortName">DWIDTH[31:0]</obj_property>
+            <obj_property name="ObjectShortName">DWIDTH[31:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/AXI_CHNL_NUM">
+            <obj_property name="ElementShortName">AXI_CHNL_NUM[31:0]</obj_property>
+            <obj_property name="ObjectShortName">AXI_CHNL_NUM[31:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/master_bridge/ADDRWIDTH">
+            <obj_property name="ElementShortName">ADDRWIDTH[31:0]</obj_property>
+            <obj_property name="ObjectShortName">ADDRWIDTH[31:0]</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="group" fp_name="group589">
+         <obj_property name="label">calib</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/calib_rst_n">
+            <obj_property name="ElementShortName">calib_rst_n</obj_property>
+            <obj_property name="ObjectShortName">calib_rst_n</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/calib_done">
+            <obj_property name="ElementShortName">calib_done</obj_property>
+            <obj_property name="ObjectShortName">calib_done</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="group" fp_name="group590">
+         <obj_property name="label">axi</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/clk_wr">
+            <obj_property name="ElementShortName">clk_wr</obj_property>
+            <obj_property name="ObjectShortName">clk_wr</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/master_bridge/wr_rst_n">
+            <obj_property name="ElementShortName">wr_rst_n</obj_property>
+            <obj_property name="ObjectShortName">wr_rst_n</obj_property>
+         </wvobject>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group577">
+      <obj_property name="label">slave_bridge</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/vddc1">
+         <obj_property name="ElementShortName">vddc1</obj_property>
+         <obj_property name="ObjectShortName">vddc1</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/vddc2">
+         <obj_property name="ElementShortName">vddc2</obj_property>
+         <obj_property name="ObjectShortName">vddc2</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/vddtx">
+         <obj_property name="ElementShortName">vddtx</obj_property>
+         <obj_property name="ObjectShortName">vddtx</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/vss">
+         <obj_property name="ElementShortName">vss</obj_property>
+         <obj_property name="ObjectShortName">vss</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/iopad_ch0_aib">
+         <obj_property name="ElementShortName">iopad_ch0_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">iopad_ch0_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/iopad_ch1_aib">
+         <obj_property name="ElementShortName">iopad_ch1_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">iopad_ch1_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/iopad_ch2_aib">
+         <obj_property name="ElementShortName">iopad_ch2_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">iopad_ch2_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/iopad_ch3_aib">
+         <obj_property name="ElementShortName">iopad_ch3_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">iopad_ch3_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/iopad_ch4_aib">
+         <obj_property name="ElementShortName">iopad_ch4_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">iopad_ch4_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/iopad_ch5_aib">
+         <obj_property name="ElementShortName">iopad_ch5_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">iopad_ch5_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/iopad_ch6_aib">
+         <obj_property name="ElementShortName">iopad_ch6_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">iopad_ch6_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/iopad_ch7_aib">
+         <obj_property name="ElementShortName">iopad_ch7_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">iopad_ch7_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/iopad_ch8_aib">
+         <obj_property name="ElementShortName">iopad_ch8_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">iopad_ch8_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/iopad_ch9_aib">
+         <obj_property name="ElementShortName">iopad_ch9_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">iopad_ch9_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/iopad_ch10_aib">
+         <obj_property name="ElementShortName">iopad_ch10_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">iopad_ch10_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/iopad_ch11_aib">
+         <obj_property name="ElementShortName">iopad_ch11_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">iopad_ch11_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/iopad_ch12_aib">
+         <obj_property name="ElementShortName">iopad_ch12_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">iopad_ch12_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/iopad_ch13_aib">
+         <obj_property name="ElementShortName">iopad_ch13_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">iopad_ch13_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/iopad_ch14_aib">
+         <obj_property name="ElementShortName">iopad_ch14_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">iopad_ch14_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/iopad_ch15_aib">
+         <obj_property name="ElementShortName">iopad_ch15_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">iopad_ch15_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/iopad_ch16_aib">
+         <obj_property name="ElementShortName">iopad_ch16_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">iopad_ch16_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/iopad_ch17_aib">
+         <obj_property name="ElementShortName">iopad_ch17_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">iopad_ch17_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/iopad_ch18_aib">
+         <obj_property name="ElementShortName">iopad_ch18_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">iopad_ch18_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/iopad_ch19_aib">
+         <obj_property name="ElementShortName">iopad_ch19_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">iopad_ch19_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/iopad_ch20_aib">
+         <obj_property name="ElementShortName">iopad_ch20_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">iopad_ch20_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/iopad_ch21_aib">
+         <obj_property name="ElementShortName">iopad_ch21_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">iopad_ch21_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/iopad_ch22_aib">
+         <obj_property name="ElementShortName">iopad_ch22_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">iopad_ch22_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/iopad_ch23_aib">
+         <obj_property name="ElementShortName">iopad_ch23_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">iopad_ch23_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/iopad_device_detect">
+         <obj_property name="ElementShortName">iopad_device_detect</obj_property>
+         <obj_property name="ObjectShortName">iopad_device_detect</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/iopad_power_on_reset">
+         <obj_property name="ElementShortName">iopad_power_on_reset</obj_property>
+         <obj_property name="ObjectShortName">iopad_power_on_reset</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/i_osc_clk">
+         <obj_property name="ElementShortName">i_osc_clk</obj_property>
+         <obj_property name="ObjectShortName">i_osc_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/avmm_clk">
+         <obj_property name="ElementShortName">avmm_clk</obj_property>
+         <obj_property name="ObjectShortName">avmm_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/avmm_rst_n">
+         <obj_property name="ElementShortName">avmm_rst_n</obj_property>
+         <obj_property name="ObjectShortName">avmm_rst_n</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/m_ns_fwd_clk">
+         <obj_property name="ElementShortName">m_ns_fwd_clk[0:0]</obj_property>
+         <obj_property name="ObjectShortName">m_ns_fwd_clk[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/m_ns_rcv_clk">
+         <obj_property name="ElementShortName">m_ns_rcv_clk[0:0]</obj_property>
+         <obj_property name="ObjectShortName">m_ns_rcv_clk[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/m_fs_rcv_clk">
+         <obj_property name="ElementShortName">m_fs_rcv_clk[0:0]</obj_property>
+         <obj_property name="ObjectShortName">m_fs_rcv_clk[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/m_fs_fwd_clk">
+         <obj_property name="ElementShortName">m_fs_fwd_clk[0:0]</obj_property>
+         <obj_property name="ObjectShortName">m_fs_fwd_clk[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/m_wr_clk">
+         <obj_property name="ElementShortName">m_wr_clk</obj_property>
+         <obj_property name="ObjectShortName">m_wr_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/m_rd_clk">
+         <obj_property name="ElementShortName">m_rd_clk</obj_property>
+         <obj_property name="ObjectShortName">m_rd_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/m_fwd_clk">
+         <obj_property name="ElementShortName">m_fwd_clk</obj_property>
+         <obj_property name="ObjectShortName">m_fwd_clk</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/data_in">
+         <obj_property name="ElementShortName">data_in[79:0]</obj_property>
+         <obj_property name="ObjectShortName">data_in[79:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/data_out">
+         <obj_property name="ElementShortName">data_out[79:0]</obj_property>
+         <obj_property name="ObjectShortName">data_out[79:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/ns_adapter_rstn">
+         <obj_property name="ElementShortName">ns_adapter_rstn[0:0]</obj_property>
+         <obj_property name="ObjectShortName">ns_adapter_rstn[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/ns_mac_rdy">
+         <obj_property name="ElementShortName">ns_mac_rdy[0:0]</obj_property>
+         <obj_property name="ObjectShortName">ns_mac_rdy[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/fs_mac_rdy">
+         <obj_property name="ElementShortName">fs_mac_rdy[0:0]</obj_property>
+         <obj_property name="ObjectShortName">fs_mac_rdy[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/i_conf_done">
+         <obj_property name="ElementShortName">i_conf_done</obj_property>
+         <obj_property name="ObjectShortName">i_conf_done</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/ms_rx_dcc_dll_lock_req">
+         <obj_property name="ElementShortName">ms_rx_dcc_dll_lock_req[0:0]</obj_property>
+         <obj_property name="ObjectShortName">ms_rx_dcc_dll_lock_req[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/ms_tx_dcc_dll_lock_req">
+         <obj_property name="ElementShortName">ms_tx_dcc_dll_lock_req[0:0]</obj_property>
+         <obj_property name="ObjectShortName">ms_tx_dcc_dll_lock_req[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/sl_tx_dcc_dll_lock_req">
+         <obj_property name="ElementShortName">sl_tx_dcc_dll_lock_req[0:0]</obj_property>
+         <obj_property name="ObjectShortName">sl_tx_dcc_dll_lock_req[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/sl_rx_dcc_dll_lock_req">
+         <obj_property name="ElementShortName">sl_rx_dcc_dll_lock_req[0:0]</obj_property>
+         <obj_property name="ObjectShortName">sl_rx_dcc_dll_lock_req[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/sr_ms_tomac">
+         <obj_property name="ElementShortName">sr_ms_tomac[80:0]</obj_property>
+         <obj_property name="ObjectShortName">sr_ms_tomac[80:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/sr_sl_tomac">
+         <obj_property name="ElementShortName">sr_sl_tomac[72:0]</obj_property>
+         <obj_property name="ObjectShortName">sr_sl_tomac[72:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/m_rx_align_done">
+         <obj_property name="ElementShortName">m_rx_align_done[0:0]</obj_property>
+         <obj_property name="ObjectShortName">m_rx_align_done[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/clk_wr">
+         <obj_property name="ElementShortName">clk_wr</obj_property>
+         <obj_property name="ObjectShortName">clk_wr</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/rst_wr_n">
+         <obj_property name="ElementShortName">rst_wr_n</obj_property>
+         <obj_property name="ObjectShortName">rst_wr_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/rst_rd_n">
+         <obj_property name="ElementShortName">rst_rd_n</obj_property>
+         <obj_property name="ObjectShortName">rst_rd_n</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/init_r_credit">
+         <obj_property name="ElementShortName">init_r_credit[7:0]</obj_property>
+         <obj_property name="ObjectShortName">init_r_credit[7:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/init_b_credit">
+         <obj_property name="ElementShortName">init_b_credit[7:0]</obj_property>
+         <obj_property name="ObjectShortName">init_b_credit[7:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/rx_ar_debug_status">
+         <obj_property name="ElementShortName">rx_ar_debug_status[31:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_ar_debug_status[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/rx_aw_debug_status">
+         <obj_property name="ElementShortName">rx_aw_debug_status[31:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_aw_debug_status[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/rx_w_debug_status">
+         <obj_property name="ElementShortName">rx_w_debug_status[31:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_w_debug_status[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/tx_r_debug_status">
+         <obj_property name="ElementShortName">tx_r_debug_status[31:0]</obj_property>
+         <obj_property name="ObjectShortName">tx_r_debug_status[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/tx_b_debug_status">
+         <obj_property name="ElementShortName">tx_b_debug_status[31:0]</obj_property>
+         <obj_property name="ObjectShortName">tx_b_debug_status[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/delay_x_value">
+         <obj_property name="ElementShortName">delay_x_value[15:0]</obj_property>
+         <obj_property name="ObjectShortName">delay_x_value[15:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/delay_y_value">
+         <obj_property name="ElementShortName">delay_y_value[15:0]</obj_property>
+         <obj_property name="ObjectShortName">delay_y_value[15:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/delay_z_value">
+         <obj_property name="ElementShortName">delay_z_value[15:0]</obj_property>
+         <obj_property name="ObjectShortName">delay_z_value[15:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/i_cfg_avmm_addr">
+         <obj_property name="ElementShortName">i_cfg_avmm_addr[31:0]</obj_property>
+         <obj_property name="ObjectShortName">i_cfg_avmm_addr[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/i_cfg_avmm_byte_en">
+         <obj_property name="ElementShortName">i_cfg_avmm_byte_en[3:0]</obj_property>
+         <obj_property name="ObjectShortName">i_cfg_avmm_byte_en[3:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/i_cfg_avmm_read">
+         <obj_property name="ElementShortName">i_cfg_avmm_read</obj_property>
+         <obj_property name="ObjectShortName">i_cfg_avmm_read</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/i_cfg_avmm_write">
+         <obj_property name="ElementShortName">i_cfg_avmm_write</obj_property>
+         <obj_property name="ObjectShortName">i_cfg_avmm_write</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/i_cfg_avmm_wdata">
+         <obj_property name="ElementShortName">i_cfg_avmm_wdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">i_cfg_avmm_wdata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/o_cfg_avmm_rdatavld">
+         <obj_property name="ElementShortName">o_cfg_avmm_rdatavld</obj_property>
+         <obj_property name="ObjectShortName">o_cfg_avmm_rdatavld</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/o_cfg_avmm_rdata">
+         <obj_property name="ElementShortName">o_cfg_avmm_rdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">o_cfg_avmm_rdata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/o_cfg_avmm_waitreq">
+         <obj_property name="ElementShortName">o_cfg_avmm_waitreq</obj_property>
+         <obj_property name="ObjectShortName">o_cfg_avmm_waitreq</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/m1_ms_tx_transfer_en">
+         <obj_property name="ElementShortName">m1_ms_tx_transfer_en[0:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_ms_tx_transfer_en[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/m1_ms_rx_transfer_en">
+         <obj_property name="ElementShortName">m1_ms_rx_transfer_en[0:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_ms_rx_transfer_en[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/m1_sl_tx_transfer_en">
+         <obj_property name="ElementShortName">m1_sl_tx_transfer_en[0:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_sl_tx_transfer_en[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/m1_sl_rx_transfer_en">
+         <obj_property name="ElementShortName">m1_sl_rx_transfer_en[0:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_sl_rx_transfer_en[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/data_in_f">
+         <obj_property name="ElementShortName">data_in_f[79:0]</obj_property>
+         <obj_property name="ObjectShortName">data_in_f[79:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/data_out_f">
+         <obj_property name="ElementShortName">data_out_f[79:0]</obj_property>
+         <obj_property name="ObjectShortName">data_out_f[79:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/tx_phy0">
+         <obj_property name="ElementShortName">tx_phy0[79:0]</obj_property>
+         <obj_property name="ObjectShortName">tx_phy0[79:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/rx_phy0">
+         <obj_property name="ElementShortName">rx_phy0[79:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_phy0[79:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/calib_done">
+         <obj_property name="ElementShortName">calib_done</obj_property>
+         <obj_property name="ObjectShortName">calib_done</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/calib_en">
+         <obj_property name="ElementShortName">calib_en</obj_property>
+         <obj_property name="ObjectShortName">calib_en</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/calib_rst_n">
+         <obj_property name="ElementShortName">calib_rst_n</obj_property>
+         <obj_property name="ObjectShortName">calib_rst_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/por_out">
+         <obj_property name="ElementShortName">por_out</obj_property>
+         <obj_property name="ObjectShortName">por_out</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/NBR_CHNLS">
+         <obj_property name="ElementShortName">NBR_CHNLS[31:0]</obj_property>
+         <obj_property name="ObjectShortName">NBR_CHNLS[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/NBR_BUMPS">
+         <obj_property name="ElementShortName">NBR_BUMPS[31:0]</obj_property>
+         <obj_property name="ObjectShortName">NBR_BUMPS[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/NBR_PHASES">
+         <obj_property name="ElementShortName">NBR_PHASES[31:0]</obj_property>
+         <obj_property name="ObjectShortName">NBR_PHASES[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/NBR_LANES">
+         <obj_property name="ElementShortName">NBR_LANES[31:0]</obj_property>
+         <obj_property name="ObjectShortName">NBR_LANES[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/MS_SSR_LEN">
+         <obj_property name="ElementShortName">MS_SSR_LEN[31:0]</obj_property>
+         <obj_property name="ObjectShortName">MS_SSR_LEN[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/SL_SSR_LEN">
+         <obj_property name="ElementShortName">SL_SSR_LEN[31:0]</obj_property>
+         <obj_property name="ObjectShortName">SL_SSR_LEN[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/DWIDTH">
+         <obj_property name="ElementShortName">DWIDTH[31:0]</obj_property>
+         <obj_property name="ObjectShortName">DWIDTH[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/AXI_CHNL_NUM">
+         <obj_property name="ElementShortName">AXI_CHNL_NUM[31:0]</obj_property>
+         <obj_property name="ObjectShortName">AXI_CHNL_NUM[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/aib_axi_bridge_tb/dut/slave_bridge/ADDRWIDTH">
+         <obj_property name="ElementShortName">ADDRWIDTH[31:0]</obj_property>
+         <obj_property name="ObjectShortName">ADDRWIDTH[31:0]</obj_property>
       </wvobject>
    </wvobject>
 </wave_config>

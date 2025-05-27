@@ -1,9 +1,17 @@
 read_verilog ${AIB2_ROOT}/rev1/dv/interface/dut_if_mac.sv
+read_verilog ${AIB2_ROOT}/rev1/dv/interface/avalon_mm_if.sv
 
 # Generated Files
-read_verilog ${PROJ_DIR}/axi4-mm/axi_lite_a32_d32/axi_lite_a32_d32_master_top.sv   
-read_verilog ${PROJ_DIR}/axi4-mm/axi_lite_a32_d32/axi_lite_a32_d32_master_concat.sv
-read_verilog ${PROJ_DIR}/axi4-mm/axi_lite_a32_d32/axi_lite_a32_d32_master_name.sv  
+read_verilog ${TOOLS_DIR}/rtl/full_examples/axi_lite/aib_calib_master_fsm.v
+read_verilog ${TOOLS_DIR}/rtl/axi_mm/axi_mm_master_top.sv   
+read_verilog ${TOOLS_DIR}/rtl/axi_mm/axi_mm_master_concat.sv
+read_verilog ${TOOLS_DIR}/rtl/axi_mm/axi_mm_master_name.sv  
+
+# Master FSM Configuration
+read_verilog -sv ${TOOLS_DIR}/rtl/full_examples/axi_lite/master_cfg_write_fsm.sv
+read_verilog -sv ${TOOLS_DIR}/rtl/full_examples/axi_lite/master_config_sequencer_fsm.sv
+read_verilog -sv ${TOOLS_DIR}/rtl/full_examples/axi_lite/master_loop_controller_fsm.sv
+read_verilog -sv ${TOOLS_DIR}/rtl/full_examples/axi_lite/master_triple_write_fsm.sv
 
 # Logic Link Files
 read_verilog ${PROJ_DIR}/llink/rtl/ll_receive.sv

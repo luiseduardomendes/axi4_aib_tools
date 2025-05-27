@@ -69,7 +69,7 @@ module top_aib_axi_bridge_master #(
     // ************************ pins aib_phy_top *******************************
 
         // ************ clock signals**************
-            input                   i_osc_clk,    // Free running oscillator clock for a
+            input                   i_osc_clk,    // Free running oscillator clock for leader interface
             input                   avmm_clk,     // Avalon MM clock
             input                   avmm_rst_n,   // Avalon MM reset 
 
@@ -81,16 +81,16 @@ module top_aib_axi_bridge_master #(
             // input  [NBR_CHNLS-1:0]  m_wr_clk,     
             // input  [NBR_CHNLS-1:0]  m_rd_clk,    
             // output [NBR_CHNLS-1:0]  m_fwd_clk,    
-            input  m_wr_clk,     
-            input  m_rd_clk,    
+            input  m_wr_clk,     // USER DEFINED
+            input  m_rd_clk,     // USER DEFINED
             output m_fwd_clk,      
         // ****************************************
 
         // ************ data signals **************
             //input  [NBR_LANES*NBR_PHASES*2*NBR_CHNLS-1 :0]  data_in_f,      // FIFO mode input
-            input  [NBR_LANES*2*NBR_CHNLS-1 :0]             data_in,        // Register mode data input
+            //input  [NBR_LANES*2*NBR_CHNLS-1 :0]             data_in,        // Register mode data input
             //output  [NBR_CHNLS*DWIDTH*8-1:0]		data_out_f,
-            output  [NBR_CHNLS*DWIDTH*2-1:0]   	    data_out,
+            //output  [NBR_CHNLS*DWIDTH*2-1:0]   	    data_out,
         // ****************************************
 
         // ******* interface intf signals *********
@@ -119,7 +119,7 @@ module top_aib_axi_bridge_master #(
             input                 rst_wr_n            ,
             
             //input                 clk_rd              ,
-            //input                 rst_rd_n            ,
+            input                 rst_rd_n            ,
         // *****************************************
           
         // ********** Control signals **************
@@ -167,22 +167,36 @@ module top_aib_axi_bridge_master #(
     wire calib_done;
     assign calib_rst_n = avmm_rst_n;
 
+    assign iopad_device_detect = 1'b1; 
+
     calib_master_fsm #(
         .TOTAL_CHNL_NUM(NBR_CHNLS)
     ) u_calib_fsm (
         .clk(avmm_clk),
         .rst_n(calib_rst_n),
-        .sl_tx_transfer_en(m1_sl_rx_transfer_en),
-        .sl_rx_transfer_en(m1_sl_rx_transfer_en),
         
+        // .sl_tx_transfer_en({NBR_CHNLS{1'b1}}), // All channels enabled for transfer
+        // .sl_rx_transfer_en({NBR_CHNLS{1'b1}}), // All channels enabled for transfer
+
+        .sl_tx_transfer_en(m1_sl_tx_transfer_en), // Transfer enable signals from AIB
+        .sl_rx_transfer_en(m1_sl_rx_transfer_en), // Transfer enable signals from AIB
+
         .calib_done(calib_done),
         .i_conf_done(intf_m1.i_conf_done),
         .ns_adapter_rstn    (intf_m1.ns_adapter_rstn),
         .ns_mac_rdy         (intf_m1.ns_mac_rdy),
         .ms_rx_dcc_dll_lock_req (intf_m1.ms_rx_dcc_dll_lock_req),
-        .ms_tx_dcc_dll_lock_req (intf_m1.ms_tx_dcc_dll_lock_req)        
+        .ms_tx_dcc_dll_lock_req (intf_m1.ms_tx_dcc_dll_lock_req), 
+        
+        .avmm_address_o(avmm_if_m1.address),
+        .avmm_read_o(avmm_if_m1.read),
+        .avmm_write_o(avmm_if_m1.write),
+        .avmm_writedata_o(avmm_if_m1.writedata),
+        .avmm_byteenable_o(avmm_if_m1.byteenable),
+        .avmm_readdata_i(avmm_if_m1.readdata),      // Input, not used by current write-only sequencer
+        .avmm_readdatavalid_i(avmm_if_m1.readdatavalid), // Input, not used by current write-only sequencer
+        .avmm_waitrequest_i(avmm_if_m1.waitrequest)
     );
-
 
     // AIB to AXI signals
     wire [NBR_CHNLS-1:0]    m1_ms_tx_transfer_en;
@@ -190,18 +204,26 @@ module top_aib_axi_bridge_master #(
     wire [NBR_CHNLS-1:0]    m1_sl_tx_transfer_en;
     wire [NBR_CHNLS-1:0]    m1_sl_rx_transfer_en;
 
+    assign m1_ms_rx_transfer_en = {NBR_CHNLS{calib_done}}; // All channels enabled for transfer
+    assign m1_ms_tx_transfer_en = {NBR_CHNLS{calib_done}}; // All channels enabled for transfer
+    assign m1_sl_tx_transfer_en = {NBR_CHNLS{1'b1}}; // All channels enabled for transfer
+    assign m1_sl_rx_transfer_en = {NBR_CHNLS{1'b1}}; // All channels enabled for transfer
+
     assign por_in = por_out;
     assign wr_rst_n = ~por_in & rst_wr_n;
 
-    wire [2*DWIDTH-1:0]     data_in_f;
-    wire [2*DWIDTH-1:0]     data_out_f;
+    wire [NBR_LANES*2*NBR_CHNLS-1:0]     data_in;
+    wire [NBR_LANES*2*NBR_CHNLS-1:0]     data_out;
+    wire [NBR_LANES*NBR_PHASES*2*NBR_CHNLS-1:0]     data_in_f;
+    wire [NBR_LANES*NBR_PHASES*2*NBR_CHNLS-1:0]     data_out_f;
 
     // PHY Interconnect ( USING AXI LITE INTERFACE )
     wire [  2*DWIDTH-1:   0]   tx_phy0             ;
     wire [  2*DWIDTH-1:   0]   rx_phy0             ;
 
-    assign rx_phy0 = data_out_f;
-    assign data_in_f = tx_phy0;
+    // Register mode
+    assign rx_phy0 = data_out[2*DWIDTH-1:0];
+    assign data_in = tx_phy0[2*DWIDTH-1:0];
 
     dut_if_mac #(.DWIDTH (DWIDTH)) intf_m1 (
         .wr_clk(m_wr_clk), 
@@ -214,17 +236,15 @@ module top_aib_axi_bridge_master #(
     //assign intf_m1.ns_mac_rdy = ns_mac_rdy;
     //assign intf_m1.fs_mac_rdy = fs_mac_rdy;
     //assign intf_m1.i_conf_done = i_conf_done;
-    //assign intf_m1.ms_rx_dcc_dll_lock_req = ~m1_ms_rx_transfer_en;
-    //assign intf_m1.ms_tx_dcc_dll_lock_req = ~m1_ms_tx_transfer_en;
+    assign intf_m1.ms_rx_dcc_dll_lock_req = ms_rx_dcc_dll_lock_req;
+    assign intf_m1.ms_tx_dcc_dll_lock_req = ms_tx_dcc_dll_lock_req;
     assign intf_m1.ms_sideband = sr_ms_tomac;
     assign intf_m1.sl_sideband = sr_sl_tomac;
-    assign intf_m1.m_rx_align_done = 1'b1;
+    assign intf_m1.m_rx_align_done = 1'b1;//TODO: not sure its working
 
     avalon_mm_if #(.AVMM_WIDTH(32), .BYTE_WIDTH(4)) avmm_if_m1  (
      .clk    (avmm_clk)
-    );
-
-    
+    );    
 
     assign avmm_if_m1.rst_n = avmm_rst_n;
     assign avmm_if_m1.address = i_cfg_avmm_addr;
@@ -237,7 +257,7 @@ module top_aib_axi_bridge_master #(
     assign o_cfg_avmm_rdata = avmm_if_m1.readdata;
     assign o_cfg_avmm_waitreq = avmm_if_m1.waitrequest;
 
-    aib_model_top aib_master_inst (
+    aib_phy_top aib_master_inst (
         .iopad_ch0_aib(iopad_ch0_aib), 
         .iopad_ch1_aib(iopad_ch1_aib), 
         .iopad_ch2_aib(iopad_ch2_aib), 
@@ -268,7 +288,8 @@ module top_aib_axi_bridge_master #(
         .iopad_power_on_reset(iopad_power_on_reset),
 
         //Aux channel signals from MAC
-        .m_por_ovrd(1'b1),
+        // TODO: NOT SURE
+        .m_por_ovrd(1'b1),  
         .m_device_detect(),
         .m_device_detect_ovrd(1'b0),
         .i_m_power_on_reset(1'b0),
@@ -277,8 +298,8 @@ module top_aib_axi_bridge_master #(
         
         .data_in_f(data_in_f),						
         .data_out_f(data_out_f),                     
-        .data_in(data_in_f), //output data to pad      
-        .data_out(data_out_f),                         
+        .data_in(data_in), //output data to pad      
+        .data_out(data_out),                         
                 
         .m_ns_fwd_clk(m_ns_fwd_clk), //output data clock	 
         .m_ns_rcv_clk(m_ns_rcv_clk),                         
@@ -297,12 +318,12 @@ module top_aib_axi_bridge_master #(
         .ms_tx_dcc_dll_lock_req(/*{24{1'b1}}*/intf_m1.ms_tx_dcc_dll_lock_req),         
         .sl_rx_dcc_dll_lock_req({24{1'b1}}),                        
         .sl_tx_dcc_dll_lock_req({24{1'b1}}),                        
-        .ms_tx_transfer_en(m1_ms_tx_transfer_en),                   
-        .ms_rx_transfer_en(m1_ms_rx_transfer_en),                   
-        .sl_tx_transfer_en(m1_sl_tx_transfer_en),
-        .sl_rx_transfer_en(m1_sl_rx_transfer_en),
-        .sr_ms_tomac(intf_m1.ms_sideband),			
-        .sr_sl_tomac(intf_m1.sl_sideband),           
+        // .ms_tx_transfer_en(m1_ms_tx_transfer_en),                   
+        // .ms_rx_transfer_en(m1_ms_rx_transfer_en),                   
+        // .sl_tx_transfer_en(m1_sl_tx_transfer_en),
+        // .sl_rx_transfer_en(m1_sl_rx_transfer_en),
+        .sr_ms_tomac(intf_m1.ms_sideband),  // outputs from AIB
+        .sr_sl_tomac(intf_m1.sl_sideband),  // outputs from AIB
         .m_rx_align_done(intf_m1.m_rx_align_done),   
         .m_gen2_mode(1'b1),
         .i_osc_clk(i_osc_clk),   //Only for master mode	
@@ -363,57 +384,57 @@ module top_aib_axi_bridge_master #(
         .dual_mode_select(1'b1)
     );
 
-    axi_lite_a32_d32_master_top  aximm_leader(
+    axi_mm_master_top  aximm_leader(
         .clk_wr              (clk_wr ),
         .rst_wr_n            (rst_wr_n),
         .tx_online           (&{m1_sl_tx_transfer_en[0],m1_ms_tx_transfer_en[0]}),
         .rx_online           (&{m1_sl_tx_transfer_en[0],m1_ms_tx_transfer_en[0]}),
-        .init_ar_lite_credit (init_ar_credit),
-        .init_aw_lite_credit (init_aw_credit),
-        .init_w_lite_credit  (init_w_credit ),
+        .init_ar_credit (init_ar_credit),
+        .init_aw_credit (init_aw_credit),
+        .init_w_credit  (init_w_credit ),
         .tx_phy0             (tx_phy0),
         .rx_phy0             (rx_phy0),
         
-        //.user_arid           (user_axi_if.arid    ),
-        //.user_arsize         (user_axi_if.arsize  ),
-        //.user_arlen          (user_axi_if.arlen   ),
-        //.user_arburst        (user_axi_if.arburst ),
+        .user_arid           (user_axi_if.arid    ),
+        .user_arsize         (user_axi_if.arsize  ),
+        .user_arlen          (user_axi_if.arlen   ),
+        .user_arburst        (user_axi_if.arburst ),
         .user_araddr         (user_axi_if.araddr  ),
         .user_arvalid        (user_axi_if.arvalid ),
         .user_arready        (user_axi_if.arready ),
         
-        //.user_awid           (user_axi_if.awid   ),
-        //.user_awsize         (user_axi_if.awsize ),
-        //.user_awlen          (user_axi_if.awlen  ),
-        //.user_awburst        (user_axi_if.awburst),
+        .user_awid           (user_axi_if.awid   ),
+        .user_awsize         (user_axi_if.awsize ),
+        .user_awlen          (user_axi_if.awlen  ),
+        .user_awburst        (user_axi_if.awburst),
         .user_awaddr         (user_axi_if.awaddr ),
         .user_awvalid        (user_axi_if.awvalid),
         .user_awready        (user_axi_if.awready),
         
-        //.user_wid            (user_axi_if.wid     ),
+        .user_wid            (user_axi_if.wid     ),
         .user_wdata          (user_axi_if.wdata   ),
         .user_wstrb          (user_axi_if.wstrb[7:0]   ),
-        //.user_wlast          (user_axi_if.wlast   ),
+        .user_wlast          (user_axi_if.wlast   ),
         .user_wvalid         (user_axi_if.wvalid  ),
         .user_wready         (user_axi_if.wready  ),
         
-        //.user_rid            (user_axi_if.rid     ),
+        .user_rid            (user_axi_if.rid     ),
         .user_rdata          (user_axi_if.rdata   ),
-        //.user_rlast          (user_axi_if.rlast   ),
+        .user_rlast          (user_axi_if.rlast   ),
         .user_rresp          (user_axi_if.rresp   ),
         .user_rvalid         (user_axi_if.rvalid  ),
         .user_rready         (user_axi_if.rready  ),
     
-        //.user_bid            (user_axi_if.bid     ),
+        .user_bid            (user_axi_if.bid     ),
         .user_bresp          (user_axi_if.bresp   ),
         .user_bvalid         (user_axi_if.bvalid  ),
         .user_bready         (user_axi_if.bready  ),
         
-        .tx_ar_lite_debug_status  (tx_ar_debug_status),
-        .tx_aw_lite_debug_status  (tx_aw_debug_status),
-        .tx_w_lite_debug_status   (tx_w_debug_status),
-        .rx_r_lite_debug_status   (rx_r_debug_status),
-        .rx_b_lite_debug_status   (rx_b_debug_status),
+        .tx_ar_debug_status  (tx_ar_debug_status),
+        .tx_aw_debug_status  (tx_aw_debug_status),
+        .tx_w_debug_status   (tx_w_debug_status),
+        .rx_r_debug_status   (rx_r_debug_status),
+        .rx_b_debug_status   (rx_b_debug_status),
 
         .m_gen2_mode         (1'b1),
         .delay_x_value       (delay_x_value),
@@ -423,6 +444,7 @@ module top_aib_axi_bridge_master #(
     );
 
     initial begin
+        $display("AIB to AXI Bridge Master");
         avmm_if_m1.cfg_write({0,11'h208}, 4'hf, 32'h0600_0000);
         avmm_if_m1.cfg_write({0,11'h210}, 4'hf, 32'h0000_000b);      
         avmm_if_m1.cfg_write({0,11'h218}, 4'hf, 32'h60a1_0000);

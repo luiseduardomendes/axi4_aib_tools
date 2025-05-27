@@ -234,16 +234,13 @@ module aib_axi_top #(
         .m_wr_clk(m_clk_wr),
         .m_rd_clk(m_clk_rd),
         .m_fwd_clk(m_fwd_clk),
-        //.data_in_f(m_data_in_f),
-        .data_in(m_data_in),
-        //.data_out_f(m_data_out_f),
-        .data_out(m_data_out),
+
         .ns_adapter_rstn(m_ns_adapter_rstn), //Only for AIB Plus
         .ns_mac_rdy(m_ns_mac_rdy),
         .fs_mac_rdy(m_fs_mac_rdy),
         .i_conf_done(i_conf_done),
-        .ms_rx_dcc_dll_lock_req(m_ms_rx_dcc_dll_lock_req),
-        .ms_tx_dcc_dll_lock_req(m_ms_tx_dcc_dll_lock_req),
+        .ms_rx_dcc_dll_lock_req(1'b1/*m_ms_rx_dcc_dll_lock_req*/),
+        .ms_tx_dcc_dll_lock_req(1'b1/*m_ms_tx_dcc_dll_lock_req*/),
         .sl_tx_dcc_dll_lock_req(1'b1/*m_sl_tx_dcc_dll_lock_req*/),
         .sl_rx_dcc_dll_lock_req(1'b1/*m_sl_rx_dcc_dll_lock_req*/),
         .sr_ms_tomac(m_sr_ms_tomac),
@@ -463,5 +460,8 @@ module aib_axi_top #(
     // Connect reset signals
     assign m_ns_adapter_rstn = s_fs_mac_rdy;
     assign s_ns_adapter_rstn = m_fs_mac_rdy;
+
+    assign m_sr_ms_tomac = s_sr_sl_tomac;
+    assign s_sr_sl_tomac = m_sr_ms_tomac;
 
 endmodule

@@ -3,7 +3,7 @@
 module aib_axi_bridge_tb;
 
     // Parameters from the design
-    parameter NBR_CHNLS = 1;
+    parameter NBR_CHNLS = 24;
     parameter NBR_BUMPS = 102;
     parameter NBR_PHASES = 4;
     parameter NBR_LANES = 40;
@@ -16,6 +16,8 @@ module aib_axi_bridge_tb;
     reg s_clk_wr, s_clk_rd;
     reg m_rst_wr_n, m_rst_rd_n;
     reg s_rst_wr_n, s_rst_rd_n;
+    reg m_avmm_clk, m_avmm_rst_n;
+    reg s_avmm_clk, s_avmm_rst_n;
     
     // Oscillator clock
     reg i_osc_clk;
@@ -113,6 +115,12 @@ module aib_axi_bridge_tb;
         .s_delay_y_value(s_delay_y_value),
         .s_delay_z_value(s_delay_z_value),
         
+        .m_avmm_clk(m_avmm_clk),
+        .m_avmm_rst_n(m_avmm_rst_n),
+
+        .s_avmm_clk(s_avmm_clk),
+        .s_avmm_rst_n(s_avmm_rst_n),
+
         // Common AIB signals
         .i_osc_clk(i_osc_clk),
         .i_conf_done(i_conf_done),
@@ -145,6 +153,16 @@ module aib_axi_bridge_tb;
         i_osc_clk = 0;
         forever #2 i_osc_clk = ~i_osc_clk; // 250MHz
     end
+
+    initial begin
+        m_avmm_clk = 0;
+        forever #5 m_avmm_clk = ~m_avmm_clk; // 100MHz
+    end
+    
+    initial begin
+        s_avmm_clk = 0;
+        forever #5 s_avmm_clk = ~s_avmm_clk; // 100MHz
+    end
     
     // Reset generation
     initial begin
@@ -153,8 +171,11 @@ module aib_axi_bridge_tb;
         m_rst_rd_n = 0;
         s_rst_wr_n = 0;
         s_rst_rd_n = 0;
+        m_avmm_rst_n = 0;
+        s_avmm_rst_n = 0;
         
         // Configuration signals
+        
         i_conf_done = 0;
         //m_tx_online = 0;
         //m_rx_online = 0;
@@ -182,6 +203,8 @@ module aib_axi_bridge_tb;
         m_rst_rd_n = 1;
         s_rst_wr_n = 1;
         s_rst_rd_n = 1;
+        m_avmm_rst_n = 1;
+        s_avmm_rst_n = 1;
         
         // Set configuration done and online signals
         #20;
