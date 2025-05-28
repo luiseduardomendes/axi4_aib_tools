@@ -25,12 +25,15 @@ module aib_axi_top #(
     input   [7:0]         m_init_ar_credit,
     input   [7:0]         m_init_aw_credit,
     input   [7:0]         m_init_w_credit,
+
     axi_if.slave          m_user_axi_if,
+
     output  [31:0]        m_tx_ar_debug_status,
     output  [31:0]        m_tx_aw_debug_status,
     output  [31:0]        m_tx_w_debug_status,
     output  [31:0]        m_rx_r_debug_status,
     output  [31:0]        m_rx_b_debug_status,
+
     input   [15:0]        m_delay_x_value,
     input   [15:0]        m_delay_y_value,
     input   [15:0]        m_delay_z_value,
@@ -46,6 +49,9 @@ module aib_axi_top #(
     output  [31:0]        m_o_cfg_avmm_rdata,
     output                m_o_cfg_avmm_waitreq,
 
+    input [NBR_CHNLS-1:0] m_ns_fwd_clk,
+    input [NBR_CHNLS-1:0] m_ns_rcv_clk,
+
     input [NBR_CHNLS-1:0] m_ns_mac_rdy,
     input [NBR_CHNLS-1:0] m_fs_mac_rdy,
 
@@ -57,16 +63,21 @@ module aib_axi_top #(
     input                 s_rst_wr_n,
     input                 s_clk_rd,
     input                 s_rst_rd_n,
-    input                 s_tx_online,
-    input                 s_rx_online,
+    
+    //input                 s_tx_online,
+    //input                 s_rx_online,
+
     input   [7:0]         s_init_r_credit,
     input   [7:0]         s_init_b_credit,
+
     axi_if.master         s_user_axi_if,
+
     output  [31:0]        s_rx_ar_debug_status,
     output  [31:0]        s_rx_aw_debug_status,
     output  [31:0]        s_rx_w_debug_status,
     output  [31:0]        s_tx_r_debug_status,
     output  [31:0]        s_tx_b_debug_status,
+
     input   [15:0]        s_delay_x_value,
     input   [15:0]        s_delay_y_value,
     input   [15:0]        s_delay_z_value,
@@ -84,14 +95,12 @@ module aib_axi_top #(
 
     // Common AIB signals
     input                   i_osc_clk,
-    input                   i_conf_done,
-    inout                   iopad_device_detect,
-    inout                   iopad_power_on_reset
+    output                   i_conf_done
+    //inout                   iopad_device_detect,
+    //inout                   iopad_power_on_reset
 );
 
     // AIB Master signals
-    wire [NBR_CHNLS-1:0]  m_ns_fwd_clk;
-    wire [NBR_CHNLS-1:0]  m_ns_rcv_clk;
     wire [NBR_CHNLS-1:0]  m_fs_rcv_clk;
     wire [NBR_CHNLS-1:0]  m_fs_fwd_clk;
     //wire [NBR_CHNLS-1:0]  m_wr_clk;
@@ -102,7 +111,10 @@ module aib_axi_top #(
     //wire [NBR_CHNLS*DWIDTH*8-1:0]                 m_data_out_f;
     wire [NBR_CHNLS*DWIDTH*2-1:0]                 m_data_out;
     wire [NBR_CHNLS-1:0]  m_ns_adapter_rstn;
+
     
+    wire iopad_device_detect;
+    wire iopad_power_on_reset;
     
     wire [NBR_CHNLS-1:0]  m_sl_tx_dcc_dll_lock_req; // should be calibration init
     wire [NBR_CHNLS-1:0]  m_sl_rx_dcc_dll_lock_req; // should be calibration init
@@ -229,8 +241,8 @@ module aib_axi_top #(
         .i_osc_clk(i_osc_clk),
         .m_ns_fwd_clk(m_ns_fwd_clk),
         .m_ns_rcv_clk(m_ns_rcv_clk),
-        .m_fs_rcv_clk(m_fs_rcv_clk),
-        .m_fs_fwd_clk(m_fs_fwd_clk),
+        .m_fs_rcv_clk(m_fs_rcv_clk), // outputs not used
+        .m_fs_fwd_clk(m_fs_fwd_clk), // outputs not used 
         .m_wr_clk(m_clk_wr),
         .m_rd_clk(m_clk_rd),
         .m_fwd_clk(m_fwd_clk),
@@ -322,10 +334,10 @@ module aib_axi_top #(
 
         // AIB PHY interface
         .i_osc_clk(i_osc_clk),
-        .m_ns_fwd_clk(s_ns_fwd_clk),
-        .m_ns_rcv_clk(s_ns_rcv_clk),
-        .m_fs_rcv_clk(s_fs_rcv_clk),
-        .m_fs_fwd_clk(s_fs_fwd_clk),
+        .m_ns_fwd_clk(s_fs_fwd_clk),
+        .m_ns_rcv_clk(s_fs_rcv_clk),
+        .m_fs_rcv_clk(s_ns_rcv_clk),
+        .m_fs_fwd_clk(s_ns_fwd_clk),
         .m_wr_clk(s_clk_wr),
         .m_rd_clk(s_clk_rd),
         .m_fwd_clk(s_fwd_clk),

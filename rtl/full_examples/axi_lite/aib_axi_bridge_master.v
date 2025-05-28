@@ -13,6 +13,9 @@
     * NBR_CHNLS: Number of channels in the AIB
 */
 
+supply1 HI;  // Global logic '1' (connects to vdd)
+supply0 LO;  // Global logic '0' (connects to gnd)
+
 `include "../../interfaces/axi_if.v"
 
 module top_aib_axi_bridge_master #(
@@ -167,7 +170,10 @@ module top_aib_axi_bridge_master #(
     wire calib_done;
     assign calib_rst_n = avmm_rst_n;
 
-    assign iopad_device_detect = 1'b1; 
+    
+
+    // assign iopad_device_detect = 1'b1; 
+    // assign iopad_device_detect = (iopad_power_on_reset) ? 1'b1 : 1'bz;
 
     calib_master_fsm #(
         .TOTAL_CHNL_NUM(NBR_CHNLS)
@@ -317,13 +323,16 @@ module top_aib_axi_bridge_master #(
         .ms_rx_dcc_dll_lock_req(/*{24{1'b1}}*/intf_m1.ms_rx_dcc_dll_lock_req),			
         .ms_tx_dcc_dll_lock_req(/*{24{1'b1}}*/intf_m1.ms_tx_dcc_dll_lock_req),         
         .sl_rx_dcc_dll_lock_req({24{1'b1}}),                        
-        .sl_tx_dcc_dll_lock_req({24{1'b1}}),                        
-        // .ms_tx_transfer_en(m1_ms_tx_transfer_en),                   
-        // .ms_rx_transfer_en(m1_ms_rx_transfer_en),                   
-        // .sl_tx_transfer_en(m1_sl_tx_transfer_en),
-        // .sl_rx_transfer_en(m1_sl_rx_transfer_en),
+        .sl_tx_dcc_dll_lock_req({24{1'b1}}),   
+
+        .ms_tx_transfer_en(m1_ms_tx_transfer_en),                   
+        .ms_rx_transfer_en(m1_ms_rx_transfer_en),                   
+        .sl_tx_transfer_en(m1_sl_tx_transfer_en),
+        .sl_rx_transfer_en(m1_sl_rx_transfer_en),
+        
         .sr_ms_tomac(intf_m1.ms_sideband),  // outputs from AIB
         .sr_sl_tomac(intf_m1.sl_sideband),  // outputs from AIB
+        
         .m_rx_align_done(intf_m1.m_rx_align_done),   
         .m_gen2_mode(1'b1),
         .i_osc_clk(i_osc_clk),   //Only for master mode	
@@ -345,12 +354,11 @@ module top_aib_axi_bridge_master #(
         .ns_fwd_clk_div(),
         .fs_fwd_clk_div(),
         .ns_fwd_clk(),
-        .fs_fwd_clk(),
-        .vddc1(1'b1),
-        .vddc2(1'b1),
-        .vddtx(1'b1),
-        .vss(1'b0),
-        */
+        .fs_fwd_clk(),*/
+        .vddc1(HI),
+        .vddc2(HI),
+        .vddtx(HI),
+        .vss(LO),
 
         //JTAG ports
         .i_jtag_clkdr(1'b0),

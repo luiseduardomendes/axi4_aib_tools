@@ -15,6 +15,9 @@
 
 `include "../../interfaces/axi_if.v"
 
+supply1 HI;  // Global logic '1' (connects to vdd)
+supply0 LO;  // Global logic '0' (connects to gnd)
+
 module top_aib_axi_bridge_slave #(
     parameter NBR_CHNLS = 24,       // Total number of channels 
     parameter NBR_BUMPS = 102,      // Number of BUMPs
@@ -334,12 +337,11 @@ module top_aib_axi_bridge_slave #(
         .ns_fwd_clk_div(),
         .fs_fwd_clk_div(),
         .ns_fwd_clk(),
-        .fs_fwd_clk(),
+        .fs_fwd_clk(),*/
         .vddc1(HI),
         .vddc2(HI),
         .vddtx(HI),
         .vss(LO),
-        */
 
         //JTAG ports
         .i_jtag_clkdr(1'b0),

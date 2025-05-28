@@ -1,5 +1,8 @@
 `timescale 1ns/1ps
 
+supply1 HI;  // Global logic '1' (connects to vdd)
+supply0 LO;  // Global logic '0' (connects to gnd)
+
 module aib_axi_bridge_tb;
 
     // Parameters from the design
@@ -25,7 +28,10 @@ module aib_axi_bridge_tb;
     // Configuration signals
     reg i_conf_done;
     wire iopad_device_detect;
-    wire iopad_power_on_reset;
+    //wire iopad_power_on_reset;
+
+    reg [NBR_CHNLS-1:0]  m_ns_fwd_clk;
+    reg [NBR_CHNLS-1:0]  m_ns_rcv_clk;
     
     // Online signals
     //reg m_tx_online, m_rx_online;
@@ -72,6 +78,9 @@ module aib_axi_bridge_tb;
         .vddc2(vddc2),
         .vddtx(vddtx),
         .vss(vss),
+
+        .m_ns_fwd_clk(m_ns_fwd_clk),
+        .m_ns_rcv_clk(m_ns_rcv_clk),
         
         // Master AXI Interface
         .m_clk_wr(m_clk_wr),
@@ -123,9 +132,9 @@ module aib_axi_bridge_tb;
 
         // Common AIB signals
         .i_osc_clk(i_osc_clk),
-        .i_conf_done(i_conf_done),
-        .iopad_device_detect(iopad_device_detect),
-        .iopad_power_on_reset(iopad_power_on_reset)
+        .i_conf_done(i_conf_done)
+        // .iopad_device_detect(iopad_device_detect),
+        // .iopad_power_on_reset(iopad_power_on_reset)
     );
     
     // Clock generation
@@ -162,6 +171,16 @@ module aib_axi_bridge_tb;
     initial begin
         s_avmm_clk = 0;
         forever #5 s_avmm_clk = ~s_avmm_clk; // 100MHz
+    end
+
+    initial begin
+        m_ns_fwd_clk = {NBR_CHNLS{1'b0}};
+        forever #10 m_ns_fwd_clk = ~m_ns_fwd_clk; // Toggle every 20ns
+    end
+
+    initial begin
+        m_ns_rcv_clk = {NBR_CHNLS{1'b0}};
+        forever #10 m_ns_rcv_clk = ~m_ns_rcv_clk; // Toggle every 20ns
     end
     
     // Reset generation
@@ -379,6 +398,16 @@ module aib_axi_bridge_tb;
         if (m_user_axi_if.rvalid && m_user_axi_if.rready && m_user_axi_if.rresp != 2'b00) begin
             $error("Read response error detected: %b", m_user_axi_if.rresp);
         end
+    end
+    
+    initial begin
+        $dumpfile("waveform.vcd");
+        $dumpvars(0, dut);
+        //$dumpvars(0, dut.master_bridge);
+        //$dumpvars(0, dut.master_bridge.u_calib_fsm);
+        //$dumpvars(0, dut.master_bridge.aib_master_inst.aib_channel_0);
+        //$dumpvars(0, dut.slave_bridge);
+        //$dumpvars(0, dut.slave_bridge.aib_slave_inst.aib_channel_0);
     end
     
 endmodule

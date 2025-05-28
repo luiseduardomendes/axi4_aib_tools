@@ -20,10 +20,10 @@ module tb_top_aib_axi_bridge_master();
     reg avmm_rst_n;
     
     // AIB PHY signals
-    wire [NBR_BUMPS-1:0] iopad_ch0_aib;
+    //wire [NBR_BUMPS-1:0] iopad_ch0_aib;
     // ... (other channels would be declared similarly)
-    wire iopad_device_detect;
-    wire iopad_power_on_reset;
+    //wire iopad_device_detect;
+    //wire iopad_power_on_reset;
     
     // Clock signals
     reg [NBR_CHNLS-1:0] m_ns_fwd_clk;
@@ -92,10 +92,10 @@ module tb_top_aib_axi_bridge_master();
         //.vddc2(1'b1),
         //.vddtx(1'b1),
         //.vss(1'b0),
-        .iopad_ch0_aib(iopad_ch0_aib),
+        //.iopad_ch0_aib(iopad_ch0_aib),
         // ... (other channels would be connected similarly)
-        .iopad_device_detect(iopad_device_detect),
-        .iopad_power_on_reset(iopad_power_on_reset),
+        //.iopad_device_detect(iopad_device_detect),
+        //.iopad_power_on_reset(iopad_power_on_reset),
         
         // AIB PHY signals
         .i_osc_clk(i_osc_clk),
@@ -132,9 +132,9 @@ module tb_top_aib_axi_bridge_master();
         .tx_w_debug_status(tx_w_debug_status),
         .rx_r_debug_status(rx_r_debug_status),
         .rx_b_debug_status(rx_b_debug_status),
-        .delay_x_value(delay_x_value),
-        .delay_y_value(delay_y_value),
-        .delay_z_value(delay_z_value),
+        .delay_x_value(32'h0000000C),   //Delay X value = 12
+        .delay_y_value(32'h00000020),   //Delay Y value = 32
+        .delay_z_value(32'h00001770),   //Delay Z value = 6000
         
         // Avalon MM Interface
         .i_cfg_avmm_addr(i_cfg_avmm_addr),
@@ -196,9 +196,9 @@ module tb_top_aib_axi_bridge_master();
         ms_tx_dcc_dll_lock_req = {NBR_CHNLS{1'b0}};
         data_in = {NBR_LANES*2*NBR_CHNLS{1'b0}};
         
-        delay_x_value = 16'h0000;
-        delay_y_value = 16'h0000;
-        delay_z_value = 16'h0000;
+        // delay_x_value = 16'h0000;
+        // delay_y_value = 16'h0000;
+        // delay_z_value = 16'h0000;
         
         i_cfg_avmm_addr = 32'h0;
         i_cfg_avmm_byte_en = 4'h0;
@@ -219,6 +219,7 @@ module tb_top_aib_axi_bridge_master();
         
         // Wait for reset to complete
         #150;
+        
         
         // Bring up AIB interface
         ns_adapter_rstn = {NBR_CHNLS{1'b1}};

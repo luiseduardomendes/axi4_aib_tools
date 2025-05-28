@@ -206,9 +206,9 @@ bit [1023:0] status;
             .data_in(m1_data_in), //output data to pad      
             .data_out(m1_data_out),                         
                     
-            .m_ns_fwd_clk(m1_m_ns_fwd_clk), //output data clock	 
+            .m_ns_fwd_clk(m1_m_ns_fwd_clk), 
             .m_ns_rcv_clk(m1_m_ns_rcv_clk),                         
-            .m_fs_rcv_clk(m1_m_fs_rcv_clk),                         
+            .m_fs_rcv_clk(m1_m_fs_rcv_clk),//output data clock	                          
             .m_fs_fwd_clk(m1_m_fs_fwd_clk),                         
                                                                 
             .m_wr_clk(m1_m_wr_clk),                              
