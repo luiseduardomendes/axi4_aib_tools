@@ -103,13 +103,13 @@ module top_aib_axi_bridge_master #(
 
             input                   i_conf_done,  // Single control to reset all AIB
             
-            input  [NBR_CHNLS-1:0]  ms_rx_dcc_dll_lock_req, // Calibration init
-            input  [NBR_CHNLS-1:0]  ms_tx_dcc_dll_lock_req, // Calibration init
-            input  [NBR_CHNLS-1:0]  sl_tx_dcc_dll_lock_req, // Calibration init
-            input  [NBR_CHNLS-1:0]  sl_rx_dcc_dll_lock_req, // Calibration init
+            // input  [NBR_CHNLS-1:0]  ms_rx_dcc_dll_lock_req, // Calibration init
+            // input  [NBR_CHNLS-1:0]  ms_tx_dcc_dll_lock_req, // Calibration init
+            // input  [NBR_CHNLS-1:0]  sl_tx_dcc_dll_lock_req, // Calibration init
+            // input  [NBR_CHNLS-1:0]  sl_rx_dcc_dll_lock_req, // Calibration init
             
-            output [MS_SSR_LEN*NBR_CHNLS-1:0] sr_ms_tomac, // Leader  sideband data
-            output [SL_SSR_LEN*NBR_CHNLS-1:0] sr_sl_tomac, // Follower  sideband data    
+            // output [MS_SSR_LEN*NBR_CHNLS-1:0] sr_ms_tomac, // Leader  sideband data
+            // output [SL_SSR_LEN*NBR_CHNLS-1:0] sr_sl_tomac, // Follower  sideband data    
             output [NBR_CHNLS-1:0] m_rx_align_done,     // Indicates that the receiving AIB
         // ****************************************
     // *************************************************************************
@@ -170,8 +170,6 @@ module top_aib_axi_bridge_master #(
     wire calib_done;
     assign calib_rst_n = avmm_rst_n;
 
-    
-
     // assign iopad_device_detect = 1'b1; 
     // assign iopad_device_detect = (iopad_power_on_reset) ? 1'b1 : 1'bz;
 
@@ -210,16 +208,16 @@ module top_aib_axi_bridge_master #(
     wire [NBR_CHNLS-1:0]    m1_sl_tx_transfer_en;
     wire [NBR_CHNLS-1:0]    m1_sl_rx_transfer_en;
 
-    assign m1_ms_rx_transfer_en = {NBR_CHNLS{calib_done}}; // All channels enabled for transfer
-    assign m1_ms_tx_transfer_en = {NBR_CHNLS{calib_done}}; // All channels enabled for transfer
-    assign m1_sl_tx_transfer_en = {NBR_CHNLS{1'b1}}; // All channels enabled for transfer
-    assign m1_sl_rx_transfer_en = {NBR_CHNLS{1'b1}}; // All channels enabled for transfer
+    // assign m1_ms_rx_transfer_en = {NBR_CHNLS{calib_done}}; // All channels enabled for transfer
+    // assign m1_ms_tx_transfer_en = {NBR_CHNLS{calib_done}}; // All channels enabled for transfer
+    // assign m1_sl_tx_transfer_en = {NBR_CHNLS{1'b1}}; // All channels enabled for transfer
+    // assign m1_sl_rx_transfer_en = {NBR_CHNLS{1'b1}}; // All channels enabled for transfer
 
     assign por_in = por_out;
     assign wr_rst_n = ~por_in & rst_wr_n;
 
-    wire [NBR_LANES*2*NBR_CHNLS-1:0]     data_in;
-    wire [NBR_LANES*2*NBR_CHNLS-1:0]     data_out;
+    wire [NBR_LANES*2*NBR_CHNLS-1:0]                data_in;
+    wire [NBR_LANES*2*NBR_CHNLS-1:0]                data_out;
     wire [NBR_LANES*NBR_PHASES*2*NBR_CHNLS-1:0]     data_in_f;
     wire [NBR_LANES*NBR_PHASES*2*NBR_CHNLS-1:0]     data_out_f;
 
@@ -242,11 +240,34 @@ module top_aib_axi_bridge_master #(
     //assign intf_m1.ns_mac_rdy = ns_mac_rdy;
     //assign intf_m1.fs_mac_rdy = fs_mac_rdy;
     //assign intf_m1.i_conf_done = i_conf_done;
-    assign intf_m1.ms_rx_dcc_dll_lock_req = ms_rx_dcc_dll_lock_req;
-    assign intf_m1.ms_tx_dcc_dll_lock_req = ms_tx_dcc_dll_lock_req;
-    assign intf_m1.ms_sideband = sr_ms_tomac;
-    assign intf_m1.sl_sideband = sr_sl_tomac;
+    //assign intf_m1.ms_rx_dcc_dll_lock_req = ms_rx_dcc_dll_lock_req;
+    //assign intf_m1.ms_tx_dcc_dll_lock_req = ms_tx_dcc_dll_lock_req;
+    //assign intf_m1.ms_sideband = sr_ms_tomac;
+    //assign intf_m1.sl_sideband = sr_sl_tomac;
     assign intf_m1.m_rx_align_done = 1'b1;//TODO: not sure its working
+
+
+    assign intf_m1.sl_rx_transfer_en        = intf_m1.sl_sideband[70];
+    assign intf_m1.sl_rx_dcc_dll_lock_req   = intf_m1.sl_sideband[69];
+    assign intf_m1.sl_tx_transfer_en        = intf_m1.sl_sideband[64];
+    assign intf_m1.sl_tx_dcc_dll_lock_req   = intf_m1.sl_sideband[63];
+    
+    wire sl_rx_dll_lock;
+    wire sl_tx_dcc_cal_done;
+
+    assign sl_rx_dll_lock           = intf_m1.sl_sideband[68]; // not used
+    assign sl_tx_dcc_cal_done       = intf_m1.sl_sideband[31];  // not used
+
+    assign m1_ms_tx_transfer_en        = intf_m1.ms_sideband[78];
+    assign m1_ms_rx_transfer_en        = intf_m1.ms_sideband[75];
+    
+    wire ms_osc_transfer_en;
+    wire ms_rx_dll_lock;
+    wire ms_tx_dcc_cal_done;
+
+    assign ms_osc_transfer_en       = intf_m1.ms_sideband[80]; // not used
+    assign ms_rx_dll_lock           = intf_m1.ms_sideband[74]; // not used
+    assign ms_tx_dcc_cal_done       = intf_m1.ms_sideband[68]; // not used
 
     avalon_mm_if #(.AVMM_WIDTH(32), .BYTE_WIDTH(4)) avmm_if_m1  (
      .clk    (avmm_clk)
@@ -298,7 +319,7 @@ module top_aib_axi_bridge_master #(
         .m_por_ovrd(1'b1),  
         .m_device_detect(),
         .m_device_detect_ovrd(1'b0),
-        .i_m_power_on_reset(1'b0),
+        .i_m_power_on_reset(por_in),
         .o_m_power_on_reset(por_out),
 
         
@@ -354,7 +375,8 @@ module top_aib_axi_bridge_master #(
         .ns_fwd_clk_div(),
         .fs_fwd_clk_div(),
         .ns_fwd_clk(),
-        .fs_fwd_clk(),*/
+        .fs_fwd_clk(),
+        */
         .vddc1(HI),
         .vddc2(HI),
         .vddtx(HI),
@@ -397,9 +419,9 @@ module top_aib_axi_bridge_master #(
         .rst_wr_n            (rst_wr_n),
         .tx_online           (&{m1_sl_tx_transfer_en[0],m1_ms_tx_transfer_en[0]}),
         .rx_online           (&{m1_sl_tx_transfer_en[0],m1_ms_tx_transfer_en[0]}),
-        .init_ar_credit (init_ar_credit),
-        .init_aw_credit (init_aw_credit),
-        .init_w_credit  (init_w_credit ),
+        .init_ar_credit      (init_ar_credit),
+        .init_aw_credit      (init_aw_credit),
+        .init_w_credit       (init_w_credit ),
         .tx_phy0             (tx_phy0),
         .rx_phy0             (rx_phy0),
         

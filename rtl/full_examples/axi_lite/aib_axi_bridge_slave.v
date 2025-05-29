@@ -91,9 +91,9 @@ module top_aib_axi_bridge_slave #(
         
         // ************ data signals **************
             //input  [NBR_LANES*NBR_PHASES*2*NBR_CHNLS-1 :0]  data_in_f,      // FIFO mode input
-            input  [NBR_LANES*2*NBR_CHNLS-1 :0]             data_in,        // Register mode data input
+            //input  [NBR_LANES*2*NBR_CHNLS-1 :0]             data_in,        // Register mode data input
             //output  [NBR_CHNLS*DWIDTH*8-1:0]		data_out_f,
-            output  [NBR_CHNLS*DWIDTH*2-1:0]   	    data_out,
+            //output  [NBR_CHNLS*DWIDTH*2-1:0]   	    data_out,
         // ****************************************
 
         // ******* interface intf signals *********
@@ -178,6 +178,8 @@ module top_aib_axi_bridge_slave #(
 
     wire [2*DWIDTH-1:0]     data_in_f;
     wire [2*DWIDTH-1:0]     data_out_f;
+    wire [2*DWIDTH-1:0]     data_in;
+    wire [2*DWIDTH-1:0]     data_out;
 
     //output [NBR_CHNLS-1:0]  m_fs_rcv_clk, // shall not be used in Gen2 Mode
         //output [NBR_CHNLS-1:0]  m_fs_fwd_clk,
@@ -197,7 +199,7 @@ module top_aib_axi_bridge_slave #(
     );
 
     // Calibration FSM control signals
-    wire calib_done;
+    // wire calib_done;
     wire calib_en;
     wire calib_rst_n;
 
@@ -234,6 +236,28 @@ module top_aib_axi_bridge_slave #(
     assign intf_s1.ms_sideband = sr_ms_tomac;
     assign intf_s1.sl_sideband = sr_sl_tomac;
     assign intf_s1.m_rx_align_done = 1'b1;
+
+    assign intf_s1.sl_rx_transfer_en        = sr_sl_tomac[70];
+    assign intf_s1.sl_rx_dcc_dll_lock_req   = sr_sl_tomac[69];
+    assign intf_s1.sl_tx_transfer_en        = sr_sl_tomac[64];
+    assign intf_s1.sl_tx_dcc_dll_lock_req   = sr_sl_tomac[63];
+
+    wire sl_rx_dll_lock;
+    wire sl_tx_dcc_cal_done;
+    assign sl_rx_dll_lock           = sr_sl_tomac[68]; // not used
+    assign sl_tx_dcc_cal_done       = sr_sl_tomac[31];  // not used
+
+    assign m1_ms_tx_transfer_en        = sr_ms_tomac[78];
+    assign m1_ms_rx_transfer_en        = sr_ms_tomac[75];
+
+    wire ms_osc_transfer_en;
+    wire ms_rx_dll_lock;
+    wire ms_tx_dcc_cal_done;
+    assign ms_osc_transfer_en       = sr_ms_tomac[80]; // not used
+    assign ms_rx_dll_lock           = sr_ms_tomac[74]; // not used
+    assign ms_tx_dcc_cal_done       = sr_ms_tomac[68]; // not used
+
+
 
     avalon_mm_if #(.AVMM_WIDTH(32), .BYTE_WIDTH(4)) avmm_if_s1 (
         .clk    (avmm_clk)

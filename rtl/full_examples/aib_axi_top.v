@@ -52,6 +52,9 @@ module aib_axi_top #(
     input [NBR_CHNLS-1:0] m_ns_fwd_clk,
     input [NBR_CHNLS-1:0] m_ns_rcv_clk,
 
+    input [NBR_CHNLS-1:0] s_ns_fwd_clk,
+    input [NBR_CHNLS-1:0] s_ns_rcv_clk,
+
     input [NBR_CHNLS-1:0] m_ns_mac_rdy,
     input [NBR_CHNLS-1:0] m_fs_mac_rdy,
 
@@ -123,17 +126,16 @@ module aib_axi_top #(
     wire [NBR_CHNLS-1:0]  m_rx_align_done;
 
     // AIB Slave signals
-    wire [NBR_CHNLS-1:0]  s_ns_fwd_clk;
-    wire [NBR_CHNLS-1:0]  s_ns_rcv_clk;
     wire [NBR_CHNLS-1:0]  s_fs_rcv_clk;
     wire [NBR_CHNLS-1:0]  s_fs_fwd_clk;
+    
     wire [NBR_CHNLS-1:0]  s_wr_clk;
     wire [NBR_CHNLS-1:0]  s_rd_clk;
     wire [NBR_CHNLS-1:0]  s_fwd_clk;
     //wire [NBR_LANES*NBR_PHASES*2*NBR_CHNLS-1:0]  s_data_in_f;
-    wire [NBR_LANES*2*NBR_CHNLS-1:0]             s_data_in;
+    //wire [NBR_LANES*2*NBR_CHNLS-1:0]             s_data_in;
     //wire [NBR_CHNLS*DWIDTH*8-1:0]                 s_data_out_f;
-    wire [NBR_CHNLS*DWIDTH*2-1:0]                 s_data_out;
+    //wire [NBR_CHNLS*DWIDTH*2-1:0]                 s_data_out;
     wire [NBR_CHNLS-1:0]  s_ns_adapter_rstn;
     wire [NBR_CHNLS-1:0]  s_ns_mac_rdy;
     wire [NBR_CHNLS-1:0]  s_fs_mac_rdy;
@@ -251,12 +253,12 @@ module aib_axi_top #(
         .ns_mac_rdy(m_ns_mac_rdy),
         .fs_mac_rdy(m_fs_mac_rdy),
         .i_conf_done(i_conf_done),
-        .ms_rx_dcc_dll_lock_req(1'b1/*m_ms_rx_dcc_dll_lock_req*/),
-        .ms_tx_dcc_dll_lock_req(1'b1/*m_ms_tx_dcc_dll_lock_req*/),
-        .sl_tx_dcc_dll_lock_req(1'b1/*m_sl_tx_dcc_dll_lock_req*/),
-        .sl_rx_dcc_dll_lock_req(1'b1/*m_sl_rx_dcc_dll_lock_req*/),
-        .sr_ms_tomac(m_sr_ms_tomac),
-        .sr_sl_tomac(m_sr_sl_tomac),
+        //.ms_rx_dcc_dll_lock_req(1'b1/*m_ms_rx_dcc_dll_lock_req*/),
+        //.ms_tx_dcc_dll_lock_req(1'b1/*m_ms_tx_dcc_dll_lock_req*/),
+        //.sl_tx_dcc_dll_lock_req(1'b1/*m_sl_tx_dcc_dll_lock_req*/),
+        //.sl_rx_dcc_dll_lock_req(1'b1/*m_sl_rx_dcc_dll_lock_req*/),
+        //.sr_ms_tomac(m_sr_ms_tomac),
+        //.sr_sl_tomac(m_sr_sl_tomac),
         .m_rx_align_done(m_rx_align_done),
 
         // AXI interface
@@ -341,10 +343,13 @@ module aib_axi_top #(
         .m_wr_clk(s_clk_wr),
         .m_rd_clk(s_clk_rd),
         .m_fwd_clk(s_fwd_clk),
-        //.data_in_f(s_data_in_f),
-        .data_in(s_data_in),
-        //.data_out_f(s_data_out_f),
-        .data_out(s_data_out),
+
+        
+        // .data_in_f(s_data_in_f),
+        // .data_in(s_data_in),
+        // .data_out_f(s_data_out_f),
+        // .data_out(s_data_out),
+        
         .ns_adapter_rstn(s_ns_adapter_rstn),
         .ns_mac_rdy(s_ns_mac_rdy),
         .fs_mac_rdy(s_fs_mac_rdy),
@@ -445,35 +450,35 @@ module aib_axi_top #(
     );
 
     // Connect clock and control signals between master and slave
-    assign m_ns_fwd_clk = s_fs_fwd_clk;
-    assign m_ns_rcv_clk = s_fs_rcv_clk;
-    assign s_ns_fwd_clk = m_fs_fwd_clk;
-    assign s_ns_rcv_clk = m_fs_rcv_clk;
+    // assign m_ns_fwd_clk = s_fs_fwd_clk;
+    // assign m_ns_rcv_clk = s_fs_rcv_clk;
+    // asign s_ns_fwd_clk = m_fs_fwd_clk;
+    // assign s_ns_rcv_clk = m_fs_rcv_clk;
 
-    assign m_fs_mac_rdy = s_ns_mac_rdy;
-    assign s_fs_mac_rdy = m_ns_mac_rdy;
+    // assign m_fs_mac_rdy = s_ns_mac_rdy;
+    // assign s_fs_mac_rdy = m_ns_mac_rdy;
 
     // Connect data paths between master and slave through EMIB
-    assign m_data_in = s_data_out;
-    assign s_data_in = m_data_out;
+    // assign m_data_in = s_data_out;
+    // assign s_data_in = m_data_out;
     //assign m_data_in_f = s_data_out_f;
     //assign s_data_in_f = m_data_out_f;
 
     // Connect sideband signals
-    assign m_sr_sl_tomac = s_sr_ms_tomac;
-    assign s_sr_ms_tomac = m_sr_sl_tomac;
+    // assign m_sr_sl_tomac = s_sr_ms_tomac;
+    // assign s_sr_ms_tomac = m_sr_sl_tomac;
 
     // Connect calibration signals
-    assign m_sl_tx_dcc_dll_lock_req = s_ms_tx_dcc_dll_lock_req;
-    assign m_sl_rx_dcc_dll_lock_req = s_ms_rx_dcc_dll_lock_req;
-    assign s_sl_tx_dcc_dll_lock_req = m_ms_tx_dcc_dll_lock_req;
-    assign s_sl_rx_dcc_dll_lock_req = m_ms_rx_dcc_dll_lock_req;
+    // assign m_sl_tx_dcc_dll_lock_req = s_ms_tx_dcc_dll_lock_req;
+    // assign m_sl_rx_dcc_dll_lock_req = s_ms_rx_dcc_dll_lock_req;
+    // assign s_sl_tx_dcc_dll_lock_req = m_ms_tx_dcc_dll_lock_req;
+    // assign s_sl_rx_dcc_dll_lock_req = m_ms_rx_dcc_dll_lock_req;
 
     // Connect reset signals
-    assign m_ns_adapter_rstn = s_fs_mac_rdy;
-    assign s_ns_adapter_rstn = m_fs_mac_rdy;
+    // assign m_ns_adapter_rstn = s_fs_mac_rdy;
+    // assign s_ns_adapter_rstn = m_fs_mac_rdy;
 
-    assign m_sr_ms_tomac = s_sr_sl_tomac;
-    assign s_sr_sl_tomac = m_sr_ms_tomac;
+    // assign m_sr_ms_tomac = s_sr_sl_tomac;
+    // assign s_sr_sl_tomac = m_sr_ms_tomac;
 
 endmodule
