@@ -73,44 +73,27 @@ module top_aib_axi_bridge_master #(
 
         // ************ clock signals**************
             input                   i_osc_clk,    // Free running oscillator clock for leader interface
+            
+            input  [NBR_CHNLS-1:0]  m_ns_fwd_clk, // should be defined by the axi master
+            input  [NBR_CHNLS-1:0]  m_ns_rcv_clk, // should be defined by the axi master
+            
+            input  m_wr_clk,     // USER DEFINED
+            input  m_rd_clk,     // USER DEFINED
+            output m_fwd_clk,
+
+
+
+            output [NBR_CHNLS-1:0] m_fs_fwd_clk, // Forward clock to MAC
+            output [NBR_CHNLS-1:0] m_fs_rcv_clk, // Receive clock to MAC
+
+
             input                   avmm_clk,     // Avalon MM clock
             input                   avmm_rst_n,   // Avalon MM reset 
 
-            input  [NBR_CHNLS-1:0]  m_ns_fwd_clk, // should be defined by the axi master
-            input  [NBR_CHNLS-1:0]  m_ns_rcv_clk, // should be defined by the axi master
-            output [NBR_CHNLS-1:0]  m_fs_rcv_clk, // shall not be used in Gen2 Mode
-            output [NBR_CHNLS-1:0]  m_fs_fwd_clk,
-            
-            // input  [NBR_CHNLS-1:0]  m_wr_clk,     
-            // input  [NBR_CHNLS-1:0]  m_rd_clk,    
-            // output [NBR_CHNLS-1:0]  m_fwd_clk,    
-            input  m_wr_clk,     // USER DEFINED
-            input  m_rd_clk,     // USER DEFINED
-            output m_fwd_clk,      
-        // ****************************************
-
-        // ************ data signals **************
-            //input  [NBR_LANES*NBR_PHASES*2*NBR_CHNLS-1 :0]  data_in_f,      // FIFO mode input
-            //input  [NBR_LANES*2*NBR_CHNLS-1 :0]             data_in,        // Register mode data input
-            //output  [NBR_CHNLS*DWIDTH*8-1:0]		data_out_f,
-            //output  [NBR_CHNLS*DWIDTH*2-1:0]   	    data_out,
         // ****************************************
 
         // ******* interface intf signals *********
-            input  [NBR_CHNLS-1:0]  ns_adapter_rstn, // Resets the AIB Adapter
-            input  [NBR_CHNLS-1:0]  ns_mac_rdy,   // Indicates that the near side is ready
-            output [NBR_CHNLS-1:0]  fs_mac_rdy,   // Indicates that the far side is ready
-
-            input                   i_conf_done,  // Single control to reset all AIB
-            
-            // input  [NBR_CHNLS-1:0]  ms_rx_dcc_dll_lock_req, // Calibration init
-            // input  [NBR_CHNLS-1:0]  ms_tx_dcc_dll_lock_req, // Calibration init
-            // input  [NBR_CHNLS-1:0]  sl_tx_dcc_dll_lock_req, // Calibration init
-            // input  [NBR_CHNLS-1:0]  sl_rx_dcc_dll_lock_req, // Calibration init
-            
-            // output [MS_SSR_LEN*NBR_CHNLS-1:0] sr_ms_tomac, // Leader  sideband data
-            // output [SL_SSR_LEN*NBR_CHNLS-1:0] sr_sl_tomac, // Follower  sideband data    
-            output [NBR_CHNLS-1:0] m_rx_align_done,     // Indicates that the receiving AIB
+            output                  i_conf_done,  // Single control to reset all AIB
         // ****************************************
     // *************************************************************************
 
@@ -120,14 +103,11 @@ module top_aib_axi_bridge_master #(
         // ************ clock signals **************
             input                 clk_wr              ,
             input                 rst_wr_n            ,
-            
-            //input                 clk_rd              ,
-            input                 rst_rd_n            ,
         // *****************************************
           
         // ********** Control signals **************
-            //input                 tx_online           ,
-            //input                 rx_online           ,
+            input                 tx_online           ,
+            input                 rx_online           ,
           
             input   [7:0]         init_ar_credit      ,
             input   [7:0]         init_aw_credit      ,
@@ -136,14 +116,6 @@ module top_aib_axi_bridge_master #(
           
         // ************* axi channel ***************
             axi_if.slave          user_axi_if,       
-        // *****************************************
-          
-        // ********* Debug Status Outputs **********
-            output  [31:0]        tx_ar_debug_status  ,
-            output  [31:0]        tx_aw_debug_status  ,
-            output  [31:0]        tx_w_debug_status   ,
-            output  [31:0]        rx_r_debug_status   ,
-            output  [31:0]        rx_b_debug_status   ,
         // *****************************************
           
         // ************* Configuration *************          
@@ -169,21 +141,20 @@ module top_aib_axi_bridge_master #(
     wire calib_rst_n;
     wire calib_done;
     assign calib_rst_n = avmm_rst_n;
+    assign i_conf_done = intf_m1.i_conf_done;
 
-    // assign iopad_device_detect = 1'b1; 
-    // assign iopad_device_detect = (iopad_power_on_reset) ? 1'b1 : 1'bz;
 
     calib_master_fsm #(
         .TOTAL_CHNL_NUM(NBR_CHNLS)
     ) u_calib_fsm (
         .clk(avmm_clk),
         .rst_n(calib_rst_n),
-        
-        // .sl_tx_transfer_en({NBR_CHNLS{1'b1}}), // All channels enabled for transfer
-        // .sl_rx_transfer_en({NBR_CHNLS{1'b1}}), // All channels enabled for transfer
 
-        .sl_tx_transfer_en(m1_sl_tx_transfer_en), // Transfer enable signals from AIB
-        .sl_rx_transfer_en(m1_sl_rx_transfer_en), // Transfer enable signals from AIB
+        .sl_tx_transfer_en(intf_m1.sl_tx_transfer_en), // Transfer enable signals from AIB
+        .sl_rx_transfer_en(intf_m1.sl_rx_transfer_en), // Transfer enable signals from AIB
+
+        //.sl_tx_transfer_en({24{1'b1}}), // Transfer enable signals from AIB
+        //.sl_rx_transfer_en({24{1'b1}}), // Transfer enable signals from AIB
 
         .calib_done(calib_done),
         .i_conf_done(intf_m1.i_conf_done),
@@ -203,23 +174,23 @@ module top_aib_axi_bridge_master #(
     );
 
     // AIB to AXI signals
-    wire [NBR_CHNLS-1:0]    m1_ms_tx_transfer_en;
-    wire [NBR_CHNLS-1:0]    m1_ms_rx_transfer_en;
-    wire [NBR_CHNLS-1:0]    m1_sl_tx_transfer_en;
-    wire [NBR_CHNLS-1:0]    m1_sl_rx_transfer_en;
-
-    // assign m1_ms_rx_transfer_en = {NBR_CHNLS{calib_done}}; // All channels enabled for transfer
-    // assign m1_ms_tx_transfer_en = {NBR_CHNLS{calib_done}}; // All channels enabled for transfer
-    // assign m1_sl_tx_transfer_en = {NBR_CHNLS{1'b1}}; // All channels enabled for transfer
-    // assign m1_sl_rx_transfer_en = {NBR_CHNLS{1'b1}}; // All channels enabled for transfer
-
-    assign por_in = por_out;
-    assign wr_rst_n = ~por_in & rst_wr_n;
-
     wire [NBR_LANES*2*NBR_CHNLS-1:0]                data_in;
     wire [NBR_LANES*2*NBR_CHNLS-1:0]                data_out;
     wire [NBR_LANES*NBR_PHASES*2*NBR_CHNLS-1:0]     data_in_f;
     wire [NBR_LANES*NBR_PHASES*2*NBR_CHNLS-1:0]     data_out_f;
+
+    wire [NBR_CHNLS-1:0]    ms_rx_dcc_dll_lock_req;
+    wire [NBR_CHNLS-1:0]    ms_tx_dcc_dll_lock_req;
+    wire [NBR_CHNLS-1:0]    sl_rx_dcc_dll_lock_req;
+    wire [NBR_CHNLS-1:0]    sl_tx_dcc_dll_lock_req;
+
+    wire [NBR_CHNLS-1:0]    m_rx_align_done; 
+
+    wire [MS_SSR_LEN*NBR_CHNLS-1:0]  ms_sideband; // Master side band signals
+    wire [SL_SSR_LEN*NBR_CHNLS-1:0]  sl_sideband; // Slave side band signals
+
+    assign por_in = por_out;
+    assign wr_rst_n = ~por_in & rst_wr_n;
 
     // PHY Interconnect ( USING AXI LITE INTERFACE )
     wire [  2*DWIDTH-1:   0]   tx_phy0             ;
@@ -231,43 +202,36 @@ module top_aib_axi_bridge_master #(
 
     dut_if_mac #(.DWIDTH (DWIDTH)) intf_m1 (
         .wr_clk(m_wr_clk), 
-        .rd_clk(m_rd_clk), 
+        .rd_clk(m_wr_clk), 
         .fwd_clk(m_fwd_clk), 
         .osc_clk(i_osc_clk)
     );
     
-    //assign intf_m1.ns_adapter_rstn = ns_adapter_rstn;
-    //assign intf_m1.ns_mac_rdy = ns_mac_rdy;
-    //assign intf_m1.fs_mac_rdy = fs_mac_rdy;
-    //assign intf_m1.i_conf_done = i_conf_done;
-    //assign intf_m1.ms_rx_dcc_dll_lock_req = ms_rx_dcc_dll_lock_req;
-    //assign intf_m1.ms_tx_dcc_dll_lock_req = ms_tx_dcc_dll_lock_req;
-    //assign intf_m1.ms_sideband = sr_ms_tomac;
-    //assign intf_m1.sl_sideband = sr_sl_tomac;
-    assign intf_m1.m_rx_align_done = 1'b1;//TODO: not sure its working
+    assign intf_m1.m_rx_align_done = {24'b1};//TODO: not sure its working
 
-
-    assign intf_m1.sl_rx_transfer_en        = intf_m1.sl_sideband[70];
-    assign intf_m1.sl_rx_dcc_dll_lock_req   = intf_m1.sl_sideband[69];
-    assign intf_m1.sl_tx_transfer_en        = intf_m1.sl_sideband[64];
-    assign intf_m1.sl_tx_dcc_dll_lock_req   = intf_m1.sl_sideband[63];
+    // assign intf_m1.sl_rx_transfer_en        = intf_m1.sl_sideband[70];
+    // assign intf_m1.sl_rx_dcc_dll_lock_req   = intf_m1.sl_sideband[69];
+    // assign intf_m1.sl_tx_transfer_en        = intf_m1.sl_sideband[64];
+    // assign intf_m1.sl_tx_dcc_dll_lock_req   = intf_m1.sl_sideband[63];
     
-    wire sl_rx_dll_lock;
-    wire sl_tx_dcc_cal_done;
+    //assign intf_m1.fs_mac_rdy = {NBR_CHNLS{1'b1}}; // Forward sync ready, not used in Gen2 mode
 
-    assign sl_rx_dll_lock           = intf_m1.sl_sideband[68]; // not used
-    assign sl_tx_dcc_cal_done       = intf_m1.sl_sideband[31];  // not used
+    //wire sl_rx_dll_lock;
+    //wire sl_tx_dcc_cal_done;
 
-    assign m1_ms_tx_transfer_en        = intf_m1.ms_sideband[78];
-    assign m1_ms_rx_transfer_en        = intf_m1.ms_sideband[75];
+    //assign sl_rx_dll_lock           = intf_m1.sl_sideband[68]; // not used
+    //assign sl_tx_dcc_cal_done       = intf_m1.sl_sideband[31];  // not used
+
+    //assign intf_m1.ms_tx_transfer_en = intf_m1.ms_sideband[78];
+    //assign intf_m1.ms_rx_transfer_en = intf_m1.ms_sideband[75];
     
-    wire ms_osc_transfer_en;
-    wire ms_rx_dll_lock;
-    wire ms_tx_dcc_cal_done;
+    // wire ms_osc_transfer_en;
+    // wire ms_rx_dll_lock;
+    // wire ms_tx_dcc_cal_done;
 
-    assign ms_osc_transfer_en       = intf_m1.ms_sideband[80]; // not used
-    assign ms_rx_dll_lock           = intf_m1.ms_sideband[74]; // not used
-    assign ms_tx_dcc_cal_done       = intf_m1.ms_sideband[68]; // not used
+    // assign ms_osc_transfer_en       = intf_m1.ms_sideband[80]; // not used
+    // assign ms_rx_dll_lock           = intf_m1.ms_sideband[74]; // not used
+    // assign ms_tx_dcc_cal_done       = intf_m1.ms_sideband[68]; // not used
 
     avalon_mm_if #(.AVMM_WIDTH(32), .BYTE_WIDTH(4)) avmm_if_m1  (
      .clk    (avmm_clk)
@@ -334,11 +298,11 @@ module top_aib_axi_bridge_master #(
         .m_fs_fwd_clk(m_fs_fwd_clk), // should go to axi master
                                                             
         .m_wr_clk(m_wr_clk),                              
-        .m_rd_clk(m_rd_clk),
+        .m_rd_clk(m_wr_clk),
 
         .ns_adapter_rstn(intf_m1.ns_adapter_rstn),	
         .ns_mac_rdy(intf_m1.ns_mac_rdy),             
-        .fs_mac_rdy(intf_m1.fs_mac_rdy),             
+        //.fs_mac_rdy(intf_m1.fs_mac_rdy),             
 
         .i_conf_done(intf_m1.i_conf_done),
         .ms_rx_dcc_dll_lock_req(/*{24{1'b1}}*/intf_m1.ms_rx_dcc_dll_lock_req),			
@@ -346,16 +310,16 @@ module top_aib_axi_bridge_master #(
         .sl_rx_dcc_dll_lock_req({24{1'b1}}),                        
         .sl_tx_dcc_dll_lock_req({24{1'b1}}),   
 
-        .ms_tx_transfer_en(m1_ms_tx_transfer_en),                   
-        .ms_rx_transfer_en(m1_ms_rx_transfer_en),                   
-        .sl_tx_transfer_en(m1_sl_tx_transfer_en),
-        .sl_rx_transfer_en(m1_sl_rx_transfer_en),
+        .ms_tx_transfer_en(intf_m1.ms_tx_transfer_en),                   
+        .ms_rx_transfer_en(intf_m1.ms_rx_transfer_en),                   
+        .sl_tx_transfer_en(intf_m1.sl_tx_transfer_en),
+        .sl_rx_transfer_en(intf_m1.sl_rx_transfer_en),
         
         .sr_ms_tomac(intf_m1.ms_sideband),  // outputs from AIB
         .sr_sl_tomac(intf_m1.sl_sideband),  // outputs from AIB
         
         .m_rx_align_done(intf_m1.m_rx_align_done),   
-        .m_gen2_mode(1'b1),
+        .m_gen2_mode(1'b0),
         .i_osc_clk(i_osc_clk),   //Only for master mode	
 
         //AVMM interface
@@ -417,8 +381,8 @@ module top_aib_axi_bridge_master #(
     axi_mm_master_top  aximm_leader(
         .clk_wr              (clk_wr ),
         .rst_wr_n            (rst_wr_n),
-        .tx_online           (&{m1_sl_tx_transfer_en[0],m1_ms_tx_transfer_en[0]}),
-        .rx_online           (&{m1_sl_tx_transfer_en[0],m1_ms_tx_transfer_en[0]}),
+        .tx_online           (&{intf_m1.sl_tx_transfer_en[0],intf_m1.ms_tx_transfer_en[0]}),
+        .rx_online           (&{intf_m1.sl_tx_transfer_en[0],intf_m1.ms_tx_transfer_en[0]}),
         .init_ar_credit      (init_ar_credit),
         .init_aw_credit      (init_aw_credit),
         .init_w_credit       (init_w_credit ),
@@ -466,17 +430,10 @@ module top_aib_axi_bridge_master #(
         .rx_r_debug_status   (rx_r_debug_status),
         .rx_b_debug_status   (rx_b_debug_status),
 
-        .m_gen2_mode         (1'b1),
+        .m_gen2_mode         (1'b0),
         .delay_x_value       (delay_x_value),
         .delay_y_value       (delay_y_value),
         .delay_z_value       (delay_z_value)
 
     );
-
-    initial begin
-        $display("AIB to AXI Bridge Master");
-        avmm_if_m1.cfg_write({0,11'h208}, 4'hf, 32'h0600_0000);
-        avmm_if_m1.cfg_write({0,11'h210}, 4'hf, 32'h0000_000b);      
-        avmm_if_m1.cfg_write({0,11'h218}, 4'hf, 32'h60a1_0000);
-    end
 endmodule

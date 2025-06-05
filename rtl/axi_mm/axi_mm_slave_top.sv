@@ -27,8 +27,8 @@ module axi_mm_slave_top  (
   input  logic [7:0]         init_b_credit       ,
 
   // PHY Interconnect
-  output logic [ 159:   0]   tx_phy0             ,
-  input  logic [ 159:   0]   rx_phy0             ,
+  output logic [  79:   0]   tx_phy0             ,
+  input  logic [  79:   0]   rx_phy0             ,
 
   // ar channel
   output logic [   3:   0]   user_arid           ,
@@ -345,8 +345,8 @@ module axi_mm_slave_top  (
          .tx_b_pushbit                     (tx_b_pushbit),
          .rx_b_credit                      (rx_b_credit),
 
-         .tx_phy0                          (tx_phy0[159:0]),
-         .rx_phy0                          (rx_phy0[159:0]),
+         .tx_phy0                          (tx_phy0[79:0]),
+         .rx_phy0                          (rx_phy0[79:0]),
 
          .clk_wr                           (clk_wr),
          .clk_rd                           (clk_wr),

@@ -22,19 +22,22 @@ module aib_axi_bridge_tb;
     parameter DWIDTH = 40;
 
     // Clock and reset
-    reg m_clk_wr, m_clk_rd;         // Master-side AXI clocks
-    reg s_clk_wr, s_clk_rd;         // Slave-side AXI clocks
-    reg m_fwd_clk, s_fwd_clk;       // Forward path clocks
-    reg m_rst_wr_n, m_rst_rd_n;
-    reg s_rst_wr_n, s_rst_rd_n;
+    reg m_clk_wr;         // Master-side AXI clocks
+    reg s_clk_wr;         // Slave-side AXI clocks
+
+    reg m_ns_fwd_clk;
+
+    reg m_rst_wr_n;
+    reg s_rst_wr_n;
+    
     reg avmm_clk;
-    reg m_avmm_rst_n, s_avmm_rst_n;
+    reg avmm_rst_n;
 
     // Oscillator clock
     reg osc_clk;
 
     // Configuration signals
-    reg i_conf_done;
+    wire i_conf_done;
 
     // Credit signals
     reg [7:0] m_init_ar_credit, m_init_aw_credit, m_init_w_credit;
@@ -43,12 +46,6 @@ module aib_axi_bridge_tb;
     // Delay values
     reg [15:0] m_delay_x_value, m_delay_y_value, m_delay_z_value;
     reg [15:0] s_delay_x_value, s_delay_y_value, s_delay_z_value;
-
-    // Debug outputs
-    wire [31:0] m_tx_ar_debug_status, m_tx_aw_debug_status, m_tx_w_debug_status;
-    wire [31:0] m_rx_r_debug_status, m_rx_b_debug_status;
-    wire [31:0] s_rx_ar_debug_status, s_rx_aw_debug_status, s_rx_w_debug_status;
-    wire [31:0] s_tx_r_debug_status, s_tx_b_debug_status;
 
     // `include "agent.sv" // Assuming axi_if is defined here or globally
     // AXI interfaces
@@ -78,55 +75,41 @@ module aib_axi_bridge_tb;
         .vddtx(vddtx),
         .vss(vss),
 
-        .m_ns_fwd_clk(m_fwd_clk),
-        .m_ns_rcv_clk(m_fwd_clk),
-
-        .s_ns_fwd_clk(s_fwd_clk),
-        .s_ns_rcv_clk(s_fwd_clk),
+        .m_ns_fwd_clk(m_ns_fwd_clk),
+        .m_ns_rcv_clk(m_ns_fwd_clk),
 
         // Master AXI Interface
         .m_clk_wr(m_clk_wr),
         .m_rst_wr_n(m_rst_wr_n),
-        .m_clk_rd(m_clk_rd),
-        .m_rst_rd_n(m_rst_rd_n),
+
         .m_init_ar_credit(m_init_ar_credit),
         .m_init_aw_credit(m_init_aw_credit),
         .m_init_w_credit(m_init_w_credit),
+        
         .m_user_axi_if(m_user_axi_if),
-        .m_tx_ar_debug_status(m_tx_ar_debug_status),
-        .m_tx_aw_debug_status(m_tx_aw_debug_status),
-        .m_tx_w_debug_status(m_tx_w_debug_status),
-        .m_rx_r_debug_status(m_rx_r_debug_status),
-        .m_rx_b_debug_status(m_rx_b_debug_status),
+        
         .m_delay_x_value(m_delay_x_value),
         .m_delay_y_value(m_delay_y_value),
         .m_delay_z_value(m_delay_z_value),
 
-        .m_ns_mac_rdy(m_rst_wr_n & m_rst_rd_n),
-        .m_fs_mac_rdy(s_rst_wr_n & s_rst_rd_n),
-
         // Slave AXI Interface
         .s_clk_wr(s_clk_wr),
         .s_rst_wr_n(s_rst_wr_n),
-        .s_clk_rd(s_clk_rd),
-        .s_rst_rd_n(s_rst_rd_n),
+        
         .s_init_r_credit(s_init_r_credit),
         .s_init_b_credit(s_init_b_credit),
+        
         .s_user_axi_if(s_user_axi_if),
-        .s_rx_ar_debug_status(s_rx_ar_debug_status),
-        .s_rx_aw_debug_status(s_rx_aw_debug_status),
-        .s_rx_w_debug_status(s_rx_w_debug_status),
-        .s_tx_r_debug_status(s_tx_r_debug_status),
-        .s_tx_b_debug_status(s_tx_b_debug_status),
+        
         .s_delay_x_value(s_delay_x_value),
         .s_delay_y_value(s_delay_y_value),
         .s_delay_z_value(s_delay_z_value),
 
         .m_avmm_clk(avmm_clk),
-        .m_avmm_rst_n(m_avmm_rst_n),
+        .m_avmm_rst_n(avmm_rst_n),
 
         .s_avmm_clk(avmm_clk),
-        .s_avmm_rst_n(s_avmm_rst_n),
+        .s_avmm_rst_n(avmm_rst_n),
 
         // Common AIB signals
         .i_osc_clk(osc_clk),
@@ -140,28 +123,13 @@ module aib_axi_bridge_tb;
     end
 
     initial begin
-        m_clk_rd = 1'b0; // Initialize
-        forever #(RD_CYCLE/2) m_clk_rd = ~m_clk_rd;
-    end
-
-    initial begin
-        m_fwd_clk = 1'b0; // Initialize
-        forever #(FWD_CYCLE/2) m_fwd_clk = ~m_fwd_clk;
+        m_ns_fwd_clk = 1'b0; // Initialize
+        forever #(FWD_CYCLE/2) m_ns_fwd_clk = ~m_ns_fwd_clk;
     end
 
     initial begin
         s_clk_wr = 1'b0; // Initialize
         forever #(WR_CYCLE/2) s_clk_wr = ~s_clk_wr;
-    end
-
-    initial begin
-        s_clk_rd = 1'b0; // Initialize
-        forever #(RD_CYCLE/2) s_clk_rd = ~s_clk_rd;
-    end
-
-    initial begin
-        s_fwd_clk = 1'b0; // Initialize
-        forever #(FWD_CYCLE/2) s_fwd_clk = ~s_fwd_clk;
     end
 
     initial begin
@@ -182,14 +150,8 @@ module aib_axi_bridge_tb;
 
         // Initial reset states
         m_rst_wr_n   = 1'b0;
-        m_rst_rd_n   = 1'b0;
         s_rst_wr_n   = 1'b0;
-        s_rst_rd_n   = 1'b0;
-        m_avmm_rst_n = 1'b0;
-        s_avmm_rst_n = 1'b0;
-
-        // Initialize configuration signals
-        i_conf_done = 1'b0;
+        avmm_rst_n = 1'b0;
 
         // Initialize credit values
         m_init_ar_credit = 8'h8;
@@ -207,23 +169,17 @@ module aib_axi_bridge_tb;
         s_delay_z_value = 16'h0;
 
         // Release reset after some time
-        #100ns;
+        wait (100ns); // Wait for 100 ns before releasing reset
         m_rst_wr_n   = 1'b1;
-        m_rst_rd_n   = 1'b1;
         s_rst_wr_n   = 1'b1;
-        s_rst_rd_n   = 1'b1;
-        m_avmm_rst_n = 1'b1;
-        s_avmm_rst_n = 1'b1;
+        avmm_rst_n = 1'b1;
 
-        // Set configuration done
-        #20ns;
-        i_conf_done = 1'b1;
     end
 
     // Test sequence
     initial begin
         // Wait for reset to complete on relevant interfaces
-        wait(m_rst_wr_n === 1'b1 && s_rst_wr_n === 1'b1 && m_rst_rd_n === 1'b1 && s_rst_rd_n === 1'b1);
+        wait(m_rst_wr_n === 1'b1 && s_rst_wr_n === 1'b1);
         $display("[%0t ns] Resets de-asserted.", $time);
 
         // Initialize AXI interface signals (testbench side)
@@ -332,7 +288,7 @@ module aib_axi_bridge_tb;
     begin
         $display("[%0t ns] Starting AXI read transaction test for Addr: 0x%h", $time, addr);
 
-        @(posedge s_clk_rd);
+        @(posedge s_clk_wr);
         s_user_axi_if.arvalid <= 1;
         s_user_axi_if.araddr  <= addr;
         s_user_axi_if.arid    <= id;
@@ -341,18 +297,18 @@ module aib_axi_bridge_tb;
         s_user_axi_if.arburst <= 2'b01;
 
         wait (s_user_axi_if.arready === 1'b1 && s_user_axi_if.arvalid === 1'b1);
-        @(posedge s_clk_rd);
+        @(posedge s_clk_wr);
         s_user_axi_if.arvalid <= 0;
 
         wait (m_user_axi_if.arvalid === 1'b1);
         $display("[%0t ns] Read Address appeared on DUT master interface. ARID: %h", $time, m_user_axi_if.arid);
 
-        @(posedge m_clk_rd);
+        @(posedge m_clk_wr);
         m_user_axi_if.arready <= 1;
-        @(posedge m_clk_rd);
+        @(posedge m_clk_wr);
         m_user_axi_if.arready <= 0;
 
-        @(posedge m_clk_rd);
+        @(posedge m_clk_wr);
         m_user_axi_if.rvalid <= 1;
         m_user_axi_if.rdata  <= expected_data;
         m_user_axi_if.rresp  <= 2'b00;
@@ -360,13 +316,13 @@ module aib_axi_bridge_tb;
         m_user_axi_if.rlast  <= 1;
 
         wait (m_user_axi_if.rready === 1'b1 && m_user_axi_if.rvalid === 1'b1);
-        @(posedge m_clk_rd);
+        @(posedge m_clk_wr);
         m_user_axi_if.rvalid <= 0;
         m_user_axi_if.rlast  <= 0;
 
         s_user_axi_if.rready <= 1;
         wait (s_user_axi_if.rvalid === 1'b1 && s_user_axi_if.rready === 1'b1);
-        @(posedge s_clk_rd);
+        @(posedge s_clk_wr);
 
         if (s_user_axi_if.rdata !== expected_data) begin
             $error("[%0t ns] Read data mismatch! Expected: 0x%h, Got: 0x%h. Initial ARID: %h, DUT Rsp RID: %h",

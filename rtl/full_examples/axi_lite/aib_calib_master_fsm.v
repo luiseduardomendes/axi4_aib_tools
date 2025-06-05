@@ -171,15 +171,16 @@ module calib_master_fsm #(
                 end
                 WAIT_TRANSFER_EN: begin
                     // ms_rx_dcc_dll_lock_req and ms_tx_dcc_dll_lock_req remain asserted.
+                    i_conf_done         <= 1'b1; // Example: make i_conf_done a pulse
+                    ns_mac_rdy          <= {TOTAL_CHNL_NUM{1'b1}};
+                    ns_adapter_rstn     <= {TOTAL_CHNL_NUM{1'b1}};
+                    ms_rx_dcc_dll_lock_req <= {TOTAL_CHNL_NUM{1'b1}};
+                    ms_tx_dcc_dll_lock_req <= {TOTAL_CHNL_NUM{1'b1}};
                 end
                 DONE: begin
                     calib_done          <= 1'b1;
                     // De-assert other signals if they should not persist after done.
-                    i_conf_done         <= 1'b0; // Example: make i_conf_done a pulse
-                    ns_mac_rdy          <= {TOTAL_CHNL_NUM{1'b0}};
-                    ns_adapter_rstn     <= {TOTAL_CHNL_NUM{1'b0}};
-                    ms_rx_dcc_dll_lock_req <= {TOTAL_CHNL_NUM{1'b0}};
-                    ms_tx_dcc_dll_lock_req <= {TOTAL_CHNL_NUM{1'b0}};
+                    
                 end
             endcase
         end
