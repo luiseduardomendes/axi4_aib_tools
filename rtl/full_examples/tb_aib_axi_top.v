@@ -12,13 +12,14 @@ module aib_axi_bridge_tb;
     parameter NBR_LANES = 40;
     parameter MS_SSR_LEN = 81;
     parameter SL_SSR_LEN = 73;
-    parameter DWIDTH = 8;
+    parameter DWIDTH = 40;
 
     // Clock and reset
     reg m_clk_wr, m_clk_rd;
     reg s_clk_wr, s_clk_rd;
     reg m_rst_wr_n, m_rst_rd_n;
     reg s_rst_wr_n, s_rst_rd_n;
+    reg m_fwd_clk, s_fwd_clk;
     reg m_avmm_clk, m_avmm_rst_n;
     reg s_avmm_clk, s_avmm_rst_n;
     
@@ -32,11 +33,7 @@ module aib_axi_bridge_tb;
 
     reg [NBR_CHNLS-1:0]  m_ns_fwd_clk;
     reg [NBR_CHNLS-1:0]  m_ns_rcv_clk;
-    
-    // Online signals
-    //reg m_tx_online, m_rx_online;
-    //reg s_tx_online, s_rx_online;
-    
+
     // Credit signals
     reg [7:0] m_init_ar_credit, m_init_aw_credit, m_init_w_credit;
     reg [7:0] s_init_r_credit, s_init_b_credit;
@@ -74,52 +71,40 @@ module aib_axi_bridge_tb;
         .DWIDTH(DWIDTH)
     ) dut (
         // Power pins
-        .vddc1(vddc1),
-        .vddc2(vddc2),
-        .vddtx(vddtx),
-        .vss(vss),
-
-        .m_ns_fwd_clk(m_ns_fwd_clk),
-        .m_ns_rcv_clk(m_ns_rcv_clk),
+        .vddc1(HI),
+        .vddc2(HI),
+        .vddtx(HI),
+        .vss(LO),
         
         // Master AXI Interface
         .m_clk_wr(m_clk_wr),
         .m_rst_wr_n(m_rst_wr_n),
         .m_clk_rd(m_clk_rd),
         .m_rst_rd_n(m_rst_rd_n),
-        //.m_tx_online(m_tx_online),
-        //.m_rx_online(m_rx_online),
+        .m_fwd_clk(m_fwd_clk),
+
         .m_init_ar_credit(m_init_ar_credit),
         .m_init_aw_credit(m_init_aw_credit),
         .m_init_w_credit(m_init_w_credit),
+        
         .m_user_axi_if(m_user_axi_if),
-        .m_tx_ar_debug_status(m_tx_ar_debug_status),
-        .m_tx_aw_debug_status(m_tx_aw_debug_status),
-        .m_tx_w_debug_status(m_tx_w_debug_status),
-        .m_rx_r_debug_status(m_rx_r_debug_status),
-        .m_rx_b_debug_status(m_rx_b_debug_status),
+        
         .m_delay_x_value(m_delay_x_value),
         .m_delay_y_value(m_delay_y_value),
         .m_delay_z_value(m_delay_z_value),
 
-        .m_ns_mac_rdy(m_rst_wr_n & m_rst_rd_n),
-        .m_fs_mac_rdy(s_rst_wr_n & s_rst_rd_n),
-    
         // Slave AXI Interface
         .s_clk_wr(s_clk_wr),
         .s_rst_wr_n(s_rst_wr_n),
         .s_clk_rd(s_clk_rd),
         .s_rst_rd_n(s_rst_rd_n),
-        //.s_tx_online(s_tx_online),
-        //.s_rx_online(s_rx_online),
+        .s_fwd_clk(s_fwd_clk),
+        
         .s_init_r_credit(s_init_r_credit),
         .s_init_b_credit(s_init_b_credit),
+        
         .s_user_axi_if(s_user_axi_if),
-        .s_rx_ar_debug_status(s_rx_ar_debug_status),
-        .s_rx_aw_debug_status(s_rx_aw_debug_status),
-        .s_rx_w_debug_status(s_rx_w_debug_status),
-        .s_tx_r_debug_status(s_tx_r_debug_status),
-        .s_tx_b_debug_status(s_tx_b_debug_status),
+        
         .s_delay_x_value(s_delay_x_value),
         .s_delay_y_value(s_delay_y_value),
         .s_delay_z_value(s_delay_z_value),
@@ -131,10 +116,7 @@ module aib_axi_bridge_tb;
         .s_avmm_rst_n(s_avmm_rst_n),
 
         // Common AIB signals
-        .i_osc_clk(i_osc_clk),
-        .i_conf_done(i_conf_done)
-        // .iopad_device_detect(iopad_device_detect),
-        // .iopad_power_on_reset(iopad_power_on_reset)
+        .i_osc_clk(i_osc_clk)
     );
     
     // Clock generation
@@ -174,13 +156,13 @@ module aib_axi_bridge_tb;
     end
 
     initial begin
-        m_ns_fwd_clk = {NBR_CHNLS{1'b0}};
-        forever #10 m_ns_fwd_clk = ~m_ns_fwd_clk; // Toggle every 20ns
+        m_fwd_clk = {NBR_CHNLS{1'b0}};
+        forever #10 m_fwd_clk = ~m_fwd_clk; // Toggle every 20ns
     end
 
     initial begin
-        m_ns_rcv_clk = {NBR_CHNLS{1'b0}};
-        forever #10 m_ns_rcv_clk = ~m_ns_rcv_clk; // Toggle every 20ns
+        s_fwd_clk = {NBR_CHNLS{1'b0}};
+        forever #10 s_fwd_clk = ~s_fwd_clk; // Toggle every 20ns
     end
     
     // Reset generation
