@@ -6,7 +6,8 @@ supply0 LO;  // Global logic '0' (connects to gnd)
 module aib_axi_bridge_tb;
 
     // Parameters from the design
-    parameter NBR_CHNLS = 24;
+    parameter ACTIVE_CHNLS = 1;
+    parameter NBR_CHNLS = 1;
     parameter NBR_BUMPS = 102;
     parameter NBR_PHASES = 4;
     parameter NBR_LANES = 40;

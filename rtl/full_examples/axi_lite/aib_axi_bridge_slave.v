@@ -19,6 +19,7 @@ supply1 HI;  // Global logic '1' (connects to vdd)
 supply0 LO;  // Global logic '0' (connects to gnd)
 
 module top_aib_axi_bridge_slave #(
+    parameter ACTIVE_CHNLS = 1,
     parameter NBR_CHNLS = 24,       // Total number of channels 
     parameter NBR_BUMPS = 102,      // Number of BUMPs
     parameter NBR_PHASES = 4,       // Number of phases
@@ -109,22 +110,29 @@ module top_aib_axi_bridge_slave #(
         // ************* Configuration *************          
             input   [15:0]        delay_x_value       ,
             input   [15:0]        delay_y_value       ,
-            input   [15:0]        delay_z_value       ,
+            input   [15:0]        delay_z_value       
         // *****************************************
 
-        // ********* Avalon MM Interface ***********
-            input  wire [31:0]  i_cfg_avmm_addr,
-            input  wire [3:0]   i_cfg_avmm_byte_en,
-            input  wire         i_cfg_avmm_read,
-            input  wire         i_cfg_avmm_write,
-            input  wire [31:0]  i_cfg_avmm_wdata,
-
-            output wire         o_cfg_avmm_rdatavld,
-            output wire [31:0]  o_cfg_avmm_rdata,
-            output wire         o_cfg_avmm_waitreq
-        // *****************************************
     // *************************************************************************
 );
+
+    calib_slave_fsm #(
+        .TOTAL_CHNL_NUM(NBR_CHNLS)
+    ) u_calib_slave_fsm (
+        .clk                (avmm_clk),
+        .rst_n              (avmm_rst_n),
+        .ms_rx_dcc_dll_lock_req (intf_s1.ms_rx_dcc_dll_lock_req),
+        .ms_tx_dcc_dll_lock_req (intf_s1.ms_tx_dcc_dll_lock_req),
+
+
+        .i_conf_done        (intf_s1.i_conf_done),
+        .ns_mac_rdy         (intf_s1.ns_mac_rdy),
+        .ns_adapter_rstn    (intf_s1.ns_adapter_rstn),
+        .sl_rx_dcc_dll_lock_req (intf_s1.sl_rx_dcc_dll_lock_req),
+        .sl_tx_dcc_dll_lock_req (intf_s1.sl_tx_dcc_dll_lock_req),
+        .sl_tx_transfer_en  (intf_s1.sl_tx_transfer_en),
+        .sl_rx_transfer_en  (intf_s1.sl_rx_transfer_en)
+    );
 
     dut_if_mac #(.DWIDTH (DWIDTH)) intf_s1 (
         .wr_clk(m_wr_clk), 

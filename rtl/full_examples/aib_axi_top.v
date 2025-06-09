@@ -1,6 +1,7 @@
 `include "../interfaces/axi_if.v"
 
 module aib_axi_top #(
+    parameter ACTIVE_CHNLS = 1,
     parameter NBR_CHNLS = 24,       // Total number of channels 
     parameter NBR_BUMPS = 102,      // Number of BUMPs
     parameter NBR_PHASES = 4,       // Number of phases
@@ -191,15 +192,7 @@ module aib_axi_top #(
         .delay_z_value(m_delay_z_value),
 
         .avmm_clk(m_avmm_clk),
-        .avmm_rst_n(m_avmm_rst_n),
-        .i_cfg_avmm_addr(m_i_cfg_avmm_addr),
-        .i_cfg_avmm_byte_en(m_i_cfg_avmm_byte_en),
-        .i_cfg_avmm_read(m_i_cfg_avmm_read),
-        .i_cfg_avmm_write(m_i_cfg_avmm_write),
-        .i_cfg_avmm_wdata(m_i_cfg_avmm_wdata),
-        .o_cfg_avmm_rdatavld(m_o_cfg_avmm_rdatavld),
-        .o_cfg_avmm_rdata(m_o_cfg_avmm_rdata),
-        .o_cfg_avmm_waitreq(m_o_cfg_avmm_waitreq)
+        .avmm_rst_n(m_avmm_rst_n)
     );
 
     // Instantiate Slave Bridge
@@ -264,15 +257,7 @@ module aib_axi_top #(
         .delay_z_value(s_delay_z_value),
 
         .avmm_clk(s_avmm_clk),
-        .avmm_rst_n(s_avmm_rst_n),
-        .i_cfg_avmm_addr(s_i_cfg_avmm_addr),
-        .i_cfg_avmm_byte_en(s_i_cfg_avmm_byte_en),
-        .i_cfg_avmm_read(s_i_cfg_avmm_read),
-        .i_cfg_avmm_write(s_i_cfg_avmm_write),
-        .i_cfg_avmm_wdata(s_i_cfg_avmm_wdata),
-        .o_cfg_avmm_rdatavld(s_o_cfg_avmm_rdatavld), // TODO: this outputs are not going anywhere
-        .o_cfg_avmm_rdata(s_o_cfg_avmm_rdata),
-        .o_cfg_avmm_waitreq(s_o_cfg_avmm_waitreq)
+        .avmm_rst_n(s_avmm_rst_n)
         
     );
 

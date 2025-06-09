@@ -20,6 +20,7 @@ supply0 LO;  // Global logic '0' (connects to gnd)
 
 
 module top_aib_axi_bridge_master #(
+    parameter ACTIVE_CHNLS = 1,
     parameter NBR_CHNLS = 24,       // Total number of channels 
     parameter NBR_BUMPS = 102,      // Number of BUMPs
     parameter NBR_PHASES = 4,       // Number of phases
@@ -108,22 +109,39 @@ module top_aib_axi_bridge_master #(
         // ************* Configuration *************          
             input   [15:0]        delay_x_value       ,
             input   [15:0]        delay_y_value       ,
-            input   [15:0]        delay_z_value       ,
-        // *****************************************
-
-        // ********* Avalon MM Interface ***********
-            input   [31:0]        i_cfg_avmm_addr,
-            input   [3:0]         i_cfg_avmm_byte_en,
-            input                 i_cfg_avmm_read,
-            input                 i_cfg_avmm_write,
-            input   [31:0]        i_cfg_avmm_wdata,
-            
-            output                o_cfg_avmm_rdatavld,
-            output  [31:0]        o_cfg_avmm_rdata,
-            output                o_cfg_avmm_waitreq
+            input   [15:0]        delay_z_value       
         // *****************************************
     // *************************************************************************
 );
+
+    calib_master_fsm #(
+        .TOTAL_CHNL_NUM(NBR_CHNLS)
+    ) u_calib_fsm (
+        .clk(avmm_clk),
+        .rst_n(avmm_rst_n),
+
+        .sl_tx_transfer_en(intf_m1.sl_tx_transfer_en), // Transfer enable signals from AIB
+        .sl_rx_transfer_en(intf_m1.sl_rx_transfer_en), // Transfer enable signals from AIB
+
+        //.sl_tx_transfer_en({24{1'b1}}), // Transfer enable signals from AIB
+        //.sl_rx_transfer_en({24{1'b1}}), // Transfer enable signals from AIB
+
+        .calib_done(calib_done),
+        .i_conf_done(intf_m1.i_conf_done),
+        .ns_adapter_rstn    (intf_m1.ns_adapter_rstn),
+        .ns_mac_rdy         (intf_m1.ns_mac_rdy),
+        .ms_rx_dcc_dll_lock_req (intf_m1.ms_rx_dcc_dll_lock_req),
+        .ms_tx_dcc_dll_lock_req (intf_m1.ms_tx_dcc_dll_lock_req), 
+        
+        .avmm_address_o(avmm_if_m1.address),
+        .avmm_read_o(avmm_if_m1.read),
+        .avmm_write_o(avmm_if_m1.write),
+        .avmm_writedata_o(avmm_if_m1.writedata),
+        .avmm_byteenable_o(avmm_if_m1.byteenable),
+        .avmm_readdata_i(avmm_if_m1.readdata),      // Input, not used by current write-only sequencer
+        .avmm_readdatavalid_i(avmm_if_m1.readdatavalid), // Input, not used by current write-only sequencer
+        .avmm_waitrequest_i(avmm_if_m1.waitrequest)
+    );
     
     dut_if_mac #(.DWIDTH (DWIDTH)) intf_m1 (
         .wr_clk(m_wr_clk), 

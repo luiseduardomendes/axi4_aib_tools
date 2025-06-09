@@ -146,10 +146,10 @@ module calib_master_fsm #(
                     acs_start_main_op   <= 1'b1;
                     i_conf_done         <= 1'b0;
                     // Other calibration control signals remain at their reset values (low)
-                    ns_mac_rdy          <= {TOTAL_CHNL_NUM{1'b0}};
-                    ns_adapter_rstn     <= {TOTAL_CHNL_NUM{1'b0}};
-                    ms_rx_dcc_dll_lock_req <= {TOTAL_CHNL_NUM{1'b0}};
-                    ms_tx_dcc_dll_lock_req <= {TOTAL_CHNL_NUM{1'b0}};
+                    ns_mac_rdy          <= {TOTAL_CHNL_NUM{1'b1}};
+                    ns_adapter_rstn     <= {TOTAL_CHNL_NUM{1'b1}};
+                    ms_rx_dcc_dll_lock_req <= {TOTAL_CHNL_NUM{1'b1}};
+                    ms_tx_dcc_dll_lock_req <= {TOTAL_CHNL_NUM{1'b1}};
                     calib_done          <= 1'b0;
                 end
                 CONF_DONE: begin
