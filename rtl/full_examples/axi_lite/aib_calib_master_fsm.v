@@ -3,7 +3,9 @@
 // to configure a peripheral using an instantiated Avalon configuration sequencer.
 
 module calib_master_fsm #(
-    parameter TOTAL_CHNL_NUM = 24
+    parameter TOTAL_CHNL_NUM = 24,
+    localparam AVMM_WIDTH = 32,
+    localparam BYTE_WIDTH = 4
 )(
     input  wire        clk,
     input  wire        rst_n,
@@ -32,26 +34,11 @@ module calib_master_fsm #(
     input  wire                        avmm_waitrequest_i
 );
 
-    // Local parameters for Avalon Interface, matching the provided interface snippet
-    localparam AVMM_WIDTH = 32;
-    localparam BYTE_WIDTH = 4;
-
-    typedef enum logic [2:0] {
-        IDLE,
-        RESET,
-        CONFIGURING,        // State to trigger and wait for Avalon configuration
-        CONF_DONE,          // Avalon configuration is complete
-        ASSERT_READY,
-        SEND_DLL_LOCK_REQ,
-        WAIT_TRANSFER_EN,
-        DONE
-    } state_t;
-
-    state_t state, next_state_logic; // Renamed 'next' to 'next_state_logic' to avoid keyword clash if any
-
     // Internal signals for controlling the avalon_config_sequencer
     logic acs_start_main_op;      // Start signal to avalon_config_sequencer
     logic acs_main_op_done;       // Done signal from avalon_config_sequencer
+    logic acs_start_phase_adj;
+    logic acs_phase_adj_done;
 
     // Instantiate the Avalon Configuration Sequencer
     // IMPORTANT: Ensure the 'avalon_config_sequencer' module definition is available in your project.
@@ -61,6 +48,8 @@ module calib_master_fsm #(
         .rst_n              (rst_n),
         .start_main_op      (acs_start_main_op),
         .main_op_done       (acs_main_op_done),
+        .start_phase_adj    (acs_start_phase_adj),
+        .phase_adj_done     (acs_phase_adj_done),
 
         // Avalon MM Interface connections
         .avmm_address       (avmm_address_o),
@@ -71,6 +60,21 @@ module calib_master_fsm #(
         .avmm_waitrequest   (avmm_waitrequest_i)
     );
 
+    // State machine states
+    typedef enum logic [3:0] {
+        IDLE,
+        RESET,
+        CONFIGURING,        // State to trigger and wait for Avalon configuration
+        CONF_DONE,          // Avalon configuration is complete
+        PHASE_ADJUST,
+        PHASE_ADJUST_WAIT,
+        ASSERT_READY,
+        SEND_DLL_LOCK_REQ,
+        WAIT_TRANSFER_EN,
+        DONE
+    } state_t;
+
+    state_t state, next_state_logic; // Renamed 'next' to 'next_state_logic' to avoid keyword clash if any
 
     // State register: Determines the current state of the FSM
     always_ff @(posedge clk or negedge rst_n) begin
@@ -93,7 +97,14 @@ module calib_master_fsm #(
                 else
                     next_state_logic = CONFIGURING; // Stay polling acs_main_op_done
             end
-            CONF_DONE: next_state_logic = ASSERT_READY;
+            CONF_DONE: next_state_logic = PHASE_ADJUST;
+            PHASE_ADJUST: next_state_logic = PHASE_ADJUST_WAIT;
+            PHASE_ADJUST_WAIT: begin
+                if (acs_phase_adj_done)
+                    next_state_logic = ASSERT_READY;
+                else
+                    next_state_logic = PHASE_ADJUST_WAIT;
+            end
             ASSERT_READY: next_state_logic = SEND_DLL_LOCK_REQ;
             SEND_DLL_LOCK_REQ: next_state_logic = WAIT_TRANSFER_EN;
             WAIT_TRANSFER_EN:
@@ -116,10 +127,12 @@ module calib_master_fsm #(
             ms_rx_dcc_dll_lock_req <= {TOTAL_CHNL_NUM{1'b0}};
             ms_tx_dcc_dll_lock_req <= {TOTAL_CHNL_NUM{1'b0}};
             acs_start_main_op   <= 1'b0; // Reset start signal to sequencer
+            acs_start_phase_adj <= 1'b0;
         end else begin
             // Default assignments for signals that might not be set in every state
             // This helps in managing pulse signals or ensuring signals are de-asserted correctly.
             acs_start_main_op <= 1'b0; // Default to de-asserting start for sequencer
+            acs_start_phase_adj <= 1'b0;
 
             case (state)
                 IDLE: begin // Explicitly set all to reset state for clarity
@@ -130,6 +143,7 @@ module calib_master_fsm #(
                     ms_rx_dcc_dll_lock_req <= {TOTAL_CHNL_NUM{1'b0}};
                     ms_tx_dcc_dll_lock_req <= {TOTAL_CHNL_NUM{1'b0}};
                     acs_start_main_op   <= 1'b0;
+                    acs_start_phase_adj <= 1'b0;
                 end
                 RESET: begin
                     // Ensure outputs are at their initial values during RESET
@@ -140,6 +154,7 @@ module calib_master_fsm #(
                     ms_rx_dcc_dll_lock_req <= {TOTAL_CHNL_NUM{1'b0}};
                     ms_tx_dcc_dll_lock_req <= {TOTAL_CHNL_NUM{1'b0}};
                     acs_start_main_op   <= 1'b0;
+                    acs_start_phase_adj <= 1'b0;
                 end
                 CONFIGURING: begin
                     // Start the avalon_config_sequencer and keep i_conf_done low.
@@ -151,13 +166,34 @@ module calib_master_fsm #(
                     ms_rx_dcc_dll_lock_req <= {TOTAL_CHNL_NUM{1'b1}};
                     ms_tx_dcc_dll_lock_req <= {TOTAL_CHNL_NUM{1'b1}};
                     calib_done          <= 1'b0;
+                    acs_start_phase_adj <= 1'b0;
                 end
                 CONF_DONE: begin
                     // Avalon configuration is complete, so assert i_conf_done.
                     // acs_start_main_op is already de-asserted by default or explicitly here.
                     i_conf_done         <= 1'b1;
                     acs_start_main_op   <= 1'b0; // Ensure sequencer start is de-asserted
+                    acs_start_phase_adj <= 1'b0;
                     // Other signals remain as they were or at reset values.
+                end
+                PHASE_ADJUST: begin
+                    acs_start_phase_adj <= 1'b1;
+                    acs_start_main_op   <= 1'b0;
+                    i_conf_done         <= 1'b1;
+                    ns_mac_rdy          <= {TOTAL_CHNL_NUM{1'b1}};
+                    ns_adapter_rstn     <= {TOTAL_CHNL_NUM{1'b1}};
+                    ms_rx_dcc_dll_lock_req <= {TOTAL_CHNL_NUM{1'b1}};
+                    ms_tx_dcc_dll_lock_req <= {TOTAL_CHNL_NUM{1'b1}};
+                    calib_done          <= 1'b0;
+                end
+                PHASE_ADJUST_WAIT: begin
+                    acs_start_phase_adj <= 1'b0;
+                    i_conf_done         <= 1'b1;
+                    ns_mac_rdy          <= {TOTAL_CHNL_NUM{1'b1}};
+                    ns_adapter_rstn     <= {TOTAL_CHNL_NUM{1'b1}};
+                    ms_rx_dcc_dll_lock_req <= {TOTAL_CHNL_NUM{1'b1}};
+                    ms_tx_dcc_dll_lock_req <= {TOTAL_CHNL_NUM{1'b1}};
+                    calib_done          <= 1'b0;
                 end
                 ASSERT_READY: begin
                     // i_conf_done remains asserted (or could be a pulse if de-asserted here)
