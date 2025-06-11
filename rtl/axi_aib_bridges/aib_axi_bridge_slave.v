@@ -115,22 +115,20 @@ module top_aib_axi_bridge_slave #(
 
     // *************************************************************************
 );
-/*
+
     calib_slave_fsm #(
         .TOTAL_CHNL_NUM(NBR_CHNLS)
     ) u_calib_slave_fsm (
         .clk                (avmm_clk),
         .rst_n              (avmm_rst_n),
-        .ms_rx_dcc_dll_lock_req (intf_s1.ms_rx_dcc_dll_lock_req),
-        .ms_tx_dcc_dll_lock_req (intf_s1.ms_tx_dcc_dll_lock_req),
+        .ms_tx_transfer_en (intf_s1.ms_tx_transfer_en),
+        .ms_rx_transfer_en (intf_s1.ms_rx_transfer_en),
 
         .i_conf_done        (intf_s1.i_conf_done),
         .ns_mac_rdy         (intf_s1.ns_mac_rdy),
         .ns_adapter_rstn    (intf_s1.ns_adapter_rstn),
         .sl_rx_dcc_dll_lock_req (intf_s1.sl_rx_dcc_dll_lock_req),
         .sl_tx_dcc_dll_lock_req (intf_s1.sl_tx_dcc_dll_lock_req),
-        .sl_tx_transfer_en  (intf_s1.sl_tx_transfer_en),
-        .sl_rx_transfer_en  (intf_s1.sl_rx_transfer_en),
 
         // Avalon-MM interface connections
         .avmm_address_o     (avmm_if_s1.address),
@@ -138,8 +136,10 @@ module top_aib_axi_bridge_slave #(
         .avmm_byteenable_o  (avmm_if_s1.byteenable),
         .avmm_write_o       (avmm_if_s1.write),
         .avmm_read_o        (avmm_if_s1.read),
+        .avmm_readdata_i    (avmm_if_s1.readdata),
+        .avmm_readdatavalid_i (avmm_if_s1.readdatavalid),
         .avmm_waitrequest_i (avmm_if_s1.waitrequest)
-    );*/
+    );
 
     dut_if_mac #(.DWIDTH (DWIDTH)) intf_s1 (
         .wr_clk(m_wr_clk), 

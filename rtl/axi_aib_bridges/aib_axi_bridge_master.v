@@ -114,7 +114,7 @@ module top_aib_axi_bridge_master #(
     // *************************************************************************
 );
 
-/*
+
     calib_master_fsm #(
         .TOTAL_CHNL_NUM(NBR_CHNLS)
     ) u_calib_fsm (
@@ -142,7 +142,7 @@ module top_aib_axi_bridge_master #(
         .avmm_readdata_i(avmm_if_m1.readdata),      // Input, not used by current write-only sequencer
         .avmm_readdatavalid_i(avmm_if_m1.readdatavalid), // Input, not used by current write-only sequencer
         .avmm_waitrequest_i(avmm_if_m1.waitrequest)
-    );*/
+    );
     
     dut_if_mac #(.DWIDTH (DWIDTH)) intf_m1 (
         .wr_clk(m_wr_clk), 
