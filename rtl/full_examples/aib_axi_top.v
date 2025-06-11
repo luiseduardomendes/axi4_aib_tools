@@ -263,6 +263,7 @@ module aib_axi_top #(
 
     // Instantiate EMIB
     emib_m2s2 dut_emib (
+        
         // Master side connections
         .m_ch0_aib(m_iopad_ch0_aib),
         .m_ch1_aib(m_iopad_ch1_aib),
@@ -314,5 +315,6 @@ module aib_axi_top #(
         .s_ch21_aib(s_iopad_ch21_aib),
         .s_ch22_aib(s_iopad_ch22_aib),
         .s_ch23_aib(s_iopad_ch23_aib)
+        
     );
 endmodule

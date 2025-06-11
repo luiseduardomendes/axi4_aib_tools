@@ -1,5 +1,10 @@
+set ROOT_PROJ_DIR ${TOOLS_DIR}/..
+
+set PROJ_DIR  ${ROOT_PROJ_DIR}/aib-protocols
+set AIB_ROOT  ${ROOT_PROJ_DIR}/aib-phy-hardware
+
 # Define RTL directory
-set AIB_ROOT ${PROJ_DIR}/../aib-phy-hardware
+set AIB2_ROOT ${AIB_ROOT}/v2.0/
 set AIBv1_1_ROOT ${AIB_ROOT}/v2.0/rev1.1
 
 set AIBv1_ROOT ${AIB_ROOT}/v2.0/rev1
