@@ -2,3 +2,4 @@
 *.jou
 *.str
 test/
+vivado_log/
