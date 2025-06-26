@@ -116,7 +116,8 @@ module top_aib_axi_bridge_master #(
 
 
     calib_master_fsm #(
-        .TOTAL_CHNL_NUM(NBR_CHNLS)
+        .TOTAL_CHNL_NUM(NBR_CHNLS),
+        .ACTIVE_CHNLS(ACTIVE_CHNLS)
     ) u_calib_fsm (
         .clk(avmm_clk),
         .rst_n(avmm_rst_n),
@@ -158,15 +159,19 @@ module top_aib_axi_bridge_master #(
     logic [NBR_LANES*2*NBR_CHNLS-1:0] data_in;
     logic [NBR_LANES*2*NBR_CHNLS-1:0] data_out;
 
-    assign rx_phy0   [79:0] = intf_m1.data_out_f [79:0];
-    assign intf_m1.data_in_f [79:0] = tx_phy0    [79:0];
-    assign intf_m1.data_in   [79:0] = tx_phy0    [79:0];
+    assign rx_phy0   [79:0] = data_out_f [79:0];
+    assign data_in_f [79:0] = tx_phy0    [79:0];
+    assign data_in   [79:0] = tx_phy0    [79:0];
 
     avalon_mm_if #(.AVMM_WIDTH(32), .BYTE_WIDTH(4)) avmm_if_m1  (
      .clk    (avmm_clk)
     );
 
-    aib_phy_top dut_master1 (
+    assign avmm_if_m1.rst_n = avmm_rst_n;
+
+    aib_phy_top #(
+        .ACTIVE_CHNLS(ACTIVE_CHNLS)
+    ) dut_master1 (
         .vddc1(vddc1),
         .vddc2(vddc2),
         .vddtx(vddtx),
@@ -200,10 +205,10 @@ module top_aib_axi_bridge_master #(
         .iopad_device_detect(iopad_device_detect),
         .iopad_power_on_reset(iopad_power_on_reset),
         
-        .data_in_f(intf_m1.data_in_f),						
-        .data_out_f(intf_m1.data_out_f),                     
-        .data_in(intf_m1.data_in), //output data to pad      
-        .data_out(intf_m1.data_out),                         
+        .data_in_f(data_in_f),						
+        .data_out_f(data_out_f),                     
+        .data_in(data_in), //output data to pad      
+        .data_out(data_out),                         
                 
         .m_ns_fwd_clk(intf_m1.m_ns_fwd_clk), //output data clock	 
         .m_ns_rcv_clk(intf_m1.m_ns_rcv_clk),                         
@@ -235,9 +240,11 @@ module top_aib_axi_bridge_master #(
         
         // sent from AIB master to AIB slave, indicates that the 
         // Leader is ready for transfer and for receiving
+        //.ms_tx_transfer_en(intf_m1.ms_tx_transfer_en),                   
+        //.ms_rx_transfer_en(intf_m1.ms_rx_transfer_en),                   
         .ms_tx_transfer_en(intf_m1.ms_tx_transfer_en),                   
         .ms_rx_transfer_en(intf_m1.ms_rx_transfer_en),                   
-        
+
         // sent from AIB slave to AIB master, indicates that the
         // Follower is ready for transfer and for receiving
         .sl_tx_transfer_en(intf_m1.sl_tx_transfer_en),
@@ -252,7 +259,7 @@ module top_aib_axi_bridge_master #(
         .dual_mode_select(1'b1),
         .m_gen2_mode(1'b1),
 
-        .i_osc_clk(intf_m1.i_osc_clk),   //Only for master mode		
+        .i_osc_clk(intf_m1.osc_clk),   //Only for master mode		
 
         //AVMM interface
         .i_cfg_avmm_clk(avmm_if_m1.clk),

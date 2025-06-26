@@ -9,7 +9,8 @@ read_verilog -sv ${TOOLS_DIR}/rtl/axi_aib_bridges/aib_axi_bridge_slave.v
 source ${TOOLS_DIR}/rtl/axi_mm/axi_mm.f
 
 # FSM Configuration
-source ${TOOLS_DIR}/rtl/aib_fsm/aib_fsm.f
+source ${TOOLS_DIR}/rtl/aib_avmm_fsm/ms_init_fsm.f
+source ${TOOLS_DIR}/rtl/aib_avmm_fsm/sl_init_fsm.f
 
 # Logic Link Files
 source ${TOOLS_DIR}/flists/llink.tcl

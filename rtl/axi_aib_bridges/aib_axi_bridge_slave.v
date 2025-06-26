@@ -80,10 +80,6 @@ module top_aib_axi_bridge_slave #(
             input                   m_rd_clk,    
             input                   m_fwd_clk,      
         // ****************************************
-
-        // ******* interface intf signals *********
-            input                   i_conf_done,  // Single control to reset all AIB
-        // ****************************************
     // *************************************************************************
 
     // *************************************************************************
@@ -117,7 +113,8 @@ module top_aib_axi_bridge_slave #(
 );
 
     calib_slave_fsm #(
-        .TOTAL_CHNL_NUM(NBR_CHNLS)
+        .TOTAL_CHNL_NUM(NBR_CHNLS),
+        .ACTIVE_CHNLS(ACTIVE_CHNLS)
     ) u_calib_slave_fsm (
         .clk                (avmm_clk),
         .rst_n              (avmm_rst_n),
@@ -138,7 +135,8 @@ module top_aib_axi_bridge_slave #(
         .avmm_read_o        (avmm_if_s1.read),
         .avmm_readdata_i    (avmm_if_s1.readdata),
         .avmm_readdatavalid_i (avmm_if_s1.readdatavalid),
-        .avmm_waitrequest_i (avmm_if_s1.waitrequest)
+        .avmm_waitrequest_i (avmm_if_s1.waitrequest),
+        .i_m_power_on_reset(intf_s1.i_m_power_on_reset)
     );
 
     dut_if_mac #(.DWIDTH (DWIDTH)) intf_s1 (
@@ -163,7 +161,11 @@ module top_aib_axi_bridge_slave #(
         .clk    (avmm_clk)
     );
 
-    aib_phy_top dut_slave1 (
+    assign avmm_if_s1.rst_n = avmm_rst_n;
+
+    aib_phy_top #(
+        .ACTIVE_CHNLS(ACTIVE_CHNLS)
+    ) dut_slave1 (
         .vddc1(vddc1),
         .vddc2(vddc2),
         .vddtx(vddtx),
@@ -260,7 +262,7 @@ module top_aib_axi_bridge_slave #(
         .m_por_ovrd(1'b0),
         .m_device_detect(intf_s1.m_device_detect),
         .m_device_detect_ovrd(intf_s1.m_device_detect_ovrd),
-        .i_m_power_on_reset(1'b0),
+        .i_m_power_on_reset(intf_s1.i_m_power_on_reset),
         .o_m_power_on_reset(),
 
         //JTAG ports

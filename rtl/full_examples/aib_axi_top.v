@@ -130,6 +130,7 @@ module aib_axi_top #(
 
     // Instantiate Master Bridge
     top_aib_axi_bridge_master #(
+        .ACTIVE_CHNLS(ACTIVE_CHNLS),
         .NBR_CHNLS(NBR_CHNLS),
         .NBR_BUMPS(NBR_BUMPS),
         .NBR_PHASES(NBR_PHASES),
@@ -197,6 +198,7 @@ module aib_axi_top #(
 
     // Instantiate Slave Bridge
     top_aib_axi_bridge_slave #(
+        .ACTIVE_CHNLS(ACTIVE_CHNLS),
         .NBR_CHNLS(NBR_CHNLS),
         .NBR_BUMPS(NBR_BUMPS),
         .NBR_PHASES(NBR_PHASES),
@@ -260,10 +262,9 @@ module aib_axi_top #(
         .avmm_rst_n(s_avmm_rst_n)
         
     );
-
+    
     // Instantiate EMIB
     emib_m2s2 dut_emib (
-        
         // Master side connections
         .m_ch0_aib(m_iopad_ch0_aib),
         .m_ch1_aib(m_iopad_ch1_aib),
