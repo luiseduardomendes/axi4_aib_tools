@@ -83,6 +83,8 @@ module ms_phase_adjust_wrkarnd_fsm #(
     logic [23:0] rx_soc_clk_lock;
     logic [AVMM_WIDTH-1:0] rdata_reg;
     logic [AVMM_WIDTH-1:0] wdata_reg;
+    logic [ADDR_WIDTH-1:0] addr_reg;
+
 
     // Delay counter logic
     localparam DELAY_1000_NS = (CLK_FREQ_MHZ * 1000) / (1000*1000);
@@ -102,6 +104,7 @@ module ms_phase_adjust_wrkarnd_fsm #(
             rx_soc_clk_lock <= '0;
             rdata_reg <= '0;
             wdata_reg <= '0;
+            addr_reg <= '0;
         end else begin
             // Loop counter reset/increment
             if (next_state == POLL_LOOP_START || next_state == S3_4_LOOP_START ||
@@ -116,6 +119,16 @@ module ms_phase_adjust_wrkarnd_fsm #(
                 i_m1 <= i_m1 + 1;
             end
 
+            if (next_state == POLL_READ_SETUP)       addr_reg <= {i_m1, 11'h344};
+            else if (next_state == S3_4_READ_SETUP)  addr_reg <= {i_m1, 11'h344};
+            else if (next_state == S5_6_READ_SETUP)  addr_reg <= {i_m1, 11'h344};
+            else if (next_state == S7_8_READ1_SETUP) addr_reg <= {i_m1, 11'h350};
+            else if (next_state == S7_8_READ2_SETUP) addr_reg <= {i_m1, 11'h34C};
+            else if (next_state == S9_10_READ_SETUP) addr_reg <= {i_m1, 11'h350};
+            else if (next_state == S11_READ_SETUP)   addr_reg <= {i_m1, 11'h344};
+            else if (next_state == S12_READ_SETUP)   addr_reg <= {i_m1, 11'h350};
+            else if (next_state == S13_READ_SETUP)   addr_reg <= {i_m1, 11'h33C};
+
             // Update lock status vector
             if(current_state == POLL_READ_WAIT && transaction_done) begin
                 rx_soc_clk_lock[i_m1] <= transaction_rdata[27];
@@ -125,6 +138,8 @@ module ms_phase_adjust_wrkarnd_fsm #(
             if(next_state == POLL_LOOP_START) begin
                 rx_soc_clk_lock <= '0;
             end
+
+            transaction_addr <= addr_reg;
 
             // Latch data for read-modify-write
             if(transaction_done) begin
@@ -156,7 +171,6 @@ module ms_phase_adjust_wrkarnd_fsm #(
         done = 1'b0;
         transaction_start = 1'b0;
         transaction_is_write = 1'b0;
-        transaction_addr = '0;
         transaction_wdata = '0;
         transaction_be = 4'hF;
         counter_load = 1'b0;
@@ -183,7 +197,7 @@ module ms_phase_adjust_wrkarnd_fsm #(
             POLL_LOOP_START: next_state = POLL_READ_SETUP;
             POLL_READ_SETUP: begin
                 transaction_start = 1'b1;
-                transaction_addr = {i_m1, 11'h344};
+                transaction_addr = addr_reg;
                 next_state = POLL_READ_WAIT;
             end
             POLL_READ_WAIT: if (transaction_done) next_state = POLL_LOOP_CHECK;
@@ -193,14 +207,14 @@ module ms_phase_adjust_wrkarnd_fsm #(
             S3_4_LOOP_START: next_state = S3_4_READ_SETUP;
             S3_4_READ_SETUP: begin
                 transaction_start = 1'b1;
-                transaction_addr = {i_m1, 11'h344};
+                transaction_addr = addr_reg;
                 next_state = S3_4_READ_WAIT;
             end
             S3_4_READ_WAIT: if(transaction_done) next_state = S3_4_WRITE_SETUP;
             S3_4_WRITE_SETUP: begin
                 transaction_start = 1'b1;
                 transaction_is_write = 1'b1;
-                transaction_addr = {i_m1, 11'h344};
+                transaction_addr = addr_reg;
                 transaction_wdata = rdata_reg;
                 transaction_wdata[19:16] = (rdata_reg[11:8] >= 4'd2) ? (rdata_reg[11:8] - 4'd2) : (14 + rdata_reg[11:8]);
                 next_state = S3_4_WRITE_WAIT;
@@ -212,14 +226,14 @@ module ms_phase_adjust_wrkarnd_fsm #(
             S5_6_LOOP_START: next_state = S5_6_READ_SETUP;
             S5_6_READ_SETUP: begin
                 transaction_start = 1'b1;
-                transaction_addr = {i_m1, 11'h344};
+                transaction_addr = addr_reg;
                 next_state = S5_6_READ_WAIT;
             end
             S5_6_READ_WAIT: if(transaction_done) next_state = S5_6_WRITE_SETUP;
             S5_6_WRITE_SETUP: begin
                 transaction_start = 1'b1;
                 transaction_is_write = 1'b1;
-                transaction_addr = {i_m1, 11'h344};
+                transaction_addr = addr_reg;
                 transaction_wdata = rdata_reg;
                 transaction_wdata[23:20] = rdata_reg[15:12] + 4'd6;
                 next_state = S5_6_WRITE_WAIT;
@@ -231,7 +245,7 @@ module ms_phase_adjust_wrkarnd_fsm #(
             S7_8_LOOP_START: next_state = S7_8_READ1_SETUP;
             S7_8_READ1_SETUP: begin
                 transaction_start = 1'b1;
-                transaction_addr = {i_m1, 11'h350};
+                transaction_addr = addr_reg;
                 next_state = S7_8_READ1_WAIT;
             end
             S7_8_READ1_WAIT: if(transaction_done) next_state = S7_8_READ2_SETUP;
@@ -256,14 +270,14 @@ module ms_phase_adjust_wrkarnd_fsm #(
             S9_10_LOOP_START: next_state = S9_10_READ_SETUP;
             S9_10_READ_SETUP: begin
                 transaction_start = 1'b1;
-                transaction_addr = {i_m1, 11'h350};
+                transaction_addr = addr_reg;
                 next_state = S9_10_READ_WAIT;
             end
             S9_10_READ_WAIT: if(transaction_done) next_state = S9_10_WRITE_SETUP;
             S9_10_WRITE_SETUP: begin
                 transaction_start = 1'b1;
                 transaction_is_write = 1'b1;
-                transaction_addr = {i_m1, 11'h350};
+                transaction_addr = addr_reg;
                 transaction_wdata = rdata_reg;
                 transaction_wdata[3:0] = (rdata_reg[19:16] >= 4'd2) ? (rdata_reg[19:16] - 4'd2) : (14 + rdata_reg[19:16]);
                 next_state = S9_10_WRITE_WAIT;
@@ -275,14 +289,14 @@ module ms_phase_adjust_wrkarnd_fsm #(
             S11_LOOP_START: next_state = S11_READ_SETUP;
             S11_READ_SETUP: begin
                 transaction_start = 1'b1;
-                transaction_addr = {i_m1, 11'h344};
+                transaction_addr = addr_reg;
                 next_state = S11_READ_WAIT;
             end
             S11_READ_WAIT: if(transaction_done) next_state = S11_WRITE_SETUP;
             S11_WRITE_SETUP: begin
                 transaction_start = 1'b1;
                 transaction_is_write = 1'b1;
-                transaction_addr = {i_m1, 11'h344};
+                transaction_addr = addr_reg;
                 transaction_wdata = rdata_reg | 32'hF000_0000;
                 next_state = S11_WRITE_WAIT;
             end
@@ -293,14 +307,14 @@ module ms_phase_adjust_wrkarnd_fsm #(
             S12_LOOP_START: next_state = S12_READ_SETUP;
             S12_READ_SETUP: begin
                 transaction_start = 1'b1;
-                transaction_addr = {i_m1, 11'h350};
+                transaction_addr = addr_reg;
                 next_state = S12_READ_WAIT;
             end
             S12_READ_WAIT: if(transaction_done) next_state = S12_WRITE_SETUP;
             S12_WRITE_SETUP: begin
                 transaction_start = 1'b1;
                 transaction_is_write = 1'b1;
-                transaction_addr = {i_m1, 11'h350};
+                transaction_addr = addr_reg;
                 transaction_wdata = rdata_reg | 32'h9C00_0000;
                 next_state = S12_WRITE_WAIT;
             end

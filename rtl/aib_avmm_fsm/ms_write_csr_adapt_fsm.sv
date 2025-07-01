@@ -1,7 +1,6 @@
-// This module implements a synthesizable Finite-State Machine (FSM) to handle
-// the write_csr_adapt sequence. It loops 24 times, writing to a set of
-// configuration and status registers (CSRs) for the AIB adapter on the master side.
-// It uses the previously defined 'avalon_mm_fsm' to execute the physical bus writes.
+//------------------------------------------------------------------------------
+// FSM to perform multiple Avalon-MM writes safely with latched transaction data
+//------------------------------------------------------------------------------
 
 module ms_write_csr_adapt_fsm #(
     parameter ACTIVE_CHNLS = 1,
@@ -47,6 +46,12 @@ module ms_write_csr_adapt_fsm #(
     // Loop counter
     logic [4:0] i_m1; // Counter for 0 to 23
 
+    // Latched transaction fields
+    logic [ADDR_WIDTH-1:0] latched_addr;
+    logic [AVMM_WIDTH-1:0] latched_wdata;
+    logic [BYTE_WIDTH-1:0] latched_be;
+    logic latched_is_write;
+
     // FSM state register
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
@@ -55,7 +60,7 @@ module ms_write_csr_adapt_fsm #(
             current_state <= next_state;
         end
     end
-    
+
     // Loop counter register
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
@@ -67,16 +72,58 @@ module ms_write_csr_adapt_fsm #(
         end
     end
 
-    // FSM next state logic and output assignments
+    // Latched transaction data
+    always_ff @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            latched_addr      <= '0;
+            latched_wdata     <= '0;
+            latched_be        <= '0;
+            latched_is_write  <= '0;
+        end else begin
+            case (next_state)
+                WRITE_1_SETUP: begin
+                    latched_addr      <= {i_m1[4:0], 11'h208};
+                    latched_wdata     <= 32'h0600_0000;
+                    latched_be        <= 4'hF;
+                    latched_is_write  <= 1'b1;
+                end
+                WRITE_2_SETUP: begin
+                    latched_addr      <= {i_m1[4:0], 11'h210};
+                    latched_wdata     <= 32'h0000_0006;
+                    latched_be        <= 4'hF;
+                    latched_is_write  <= 1'b1;
+                end
+                WRITE_3_SETUP: begin
+                    latched_addr      <= {i_m1[4:0], 11'h218};
+                    latched_wdata     <= 32'h6060_0000;
+                    latched_be        <= 4'hF;
+                    latched_is_write  <= 1'b1;
+                end
+                WRITE_BCA_SETUP: begin
+                    latched_addr      <= {i_m1[4:0], 11'h33C};
+                    latched_wdata     <= 32'h4000_0000;
+                    latched_be        <= 4'hF;
+                    latched_is_write  <= 1'b1;
+                end
+                default: begin
+                    // Retain previous values
+                end
+            endcase
+        end
+    end
+
+    // FSM next state logic and outputs
     always_comb begin
-        // Default values
+        // Default assignments
         next_state           = current_state;
         done                 = 1'b0;
         transaction_start    = 1'b0;
-        transaction_is_write = 1'b0;
-        transaction_addr     = '0;
-        transaction_wdata    = '0;
-        transaction_be       = '0;
+
+        // Outputs from latched registers
+        transaction_addr     = latched_addr;
+        transaction_wdata    = latched_wdata;
+        transaction_be       = latched_be;
+        transaction_is_write = latched_is_write;
 
         case (current_state)
             IDLE: begin
@@ -86,34 +133,23 @@ module ms_write_csr_adapt_fsm #(
             end
 
             LOOP_START: begin
-                // Initialize the loop counter and start the first write
                 next_state = WRITE_1_SETUP;
             end
 
             WRITE_1_SETUP: begin
-                // Setup the first cfg_write transaction for the current loop iteration
-                transaction_start    = 1'b1;
-                transaction_is_write = 1'b1;
-                transaction_addr     = {i_m1[4:0], 11'h208};
-                transaction_wdata    = 32'h0600_0000;
-                transaction_be       = 4'hF;
-                next_state           = WRITE_1_WAIT;
+                transaction_start = 1'b1;
+                next_state = WRITE_1_WAIT;
             end
 
             WRITE_1_WAIT: begin
-                // Wait for the avalon_mm_fsm to complete the transaction
                 if (transaction_done) begin
                     next_state = WRITE_2_SETUP;
                 end
             end
 
             WRITE_2_SETUP: begin
-                transaction_start    = 1'b1;
-                transaction_is_write = 1'b1;
-                transaction_addr     = {i_m1[4:0], 11'h210};
-                transaction_wdata    = 32'h0000_0006;
-                transaction_be       = 4'hF;
-                next_state           = WRITE_2_WAIT;
+                transaction_start = 1'b1;
+                next_state = WRITE_2_WAIT;
             end
 
             WRITE_2_WAIT: begin
@@ -121,15 +157,10 @@ module ms_write_csr_adapt_fsm #(
                     next_state = WRITE_3_SETUP;
                 end
             end
-            
+
             WRITE_3_SETUP: begin
-                transaction_start    = 1'b1;
-                transaction_is_write = 1'b1;
-                transaction_addr     = {i_m1[4:0], 11'h218};
-                transaction_wdata    = 32'h6060_0000;
-                transaction_be       = 4'hF;
+                transaction_start = 1'b1;
                 next_state = WRITE_3_WAIT;
-                
             end
 
             WRITE_3_WAIT: begin
@@ -139,12 +170,8 @@ module ms_write_csr_adapt_fsm #(
             end
 
             WRITE_BCA_SETUP: begin
-                transaction_start    = 1'b1;
-                transaction_is_write = 1'b1;
-                transaction_addr     = {i_m1[4:0], 11'h33C};
-                transaction_wdata    = 32'h4000_0000;
-                transaction_be       = 4'hF;
-                next_state           = WRITE_BCA_WAIT;
+                transaction_start = 1'b1;
+                next_state = WRITE_BCA_WAIT;
             end
 
             WRITE_BCA_WAIT: begin
@@ -154,8 +181,7 @@ module ms_write_csr_adapt_fsm #(
             end
 
             LOOP_CHECK: begin
-                // Check if we have completed all 24 iterations
-                if (i_m1 == ACTIVE_CHNLS-1) begin
+                if (i_m1 == ACTIVE_CHNLS - 1) begin
                     next_state = SEQUENCE_DONE;
                 end else begin
                     next_state = LOOP_INCREMENT;
@@ -163,12 +189,10 @@ module ms_write_csr_adapt_fsm #(
             end
 
             LOOP_INCREMENT: begin
-                // Increment counter and restart the write sequence for the next channel
                 next_state = WRITE_1_SETUP;
             end
 
             SEQUENCE_DONE: begin
-                // Signal that the entire sequence is finished for one cycle
                 done = 1'b1;
                 next_state = IDLE;
             end

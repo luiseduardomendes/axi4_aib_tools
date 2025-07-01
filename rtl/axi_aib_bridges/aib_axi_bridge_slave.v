@@ -28,7 +28,8 @@ module top_aib_axi_bridge_slave #(
     parameter SL_SSR_LEN = 73,      // Data size for follower side band
     parameter DWIDTH = 40,
     parameter AXI_CHNL_NUM = 1,     // Number of AXI channels
-    parameter ADDRWIDTH = 32   
+    parameter ADDRWIDTH = 32,
+    parameter GEN2_MODE = 1'b0  
         
 ) (
 
@@ -114,7 +115,8 @@ module top_aib_axi_bridge_slave #(
 
     calib_slave_fsm #(
         .TOTAL_CHNL_NUM(NBR_CHNLS),
-        .ACTIVE_CHNLS(ACTIVE_CHNLS)
+        .ACTIVE_CHNLS(ACTIVE_CHNLS),
+        .GEN2_MODE(GEN2_MODE)
     ) u_calib_slave_fsm (
         .clk                (avmm_clk),
         .rst_n              (avmm_rst_n),
@@ -235,7 +237,7 @@ module top_aib_axi_bridge_slave #(
         .m_rx_align_done(intf_s1.m_rx_align_done),
         
         .dual_mode_select(1'b0),
-        .m_gen2_mode(1'b1),
+        .m_gen2_mode(GEN2_MODE),
 
         //AVMM interface
         .i_cfg_avmm_clk(avmm_if_s1.clk),
@@ -340,7 +342,7 @@ module top_aib_axi_bridge_slave #(
         .user_bvalid         (user_axi_if.bvalid  ),
         .user_bready         (user_axi_if.bready  ),
 
-        .m_gen2_mode         (1'b1),
+        .m_gen2_mode         (GEN2_MODE),
         .delay_x_value       (delay_x_value),
         .delay_y_value       (delay_y_value),
         .delay_z_value       (delay_z_value)

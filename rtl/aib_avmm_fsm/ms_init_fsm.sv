@@ -14,7 +14,8 @@ module calib_master_fsm #(
     parameter CLK_FREQ_MHZ   = 100,
     parameter AVMM_WIDTH     = 32,
     parameter BYTE_WIDTH     = 4,
-    parameter ADDR_WIDTH     = 16
+    parameter ADDR_WIDTH     = 16,
+    parameter GEN2_MODE      = 1'b1
 ) (
     // Clock and Reset
     input                               clk,
@@ -44,12 +45,14 @@ module calib_master_fsm #(
 );
 
     // Main FSM state definitions
-    typedef enum logic [2:0] {
+    typedef enum logic [3:0] {
         IDLE,
         RESET_DUTS,
         WRITE_CSR,
         DUTS_WAKEUP,
         PHASE_ADJUST,
+        DLL_BYPASS,
+        DCC_BYPASS,
         CAL_DONE
     } main_fsm_state_t;
 
@@ -60,15 +63,17 @@ module calib_master_fsm #(
     logic write_csr_start, write_csr_done;
     logic duts_wakeup_start, duts_wakeup_done;
     logic phase_adjust_start, phase_adjust_done;
+    logic dcc_bypass_start, dcc_bypass_done;
+    logic dll_bypass_start, dll_bypass_done;
     logic avmm_fsm_start, avmm_fsm_done;
 
     // --- Sub-FSM Output Wires ---
     logic reset_duts_avmm_rst_n;
-    logic reset_duts_conf_done, wakeup_conf_done;
+    logic wakeup_conf_done;
     logic [TOTAL_CHNL_NUM-1:0] reset_duts_adapter_rstn, wakeup_adapter_rstn;
-    logic [TOTAL_CHNL_NUM-1:0] reset_duts_mac_rdy, wakeup_mac_rdy;
-    logic [TOTAL_CHNL_NUM-1:0] reset_duts_rx_lock, wakeup_rx_lock;
-    logic [TOTAL_CHNL_NUM-1:0] reset_duts_tx_lock, wakeup_tx_lock;
+    logic [TOTAL_CHNL_NUM-1:0] wakeup_mac_rdy;
+    logic [TOTAL_CHNL_NUM-1:0] wakeup_rx_lock;
+    logic [TOTAL_CHNL_NUM-1:0] wakeup_tx_lock;
     logic reset_duts_por_ovrd; // Internal signal from reset FSM
 
     // --- Avalon Muxing Logic ---
@@ -117,11 +122,25 @@ module calib_master_fsm #(
             end
             DUTS_WAKEUP: begin
                 duts_wakeup_start = 1'b1;
-                if (duts_wakeup_done) next_state = PHASE_ADJUST;
+                if (duts_wakeup_done) begin
+                    if (GEN2_MODE) begin 
+                        next_state = PHASE_ADJUST;
+                    end else begin
+                        next_state = DCC_BYPASS;
+                    end
+                end
             end
             PHASE_ADJUST: begin
                 phase_adjust_start = 1'b1;
                 if (phase_adjust_done) next_state = CAL_DONE;
+            end
+            DCC_BYPASS: begin
+                dcc_bypass_start = 1'b1;
+                if (dcc_bypass_done) next_state = DLL_BYPASS;
+            end
+            DLL_BYPASS: begin
+                dll_bypass_start = 1'b1;
+                if (dll_bypass_done) next_state = CAL_DONE;
             end
             CAL_DONE: begin
                 calib_done = 1'b1;
@@ -205,6 +224,51 @@ module calib_master_fsm #(
         .transaction_rdata(avmm_readdata_i)
     );
     
+    avmm_multi_write_fsm #(
+        .ACTIVE_CHNLS(ACTIVE_CHNLS),
+        .SEQ_COUNT(4),
+        .ADDR0(16'h34C),
+        .DATA0(32'h0000_0000),
+        .ADDR1(16'h350),
+        .DATA1({1'b1,2'b0,3'b111,26'h0}),
+        .ADDR2(16'h368),
+        .DATA2({4{3'h0,5'd16}}),
+        .ADDR3(16'h364),
+        .DATA3({2'b11,30'h0})
+    ) ms_dcc_bypass_inst (
+        .clk     (clk),
+        .rst_n   (rst_n),
+        .start   (dcc_bypass_start),
+        .done    (dcc_bypass_done),
+        .transaction_start     (csr_avmm_start),
+        .transaction_is_write  (csr_avmm_is_write),
+        .transaction_addr      (csr_avmm_addr),
+        .transaction_wdata     (csr_avmm_wdata),
+        .transaction_be        (csr_avmm_be),
+        .transaction_done      (avmm_fsm_done)
+    );
+
+    avmm_multi_write_fsm #(
+        .ACTIVE_CHNLS(ACTIVE_CHNLS),
+        .SEQ_COUNT(2),
+        .ADDR0(16'h348),
+        .DATA0({1'b0,1'b1,1'b1,14'h0,8'h0,7'd64}),
+        .ADDR1(16'h344),
+        .DATA1({4'b1111,28'h0})
+    ) ms_dll_bypass_inst (
+        .clk     (clk),
+        .rst_n   (rst_n),
+        .start   (dll_bypass_start),
+        .done    (dll_bypass_done),
+        .transaction_start     (csr_avmm_start),
+        .transaction_is_write  (csr_avmm_is_write),
+        .transaction_addr      (csr_avmm_addr),
+        .transaction_wdata     (csr_avmm_wdata),
+        .transaction_be        (csr_avmm_be),
+        .transaction_done      (avmm_fsm_done)
+    );
+
+
     // Physical AVMM bus driver FSM
     avalon_mm_fsm #(
         .AVMM_WIDTH(AVMM_WIDTH),

@@ -29,8 +29,8 @@ module top_aib_axi_bridge_master #(
     parameter SL_SSR_LEN = 73,      // Data size for follower side band
     parameter DWIDTH = 40,
     parameter AXI_CHNL_NUM = 1,     // Number of AXI channels
-    parameter ADDRWIDTH = 32        // Address width
-        
+    parameter ADDRWIDTH = 32,       // Address width
+    parameter GEN2_MODE = 1'b0  
 ) (
 
     // **********************************************************************
@@ -117,7 +117,8 @@ module top_aib_axi_bridge_master #(
 
     calib_master_fsm #(
         .TOTAL_CHNL_NUM(NBR_CHNLS),
-        .ACTIVE_CHNLS(ACTIVE_CHNLS)
+        .ACTIVE_CHNLS(ACTIVE_CHNLS),
+        .GEN2_MODE(GEN2_MODE)
     ) u_calib_fsm (
         .clk(avmm_clk),
         .rst_n(avmm_rst_n),
@@ -257,7 +258,7 @@ module top_aib_axi_bridge_master #(
         // ==================================
         
         .dual_mode_select(1'b1),
-        .m_gen2_mode(1'b1),
+        .m_gen2_mode(GEN2_MODE),
 
         .i_osc_clk(intf_m1.osc_clk),   //Only for master mode		
 
@@ -368,7 +369,7 @@ module top_aib_axi_bridge_master #(
         .user_bvalid         (user_axi_if.bvalid  ),
         .user_bready         (user_axi_if.bready  ),
 
-        .m_gen2_mode         (1'b1),
+        .m_gen2_mode         (GEN2_MODE),
         .delay_x_value       (delay_x_value),
         .delay_y_value       (delay_y_value),
         .delay_z_value       (delay_z_value)
