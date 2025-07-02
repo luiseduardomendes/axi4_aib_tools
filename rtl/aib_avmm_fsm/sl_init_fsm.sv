@@ -53,8 +53,8 @@ module calib_slave_fsm #(
         WRITE_CSR,
         DUTS_WAKEUP,
         PHASE_ADJUST,
-        DCC_BYPASS,
         DLL_BYPASS,
+        DCC_BYPASS,
         LINK_UP,
         CAL_DONE
     } main_fsm_state_t;
@@ -73,8 +73,8 @@ module calib_slave_fsm #(
     
     // --- Sub-FSM Output Wires ---
     logic reset_duts_avmm_rst_n;
-    logic [TOTAL_CHNL_NUM-1:0] reset_duts_adapter_rstn, wakeup_adapter_rstn;
     logic wakeup_conf_done;
+    logic [TOTAL_CHNL_NUM-1:0] reset_duts_adapter_rstn, wakeup_adapter_rstn;
     logic [TOTAL_CHNL_NUM-1:0] wakeup_mac_rdy;
     logic [TOTAL_CHNL_NUM-1:0] wakeup_rx_lock;
     logic [TOTAL_CHNL_NUM-1:0] wakeup_tx_lock;
@@ -118,23 +118,49 @@ module calib_slave_fsm #(
         phase_adjust_start = 1'b0;
         link_up_start      = 1'b0;
         
-        case(current_state)
-            IDLE:           next_state = RESET_DUTS;
-            RESET_DUTS:     if (reset_duts_done)   next_state = WRITE_CSR;    else reset_duts_start = 1'b1;
-            WRITE_CSR:      if (write_csr_done)    next_state = DUTS_WAKEUP;  else write_csr_start = 1'b1;
-            DUTS_WAKEUP:    
+        case (current_state)
+            IDLE: begin
+                // Can add a start condition if needed, otherwise starts automatically
+                next_state = RESET_DUTS;
+            end
+            RESET_DUTS: begin
+                reset_duts_start = 1'b1;
+                if (reset_duts_done) next_state = WRITE_CSR;
+            end
+            WRITE_CSR: begin
+                write_csr_start = 1'b1;
+                if (write_csr_done) next_state = DUTS_WAKEUP;
+            end
+            DUTS_WAKEUP: begin
+                duts_wakeup_start = 1'b1;
                 if (duts_wakeup_done) begin
                     if (GEN2_MODE) begin
                         next_state = PHASE_ADJUST; 
                     end else begin
                         next_state = DCC_BYPASS; 
                     end
-                end else begin
-                    duts_wakeup_start = 1'b1;
                 end
-            PHASE_ADJUST:   if (phase_adjust_done) next_state = LINK_UP;      else phase_adjust_start = 1'b1;
-            LINK_UP:        if (link_up_done)      next_state = CAL_DONE;     else link_up_start = 1'b1;
-            CAL_DONE:       calib_done = 1'b1;
+            end
+            PHASE_ADJUST: begin
+                phase_adjust_start = 1'b1;
+                if (phase_adjust_done) next_state = CAL_DONE;
+            end
+            DCC_BYPASS: begin
+                dcc_bypass_start = 1'b1;
+                if (dcc_bypass_done) next_state = DLL_BYPASS;
+            end
+            DLL_BYPASS: begin
+                dll_bypass_start = 1'b1;
+                if (dll_bypass_done) next_state = LINK_UP;
+            end
+            LINK_UP: begin
+                if (link_up_done) next_state = CAL_DONE;
+            end
+            CAL_DONE: begin
+                calib_done = 1'b1;
+                // Stay in this state
+            end
+            
             default:        next_state = IDLE;
         endcase
     end

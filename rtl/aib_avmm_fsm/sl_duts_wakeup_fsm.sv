@@ -137,7 +137,7 @@ module sl_duts_wakeup_fsm #(
                 s1_sl_rx_dcc_dll_lock_req = {TOTAL_CHNL_NUM{1'b1}};
                 s1_sl_tx_dcc_dll_lock_req = {TOTAL_CHNL_NUM{1'b1}};
                 done                      = 1'b1;
-                next_state                = IDLE;
+                next_state                = SEQUENCE_DONE;
             end
 
             default: begin

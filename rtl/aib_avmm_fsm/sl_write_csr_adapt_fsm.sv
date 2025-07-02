@@ -115,15 +115,15 @@ module sl_write_csr_adapt_fsm #(
     // FSM next state logic and outputs
     always_comb begin
         // Default assignments
-        next_state           = current_state;
-        done                 = 1'b0;
-        transaction_start    = 1'b0;
+    next_state             = current_state;
+    done                   = 1'b0;
+    transaction_start      = 1'b0; // Default is to not start a transaction
 
         // Outputs from latched registers
-        transaction_addr     = latched_addr;
-        transaction_wdata    = latched_wdata;
-        transaction_be       = latched_be;
-        transaction_is_write = latched_is_write;
+    transaction_addr       = latched_addr;
+    transaction_wdata      = latched_wdata;
+    transaction_be         = latched_be;
+    transaction_is_write   = latched_is_write;
 
         case (current_state)
             IDLE: begin
@@ -133,55 +133,51 @@ module sl_write_csr_adapt_fsm #(
             end
 
             LOOP_START: begin
+            // This state sets up the latches for the first write
                 next_state = WRITE_1_SETUP;
             end
 
-            WRITE_1_SETUP: begin
-                transaction_start = 1'b1;
-                next_state = WRITE_1_WAIT;
-            end
+        // SETUP states are now only for setting next_state
+            WRITE_1_SETUP:   next_state = WRITE_1_WAIT;
+            WRITE_2_SETUP:   next_state = WRITE_2_WAIT;
+            WRITE_3_SETUP:   next_state = WRITE_3_WAIT;
+            WRITE_BCA_SETUP: next_state = WRITE_BCA_WAIT;
 
+            // WAIT states now start the transaction and wait for completion
             WRITE_1_WAIT: begin
+                transaction_start = 1'b1; // Assert start here
                 if (transaction_done) begin
+                    transaction_start = 1'b0; // De-assert if done in the same cycle
                     next_state = WRITE_2_SETUP;
                 end
             end
 
-            WRITE_2_SETUP: begin
-                transaction_start = 1'b1;
-                next_state = WRITE_2_WAIT;
-            end
-
             WRITE_2_WAIT: begin
+            transaction_start = 1'b1; // Assert start here
                 if (transaction_done) begin
+                transaction_start = 1'b0;
                     next_state = WRITE_3_SETUP;
                 end
             end
 
-            WRITE_3_SETUP: begin
-                transaction_start = 1'b1;
-                next_state = WRITE_3_WAIT;
-            end
-
             WRITE_3_WAIT: begin
+            transaction_start = 1'b1; // Assert start here
                 if (transaction_done) begin
+                transaction_start = 1'b0;
                     next_state = WRITE_BCA_SETUP;
                 end
             end
 
-            WRITE_BCA_SETUP: begin
-                transaction_start = 1'b1;
-                next_state = WRITE_BCA_WAIT;
-            end
-
             WRITE_BCA_WAIT: begin
+            transaction_start = 1'b1; // Assert start here
                 if (transaction_done) begin
+                transaction_start = 1'b0;
                     next_state = LOOP_CHECK;
                 end
             end
 
             LOOP_CHECK: begin
-                if (i_s1 == ACTIVE_CHNLS - 1) begin
+            if (i_s1 == ACTIVE_CHNLS - 1) begin
                     next_state = SEQUENCE_DONE;
                 end else begin
                     next_state = LOOP_INCREMENT;
@@ -202,5 +198,4 @@ module sl_write_csr_adapt_fsm #(
             end
         endcase
     end
-
 endmodule
