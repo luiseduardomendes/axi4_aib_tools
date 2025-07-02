@@ -29,7 +29,7 @@ module top_aib_axi_bridge_slave #(
     parameter DWIDTH = 40,
     parameter AXI_CHNL_NUM = 1,     // Number of AXI channels
     parameter ADDRWIDTH = 32,
-    parameter GEN2_MODE = 1'b0  
+    parameter GEN2_MODE = 1'b1  
         
 ) (
 
