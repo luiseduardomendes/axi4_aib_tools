@@ -9,7 +9,8 @@ module aib_axi_top #(
     parameter MS_SSR_LEN = 81,      // Data size for leader side band
     parameter SL_SSR_LEN = 73,      // Data size for follower side band
     parameter DWIDTH = 40,          // Data width (added since it was used in data_out_f)
-    parameter GEN2_MODE = 1'b1
+    parameter MS_GEN2_MODE = 1'b1,
+    parameter SL_GEN2_MODE = 1'b1
 ) (
     // Power pins
     inout vddc1,
@@ -138,7 +139,7 @@ module aib_axi_top #(
         .NBR_LANES(NBR_LANES),
         .MS_SSR_LEN(MS_SSR_LEN),
         .SL_SSR_LEN(SL_SSR_LEN),
-        .GEN2_MODE(GEN2_MODE)
+        .GEN2_MODE(MS_GEN2_MODE)
     ) master_bridge (
         // EMIB interface
         .vddc1(vddc1),
@@ -207,7 +208,7 @@ module aib_axi_top #(
         .NBR_LANES(NBR_LANES),
         .MS_SSR_LEN(MS_SSR_LEN),
         .SL_SSR_LEN(SL_SSR_LEN),
-        .GEN2_MODE(GEN2_MODE)
+        .GEN2_MODE(SL_GEN2_MODE)
     ) slave_bridge (
         // EMIB interface
         .vddc1(vddc1),

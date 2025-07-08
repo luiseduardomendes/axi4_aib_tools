@@ -125,7 +125,7 @@ module calib_slave_fsm #(
             end
             RESET_DUTS: begin
                 reset_duts_start = 1'b1;
-                if (reset_duts_done) next_state = WRITE_CSR;
+                if (reset_duts_done) next_state = WRITE_CSR; // WRITE_CSR
             end
             WRITE_CSR: begin
                 write_csr_start = 1'b1;
@@ -137,13 +137,13 @@ module calib_slave_fsm #(
                     if (GEN2_MODE) begin
                         next_state = PHASE_ADJUST; 
                     end else begin
-                        next_state = DCC_BYPASS; 
+                        next_state = PHASE_ADJUST; 
                     end
                 end
             end
             PHASE_ADJUST: begin
                 phase_adjust_start = 1'b1;
-                if (phase_adjust_done) next_state = CAL_DONE;
+                if (phase_adjust_done) next_state = CAL_DONE; 
             end
             DCC_BYPASS: begin
                 dcc_bypass_start = 1'b1;
@@ -201,6 +201,7 @@ module calib_slave_fsm #(
         .transaction_addr(csr_avmm_addr),
         .transaction_wdata(csr_avmm_wdata),
         .transaction_be(csr_avmm_be),
+        .transaction_rdata(avmm_readdata_i),
         .transaction_done(avmm_fsm_done)
     );
     
@@ -290,7 +291,7 @@ module calib_slave_fsm #(
         .transaction_addr(avmm_addr_mux),
         .transaction_wdata(avmm_wdata_mux),
         .transaction_be(avmm_be_mux),
-        .transaction_rdata(avmm_readdata_i),
+        //.transaction_rdata(avmm_readdata_i),
         .transaction_done(avmm_fsm_done),
         .avm_address(avmm_address_o),
         .avm_write(avmm_write_o),

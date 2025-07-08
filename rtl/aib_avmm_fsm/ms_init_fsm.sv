@@ -126,7 +126,7 @@ module calib_master_fsm #(
                     if (GEN2_MODE) begin 
                         next_state = PHASE_ADJUST;
                     end else begin
-                        next_state = DCC_BYPASS;
+                        next_state = PHASE_ADJUST;
                     end
                 end
             end
@@ -187,6 +187,7 @@ module calib_master_fsm #(
         .transaction_addr(csr_avmm_addr),
         .transaction_wdata(csr_avmm_wdata),
         .transaction_be(csr_avmm_be),
+        .transaction_rdata(avmm_readdata_i),
         .transaction_done(avmm_fsm_done)
     );
 
@@ -282,7 +283,7 @@ module calib_master_fsm #(
         .transaction_addr(avmm_addr_mux),
         .transaction_wdata(avmm_wdata_mux),
         .transaction_be(avmm_be_mux),
-        .transaction_rdata(avmm_readdata_i), // To phase adjust FSM
+        //.transaction_rdata(avmm_readdata_i), // To phase adjust FSM
         .transaction_done(avmm_fsm_done),
         .avm_address(avmm_address_o),
         .avm_write(avmm_write_o),

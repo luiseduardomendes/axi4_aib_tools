@@ -21,11 +21,16 @@ module sl_write_csr_adapt_fsm #(
     output logic [ADDR_WIDTH-1:0]     transaction_addr,
     output logic [AVMM_WIDTH-1:0]     transaction_wdata,
     output logic [BYTE_WIDTH-1:0]     transaction_be,
+    input  logic [AVMM_WIDTH-1:0]     transaction_rdata,
     input  bit                        transaction_done
 );
+    localparam RX_0 = 32'h0600_0000;
+    localparam RX_1 = 32'h0000_0001;
+    localparam TX_0 = 32'h4000_0000;
+    localparam R_AIB_CSR7 = 32'h4000_0000;
 
     // FSM State Definitions
-    typedef enum logic [3:0] {
+    typedef enum logic [4:0] {
         IDLE,
         LOOP_START,
         WRITE_1_SETUP,
@@ -36,6 +41,16 @@ module sl_write_csr_adapt_fsm #(
         WRITE_3_WAIT,
         WRITE_BCA_SETUP,
         WRITE_BCA_WAIT,
+
+        WRITE_1_CHECK_SETUP,
+        WRITE_1_CHECK_WAIT,
+        WRITE_2_CHECK_SETUP,
+        WRITE_2_CHECK_WAIT,
+        WRITE_3_CHECK_SETUP,
+        WRITE_3_CHECK_WAIT,
+        WRITE_BCA_CHECK_SETUP,
+        WRITE_BCA_CHECK_WAIT,
+
         LOOP_INCREMENT,
         LOOP_CHECK,
         SEQUENCE_DONE
@@ -50,7 +65,7 @@ module sl_write_csr_adapt_fsm #(
     logic [ADDR_WIDTH-1:0] latched_addr;
     logic [AVMM_WIDTH-1:0] latched_wdata;
     logic [BYTE_WIDTH-1:0] latched_be;
-    logic latched_is_write;
+    logic                  latched_is_write;
 
     // FSM state register
     always_ff @(posedge clk or negedge rst_n) begin
@@ -83,27 +98,43 @@ module sl_write_csr_adapt_fsm #(
             case (next_state)
                 WRITE_1_SETUP: begin
                     latched_addr      <= {i_s1[4:0], 11'h208};
-                    latched_wdata     <= 32'h0600_0000;
+                    latched_wdata     <= RX_0;
                     latched_be        <= 4'hF;
                     latched_is_write  <= 1'b1;
+                end
+                WRITE_1_CHECK_SETUP: begin
+                    latched_addr      <= {i_s1[4:0], 11'h208};
+                    latched_is_write  <= 1'b0;
                 end
                 WRITE_2_SETUP: begin
                     latched_addr      <= {i_s1[4:0], 11'h210};
-                    latched_wdata     <= 32'h0000_0006;
+                    latched_wdata     <= RX_1;
                     latched_be        <= 4'hF;
                     latched_is_write  <= 1'b1;
+                end
+                WRITE_2_CHECK_SETUP: begin
+                    latched_addr      <= {i_s1[4:0], 11'h210};
+                    latched_is_write  <= 1'b0;
                 end
                 WRITE_3_SETUP: begin
                     latched_addr      <= {i_s1[4:0], 11'h218};
-                    latched_wdata     <= 32'h6060_0000;
+                    latched_wdata     <= TX_0;
                     latched_be        <= 4'hF;
                     latched_is_write  <= 1'b1;
                 end
+                WRITE_3_CHECK_SETUP: begin
+                    latched_addr      <= {i_s1[4:0], 11'h218};
+                    latched_is_write  <= 1'b0;
+                end
                 WRITE_BCA_SETUP: begin
                     latched_addr      <= {i_s1[4:0], 11'h33C};
-                    latched_wdata     <= 32'h4000_0000;
+                    latched_wdata     <= R_AIB_CSR7;
                     latched_be        <= 4'hF;
                     latched_is_write  <= 1'b1;
+                end
+                WRITE_BCA_CHECK_SETUP: begin
+                    latched_addr      <= {i_s1[4:0], 11'h33C};
+                    latched_is_write  <= 1'b0;
                 end
                 default: begin
                     // Retain previous values
@@ -143,12 +174,29 @@ module sl_write_csr_adapt_fsm #(
             WRITE_3_SETUP:   next_state = WRITE_3_WAIT;
             WRITE_BCA_SETUP: next_state = WRITE_BCA_WAIT;
 
+            WRITE_1_CHECK_SETUP:   next_state = WRITE_1_CHECK_WAIT;
+            WRITE_2_CHECK_SETUP:   next_state = WRITE_2_CHECK_WAIT;
+            WRITE_3_CHECK_SETUP:   next_state = WRITE_3_CHECK_WAIT;
+            WRITE_BCA_CHECK_SETUP: next_state = WRITE_BCA_CHECK_WAIT;
+
             // WAIT states now start the transaction and wait for completion
             WRITE_1_WAIT: begin
                 transaction_start = 1'b1; // Assert start here
                 if (transaction_done) begin
                     transaction_start = 1'b0; // De-assert if done in the same cycle
+                    next_state = WRITE_1_CHECK_SETUP;
+                end
+            end
+
+            WRITE_1_CHECK_WAIT: begin
+                transaction_start = 1'b1; // Assert start here
+                if (transaction_done) begin
+                    transaction_start = 1'b0; // De-assert if done in the same cycle
+                    if (transaction_rdata == RX_0) begin
                     next_state = WRITE_2_SETUP;
+                    end else begin
+                        next_state = WRITE_1_SETUP;
+                    end
                 end
             end
 
@@ -156,7 +204,19 @@ module sl_write_csr_adapt_fsm #(
             transaction_start = 1'b1; // Assert start here
                 if (transaction_done) begin
                 transaction_start = 1'b0;
+                    next_state = WRITE_2_CHECK_SETUP;
+                end
+            end
+
+            WRITE_2_CHECK_WAIT: begin
+                transaction_start = 1'b1; // Assert start here
+                if (transaction_done) begin
+                    transaction_start = 1'b0; // De-assert if done in the same cycle
+                    if (transaction_rdata == RX_1) begin
                     next_state = WRITE_3_SETUP;
+                    end else begin
+                        next_state = WRITE_2_SETUP;
+                    end
                 end
             end
 
@@ -164,7 +224,19 @@ module sl_write_csr_adapt_fsm #(
             transaction_start = 1'b1; // Assert start here
                 if (transaction_done) begin
                 transaction_start = 1'b0;
+                    next_state = WRITE_3_CHECK_SETUP;
+                end
+            end
+
+            WRITE_3_CHECK_WAIT: begin
+                transaction_start = 1'b1; // Assert start here
+                if (transaction_done) begin
+                    transaction_start = 1'b0; // De-assert if done in the same cycle
+                    if (transaction_rdata == TX_0) begin
                     next_state = WRITE_BCA_SETUP;
+                    end else begin
+                        next_state = WRITE_3_SETUP;
+                    end
                 end
             end
 
@@ -176,8 +248,20 @@ module sl_write_csr_adapt_fsm #(
                 end
             end
 
+            WRITE_BCA_CHECK_WAIT: begin
+                transaction_start = 1'b1; // Assert start here
+                if (transaction_done) begin
+                    transaction_start = 1'b0; // De-assert if done in the same cycle
+                    if (transaction_rdata == RX_0) begin
+                        next_state = LOOP_CHECK;
+                    end else begin
+                        next_state = WRITE_BCA_SETUP;
+                    end
+                end
+            end
+
             LOOP_CHECK: begin
-            if (i_s1 == ACTIVE_CHNLS - 1) begin
+                if (i_s1 == ACTIVE_CHNLS - 1) begin
                     next_state = SEQUENCE_DONE;
                 end else begin
                     next_state = LOOP_INCREMENT;
