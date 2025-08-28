@@ -129,7 +129,7 @@ module sl_phase_adjust_wrkarnd_fsm #(
 
             // Update lock status vector
             if(current_state == POLL_READ_WAIT && transaction_done) begin
-                rx_soc_clk_lock[i_s1] <= transaction_rdata[27];
+                rx_soc_clk_lock[i_s1] <= transaction_rdata[26];
             end
             
             // Clear lock status at the beginning of a polling cycle

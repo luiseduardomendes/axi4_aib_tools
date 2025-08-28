@@ -27,8 +27,8 @@ module axi_mm_slave_top  (
   input  logic [7:0]         init_b_credit       ,
 
   // PHY Interconnect
-  output logic [  79:   0]   tx_phy0             ,
-  input  logic [  79:   0]   rx_phy0             ,
+  output logic [ 319:   0]   tx_phy0             ,
+  input  logic [ 319:   0]   rx_phy0             ,
 
   // ar channel
   output logic [   3:   0]   user_arid           ,
@@ -129,12 +129,12 @@ module axi_mm_slave_top  (
   logic                                          user_b_ready                  ;
   logic                                          tx_b_pop_ovrd                 ;
 
-  logic [   0:   0]                              tx_auto_mrk_userbit           ;
+  logic [   3:   0]                              tx_auto_mrk_userbit           ;
   logic                                          tx_auto_stb_userbit           ;
   logic                                          tx_online_delay               ;
   logic                                          rx_online_delay               ;
   logic                                          rx_online_holdoff             ;
-  logic [   0:   0]                              tx_mrk_userbit                ; // No TX User Marker, so tie off
+  logic [   3:   0]                              tx_mrk_userbit                ; // No TX User Marker, so tie off
   logic                                          tx_stb_userbit                ; // No TX User Strobe, so tie off
   assign tx_mrk_userbit                     = '0                                 ;
   assign tx_stb_userbit                     = '1                                 ;
@@ -147,7 +147,7 @@ module axi_mm_slave_top  (
 
   assign rx_online_holdoff                  = 1'b0                               ;
 
-   ll_auto_sync #(.MARKER_WIDTH(1),
+   ll_auto_sync #(.MARKER_WIDTH(4),
                   .PERSISTENT_MARKER(1'b1),
                   .NO_MARKER(1'b1),
                   .PERSISTENT_STROBE(1'b1)) ll_auto_sync_i
@@ -345,8 +345,8 @@ module axi_mm_slave_top  (
          .tx_b_pushbit                     (tx_b_pushbit),
          .rx_b_credit                      (rx_b_credit),
 
-         .tx_phy0                          (tx_phy0[79:0]),
-         .rx_phy0                          (rx_phy0[79:0]),
+         .tx_phy0                          (tx_phy0[319:0]),
+         .rx_phy0                          (rx_phy0[319:0]),
 
          .clk_wr                           (clk_wr),
          .clk_rd                           (clk_wr),

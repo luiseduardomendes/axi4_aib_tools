@@ -1,0 +1,857 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="top_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="top_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="7.606666666 us"></ZoomStartTime>
+      <ZoomEndTime time="20.726666667 us"></ZoomEndTime>
+      <Cursor1Time time="18.540000000 us"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="302"></NameColumnWidth>
+      <ValueColumnWidth column_width="67"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="6" />
+   <wvobject type="group" fp_name="group53">
+      <obj_property name="label">top_tb</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/top_tb/ms_wr_clk">
+         <obj_property name="ElementShortName">ms_wr_clk</obj_property>
+         <obj_property name="ObjectShortName">ms_wr_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/ms_rd_clk">
+         <obj_property name="ElementShortName">ms_rd_clk</obj_property>
+         <obj_property name="ObjectShortName">ms_rd_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/ms_fwd_clk">
+         <obj_property name="ElementShortName">ms_fwd_clk</obj_property>
+         <obj_property name="ObjectShortName">ms_fwd_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/sl_wr_clk">
+         <obj_property name="ElementShortName">sl_wr_clk</obj_property>
+         <obj_property name="ObjectShortName">sl_wr_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/sl_rd_clk">
+         <obj_property name="ElementShortName">sl_rd_clk</obj_property>
+         <obj_property name="ObjectShortName">sl_rd_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/sl_fwd_clk">
+         <obj_property name="ElementShortName">sl_fwd_clk</obj_property>
+         <obj_property name="ObjectShortName">sl_fwd_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/avmm_clk">
+         <obj_property name="ElementShortName">avmm_clk</obj_property>
+         <obj_property name="ObjectShortName">avmm_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/osc_clk">
+         <obj_property name="ElementShortName">osc_clk</obj_property>
+         <obj_property name="ObjectShortName">osc_clk</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/tb_read_data">
+         <obj_property name="ElementShortName">tb_read_data[31:0]</obj_property>
+         <obj_property name="ObjectShortName">tb_read_data[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/tb_master_readdata">
+         <obj_property name="ElementShortName">tb_master_readdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">tb_master_readdata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/tb_master_readdatavalid">
+         <obj_property name="ElementShortName">tb_master_readdatavalid</obj_property>
+         <obj_property name="ObjectShortName">tb_master_readdatavalid</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/tb_wr_addr">
+         <obj_property name="ElementShortName">tb_wr_addr[31:0]</obj_property>
+         <obj_property name="ObjectShortName">tb_wr_addr[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/tb_wrdata">
+         <obj_property name="ElementShortName">tb_wrdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">tb_wrdata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/mask_reg">
+         <obj_property name="ElementShortName">mask_reg[3:0]</obj_property>
+         <obj_property name="ObjectShortName">mask_reg[3:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/tb_wren">
+         <obj_property name="ElementShortName">tb_wren</obj_property>
+         <obj_property name="ObjectShortName">tb_wren</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/tb_rden">
+         <obj_property name="ElementShortName">tb_rden</obj_property>
+         <obj_property name="ObjectShortName">tb_rden</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/clk_phy">
+         <obj_property name="ElementShortName">clk_phy</obj_property>
+         <obj_property name="ObjectShortName">clk_phy</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/clk_p_div2">
+         <obj_property name="ElementShortName">clk_p_div2</obj_property>
+         <obj_property name="ObjectShortName">clk_p_div2</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/clk_p_div4">
+         <obj_property name="ElementShortName">clk_p_div4</obj_property>
+         <obj_property name="ObjectShortName">clk_p_div4</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/rst_phy_n">
+         <obj_property name="ElementShortName">rst_phy_n</obj_property>
+         <obj_property name="ObjectShortName">rst_phy_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/tb_w_m_wr_rst_n">
+         <obj_property name="ElementShortName">tb_w_m_wr_rst_n</obj_property>
+         <obj_property name="ObjectShortName">tb_w_m_wr_rst_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/tb_w_s_wr_rst_n">
+         <obj_property name="ElementShortName">tb_w_s_wr_rst_n</obj_property>
+         <obj_property name="ObjectShortName">tb_w_s_wr_rst_n</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/t_data_out_128b">
+         <obj_property name="ElementShortName">t_data_out_128b[63:0]</obj_property>
+         <obj_property name="ObjectShortName">t_data_out_128b[63:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/data_out_first">
+         <obj_property name="ElementShortName">data_out_first[63:0]</obj_property>
+         <obj_property name="ObjectShortName">data_out_first[63:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/data_out_last">
+         <obj_property name="ElementShortName">data_out_last[63:0]</obj_property>
+         <obj_property name="ObjectShortName">data_out_last[63:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/data_in_first">
+         <obj_property name="ElementShortName">data_in_first[63:0]</obj_property>
+         <obj_property name="ObjectShortName">data_in_first[63:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/data_in_last">
+         <obj_property name="ElementShortName">data_in_last[63:0]</obj_property>
+         <obj_property name="ObjectShortName">data_in_last[63:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/i">
+         <obj_property name="ElementShortName">i[31:0]</obj_property>
+         <obj_property name="ObjectShortName">i[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/tb_32b_rd_addr">
+         <obj_property name="ElementShortName">tb_32b_rd_addr[31:0]</obj_property>
+         <obj_property name="ObjectShortName">tb_32b_rd_addr[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/random_seed">
+         <obj_property name="ElementShortName">random_seed[31:0]</obj_property>
+         <obj_property name="ObjectShortName">random_seed[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/CLK_SCALING">
+         <obj_property name="ElementShortName">CLK_SCALING[31:0]</obj_property>
+         <obj_property name="ObjectShortName">CLK_SCALING[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/WR_CYCLE">
+         <obj_property name="ElementShortName">WR_CYCLE[31:0]</obj_property>
+         <obj_property name="ObjectShortName">WR_CYCLE[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/RD_CYCLE">
+         <obj_property name="ElementShortName">RD_CYCLE[31:0]</obj_property>
+         <obj_property name="ObjectShortName">RD_CYCLE[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/FWD_CYCLE">
+         <obj_property name="ElementShortName">FWD_CYCLE[31:0]</obj_property>
+         <obj_property name="ObjectShortName">FWD_CYCLE[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/AVMM_CYCLE">
+         <obj_property name="ElementShortName">AVMM_CYCLE[31:0]</obj_property>
+         <obj_property name="ObjectShortName">AVMM_CYCLE[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/OSC_CYCLE">
+         <obj_property name="ElementShortName">OSC_CYCLE[31:0]</obj_property>
+         <obj_property name="ObjectShortName">OSC_CYCLE[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/TOTAL_CHNL_NUM">
+         <obj_property name="ElementShortName">TOTAL_CHNL_NUM[31:0]</obj_property>
+         <obj_property name="ObjectShortName">TOTAL_CHNL_NUM[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/DWIDTH">
+         <obj_property name="ElementShortName">DWIDTH[31:0]</obj_property>
+         <obj_property name="ObjectShortName">DWIDTH[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/DATAWIDTH">
+         <obj_property name="ElementShortName">DATAWIDTH[31:0]</obj_property>
+         <obj_property name="ObjectShortName">DATAWIDTH[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/FULL">
+         <obj_property name="ElementShortName">FULL[31:0]</obj_property>
+         <obj_property name="ObjectShortName">FULL[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/HALF">
+         <obj_property name="ElementShortName">HALF[31:0]</obj_property>
+         <obj_property name="ObjectShortName">HALF[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/CLKL_HALF_CYCLE">
+         <obj_property name="ElementShortName">CLKL_HALF_CYCLE[31:0]</obj_property>
+         <obj_property name="ObjectShortName">CLKL_HALF_CYCLE[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/REG_MM_WR_CFG_ADDR">
+         <obj_property name="ElementShortName">REG_MM_WR_CFG_ADDR[31:0]</obj_property>
+         <obj_property name="ObjectShortName">REG_MM_WR_CFG_ADDR[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/REG_MM_WR_RD_ADDR">
+         <obj_property name="ElementShortName">REG_MM_WR_RD_ADDR[31:0]</obj_property>
+         <obj_property name="ObjectShortName">REG_MM_WR_RD_ADDR[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/REG_MM_BUS_STS_ADDR">
+         <obj_property name="ElementShortName">REG_MM_BUS_STS_ADDR[31:0]</obj_property>
+         <obj_property name="ObjectShortName">REG_MM_BUS_STS_ADDR[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/REG_LINKUP_STS_ADDR">
+         <obj_property name="ElementShortName">REG_LINKUP_STS_ADDR[31:0]</obj_property>
+         <obj_property name="ObjectShortName">REG_LINKUP_STS_ADDR[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/REG_DOUT_FIRST1_ADDR">
+         <obj_property name="ElementShortName">REG_DOUT_FIRST1_ADDR[31:0]</obj_property>
+         <obj_property name="ObjectShortName">REG_DOUT_FIRST1_ADDR[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/REG_DOUT_LAST1_ADDR">
+         <obj_property name="ElementShortName">REG_DOUT_LAST1_ADDR[31:0]</obj_property>
+         <obj_property name="ObjectShortName">REG_DOUT_LAST1_ADDR[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/REG_DIN_FIRST1_ADDR">
+         <obj_property name="ElementShortName">REG_DIN_FIRST1_ADDR[31:0]</obj_property>
+         <obj_property name="ObjectShortName">REG_DIN_FIRST1_ADDR[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/REG_DIN_LAST1_ADDR">
+         <obj_property name="ElementShortName">REG_DIN_LAST1_ADDR[31:0]</obj_property>
+         <obj_property name="ObjectShortName">REG_DIN_LAST1_ADDR[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/REG_MM_RD_CFG_ADDR">
+         <obj_property name="ElementShortName">REG_MM_RD_CFG_ADDR[31:0]</obj_property>
+         <obj_property name="ObjectShortName">REG_MM_RD_CFG_ADDR[31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group2180">
+      <obj_property name="label">io_csr_master</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="group" fp_name="group3429">
+         <obj_property name="label">redundancy</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+      </wvobject>
+      <wvobject type="group" fp_name="group3428">
+         <obj_property name="label">common</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+      </wvobject>
+      <wvobject type="group" fp_name="group3427">
+         <obj_property name="label">tx_rx</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+      </wvobject>
+      <wvobject type="group" fp_name="group3426">
+         <obj_property name="label">vref</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+      </wvobject>
+      <wvobject type="group" fp_name="group3425">
+         <obj_property name="label">rxdll</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+      </wvobject>
+      <wvobject type="group" fp_name="group3430">
+         <obj_property name="label">cdr_clk</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+      </wvobject>
+      <wvobject type="group" fp_name="group3424">
+         <obj_property name="label">txdll</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+      </wvobject>
+      <wvobject type="group" fp_name="group3423">
+         <obj_property name="label">rxclk cbb</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+      </wvobject>
+      <wvobject type="group" fp_name="group3422">
+         <obj_property name="label">dcs cbb</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+      </wvobject>
+      <wvobject type="group" fp_name="group3421">
+         <obj_property name="label">rcomp</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+      </wvobject>
+      <wvobject type="group" fp_name="group3420">
+         <obj_property name="label">ntl_regs</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+      </wvobject>
+      <wvobject type="group" fp_name="group3419">
+         <obj_property name="label">clock_dividers_control_signals</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+      </wvobject>
+      <wvobject type="group" fp_name="group3418">
+         <obj_property name="label">Bus interface</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+      </wvobject>
+      <wvobject type="group" fp_name="group3417">
+         <obj_property name="label">wire</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group3765">
+      <obj_property name="label">aib top</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/avmm_clk">
+         <obj_property name="ElementShortName">avmm_clk</obj_property>
+         <obj_property name="ObjectShortName">avmm_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/osc_clk">
+         <obj_property name="ElementShortName">osc_clk</obj_property>
+         <obj_property name="ObjectShortName">osc_clk</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_data_in_f">
+         <obj_property name="ElementShortName">m1_data_in_f[7679:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_data_in_f[7679:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_data_out_f">
+         <obj_property name="ElementShortName">m1_data_out_f[7679:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_data_out_f[7679:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_data_in">
+         <obj_property name="ElementShortName">m1_data_in[1919:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_data_in[1919:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_data_out">
+         <obj_property name="ElementShortName">m1_data_out[1919:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_data_out[1919:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_m_ns_fwd_clk">
+         <obj_property name="ElementShortName">m1_m_ns_fwd_clk[23:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_m_ns_fwd_clk[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_m_ns_rcv_clk">
+         <obj_property name="ElementShortName">m1_m_ns_rcv_clk[23:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_m_ns_rcv_clk[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_m_fs_rcv_clk">
+         <obj_property name="ElementShortName">m1_m_fs_rcv_clk[23:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_m_fs_rcv_clk[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_m_fs_fwd_clk">
+         <obj_property name="ElementShortName">m1_m_fs_fwd_clk[23:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_m_fs_fwd_clk[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_m_wr_clk">
+         <obj_property name="ElementShortName">m1_m_wr_clk[23:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_m_wr_clk[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_m_rd_clk">
+         <obj_property name="ElementShortName">m1_m_rd_clk[23:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_m_rd_clk[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_ms_tx_transfer_en">
+         <obj_property name="ElementShortName">m1_ms_tx_transfer_en[23:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_ms_tx_transfer_en[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_ms_rx_transfer_en">
+         <obj_property name="ElementShortName">m1_ms_rx_transfer_en[23:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_ms_rx_transfer_en[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_sl_tx_transfer_en">
+         <obj_property name="ElementShortName">m1_sl_tx_transfer_en[23:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_sl_tx_transfer_en[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_sl_rx_transfer_en">
+         <obj_property name="ElementShortName">m1_sl_rx_transfer_en[23:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_sl_rx_transfer_en[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_i_osc_clk">
+         <obj_property name="ElementShortName">m1_i_osc_clk</obj_property>
+         <obj_property name="ObjectShortName">m1_i_osc_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_por_out">
+         <obj_property name="ElementShortName">m1_por_out</obj_property>
+         <obj_property name="ObjectShortName">m1_por_out</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/usermode_en">
+         <obj_property name="ElementShortName">usermode_en</obj_property>
+         <obj_property name="ObjectShortName">usermode_en</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_gen1_data_in_f">
+         <obj_property name="ElementShortName">s1_gen1_data_in_f[1919:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_gen1_data_in_f[1919:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_gen1_data_out_f">
+         <obj_property name="ElementShortName">s1_gen1_data_out_f[1919:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_gen1_data_out_f[1919:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_m_wr_clk">
+         <obj_property name="ElementShortName">s1_m_wr_clk[23:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_m_wr_clk[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_m_rd_clk">
+         <obj_property name="ElementShortName">s1_m_rd_clk[23:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_m_rd_clk[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_m_ns_fwd_clk">
+         <obj_property name="ElementShortName">s1_m_ns_fwd_clk[23:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_m_ns_fwd_clk[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_m_fs_fwd_clk">
+         <obj_property name="ElementShortName">s1_m_fs_fwd_clk[23:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_m_fs_fwd_clk[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_ms_rx_transfer_en">
+         <obj_property name="ElementShortName">s1_ms_rx_transfer_en[23:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_ms_rx_transfer_en[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_ms_tx_transfer_en">
+         <obj_property name="ElementShortName">s1_ms_tx_transfer_en[23:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_ms_tx_transfer_en[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_sl_rx_transfer_en">
+         <obj_property name="ElementShortName">s1_sl_rx_transfer_en[23:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_sl_rx_transfer_en[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_sl_tx_transfer_en">
+         <obj_property name="ElementShortName">s1_sl_tx_transfer_en[23:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_sl_tx_transfer_en[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/ms_fwd_clk">
+         <obj_property name="ElementShortName">ms_fwd_clk</obj_property>
+         <obj_property name="ObjectShortName">ms_fwd_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/ms_wr_clk">
+         <obj_property name="ElementShortName">ms_wr_clk</obj_property>
+         <obj_property name="ObjectShortName">ms_wr_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/ms_rd_clk">
+         <obj_property name="ElementShortName">ms_rd_clk</obj_property>
+         <obj_property name="ObjectShortName">ms_rd_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/sl_fwd_clk">
+         <obj_property name="ElementShortName">sl_fwd_clk</obj_property>
+         <obj_property name="ObjectShortName">sl_fwd_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/sl_wr_clk">
+         <obj_property name="ElementShortName">sl_wr_clk</obj_property>
+         <obj_property name="ObjectShortName">sl_wr_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/sl_rd_clk">
+         <obj_property name="ElementShortName">sl_rd_clk</obj_property>
+         <obj_property name="ObjectShortName">sl_rd_clk</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/run_for_n_pkts_ms1">
+         <obj_property name="ElementShortName">run_for_n_pkts_ms1[31:0]</obj_property>
+         <obj_property name="ObjectShortName">run_for_n_pkts_ms1[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/run_for_n_pkts_sl1">
+         <obj_property name="ElementShortName">run_for_n_pkts_sl1[31:0]</obj_property>
+         <obj_property name="ObjectShortName">run_for_n_pkts_sl1[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/run_for_n_wa_cycle">
+         <obj_property name="ElementShortName">run_for_n_wa_cycle[31:0]</obj_property>
+         <obj_property name="ObjectShortName">run_for_n_wa_cycle[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/err_count">
+         <obj_property name="ElementShortName">err_count[31:0]</obj_property>
+         <obj_property name="ObjectShortName">err_count[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/status">
+         <obj_property name="ElementShortName">status[1023:0]</obj_property>
+         <obj_property name="ObjectShortName">status[1023:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_iopad_ch0_aib">
+         <obj_property name="ElementShortName">s1_iopad_ch0_aib[95:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_iopad_ch0_aib[95:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_iopad_ch1_aib">
+         <obj_property name="ElementShortName">m1_iopad_ch1_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_iopad_ch1_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_iopad_ch1_aib">
+         <obj_property name="ElementShortName">s1_iopad_ch1_aib[95:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_iopad_ch1_aib[95:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_iopad_ch2_aib">
+         <obj_property name="ElementShortName">m1_iopad_ch2_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_iopad_ch2_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_iopad_ch2_aib">
+         <obj_property name="ElementShortName">s1_iopad_ch2_aib[95:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_iopad_ch2_aib[95:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_iopad_ch3_aib">
+         <obj_property name="ElementShortName">m1_iopad_ch3_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_iopad_ch3_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_iopad_ch3_aib">
+         <obj_property name="ElementShortName">s1_iopad_ch3_aib[95:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_iopad_ch3_aib[95:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_iopad_ch4_aib">
+         <obj_property name="ElementShortName">m1_iopad_ch4_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_iopad_ch4_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_iopad_ch4_aib">
+         <obj_property name="ElementShortName">s1_iopad_ch4_aib[95:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_iopad_ch4_aib[95:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_iopad_ch5_aib">
+         <obj_property name="ElementShortName">m1_iopad_ch5_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_iopad_ch5_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_iopad_ch5_aib">
+         <obj_property name="ElementShortName">s1_iopad_ch5_aib[95:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_iopad_ch5_aib[95:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_iopad_ch6_aib">
+         <obj_property name="ElementShortName">m1_iopad_ch6_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_iopad_ch6_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_iopad_ch6_aib">
+         <obj_property name="ElementShortName">s1_iopad_ch6_aib[95:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_iopad_ch6_aib[95:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_iopad_ch7_aib">
+         <obj_property name="ElementShortName">m1_iopad_ch7_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_iopad_ch7_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_iopad_ch7_aib">
+         <obj_property name="ElementShortName">s1_iopad_ch7_aib[95:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_iopad_ch7_aib[95:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_iopad_ch8_aib">
+         <obj_property name="ElementShortName">m1_iopad_ch8_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_iopad_ch8_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_iopad_ch8_aib">
+         <obj_property name="ElementShortName">s1_iopad_ch8_aib[95:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_iopad_ch8_aib[95:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_iopad_ch9_aib">
+         <obj_property name="ElementShortName">m1_iopad_ch9_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_iopad_ch9_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_iopad_ch9_aib">
+         <obj_property name="ElementShortName">s1_iopad_ch9_aib[95:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_iopad_ch9_aib[95:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_iopad_ch10_aib">
+         <obj_property name="ElementShortName">m1_iopad_ch10_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_iopad_ch10_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_iopad_ch10_aib">
+         <obj_property name="ElementShortName">s1_iopad_ch10_aib[95:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_iopad_ch10_aib[95:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_iopad_ch11_aib">
+         <obj_property name="ElementShortName">m1_iopad_ch11_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_iopad_ch11_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_iopad_ch11_aib">
+         <obj_property name="ElementShortName">s1_iopad_ch11_aib[95:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_iopad_ch11_aib[95:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_iopad_ch12_aib">
+         <obj_property name="ElementShortName">m1_iopad_ch12_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_iopad_ch12_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_iopad_ch12_aib">
+         <obj_property name="ElementShortName">s1_iopad_ch12_aib[95:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_iopad_ch12_aib[95:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_iopad_ch13_aib">
+         <obj_property name="ElementShortName">m1_iopad_ch13_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_iopad_ch13_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_iopad_ch13_aib">
+         <obj_property name="ElementShortName">s1_iopad_ch13_aib[95:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_iopad_ch13_aib[95:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_iopad_ch14_aib">
+         <obj_property name="ElementShortName">m1_iopad_ch14_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_iopad_ch14_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_iopad_ch14_aib">
+         <obj_property name="ElementShortName">s1_iopad_ch14_aib[95:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_iopad_ch14_aib[95:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_iopad_ch15_aib">
+         <obj_property name="ElementShortName">m1_iopad_ch15_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_iopad_ch15_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_iopad_ch15_aib">
+         <obj_property name="ElementShortName">s1_iopad_ch15_aib[95:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_iopad_ch15_aib[95:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_iopad_ch16_aib">
+         <obj_property name="ElementShortName">m1_iopad_ch16_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_iopad_ch16_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_iopad_ch16_aib">
+         <obj_property name="ElementShortName">s1_iopad_ch16_aib[95:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_iopad_ch16_aib[95:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_iopad_ch17_aib">
+         <obj_property name="ElementShortName">m1_iopad_ch17_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_iopad_ch17_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_iopad_ch17_aib">
+         <obj_property name="ElementShortName">s1_iopad_ch17_aib[95:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_iopad_ch17_aib[95:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_iopad_ch18_aib">
+         <obj_property name="ElementShortName">m1_iopad_ch18_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_iopad_ch18_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_iopad_ch18_aib">
+         <obj_property name="ElementShortName">s1_iopad_ch18_aib[95:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_iopad_ch18_aib[95:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_iopad_ch19_aib">
+         <obj_property name="ElementShortName">m1_iopad_ch19_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_iopad_ch19_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_iopad_ch19_aib">
+         <obj_property name="ElementShortName">s1_iopad_ch19_aib[95:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_iopad_ch19_aib[95:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_iopad_ch20_aib">
+         <obj_property name="ElementShortName">m1_iopad_ch20_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_iopad_ch20_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_iopad_ch20_aib">
+         <obj_property name="ElementShortName">s1_iopad_ch20_aib[95:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_iopad_ch20_aib[95:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_iopad_ch21_aib">
+         <obj_property name="ElementShortName">m1_iopad_ch21_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_iopad_ch21_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_iopad_ch21_aib">
+         <obj_property name="ElementShortName">s1_iopad_ch21_aib[95:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_iopad_ch21_aib[95:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_iopad_ch22_aib">
+         <obj_property name="ElementShortName">m1_iopad_ch22_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_iopad_ch22_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_iopad_ch22_aib">
+         <obj_property name="ElementShortName">s1_iopad_ch22_aib[95:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_iopad_ch22_aib[95:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/m1_iopad_ch23_aib">
+         <obj_property name="ElementShortName">m1_iopad_ch23_aib[101:0]</obj_property>
+         <obj_property name="ObjectShortName">m1_iopad_ch23_aib[101:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/s1_iopad_ch23_aib">
+         <obj_property name="ElementShortName">s1_iopad_ch23_aib[95:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_iopad_ch23_aib[95:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/HI">
+         <obj_property name="ElementShortName">HI</obj_property>
+         <obj_property name="ObjectShortName">HI</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/LO">
+         <obj_property name="ElementShortName">LO</obj_property>
+         <obj_property name="ObjectShortName">LO</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/ms1_tx_fifo_mode">
+         <obj_property name="ElementShortName">ms1_tx_fifo_mode[1:0]</obj_property>
+         <obj_property name="ObjectShortName">ms1_tx_fifo_mode[1:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/sl1_tx_fifo_mode">
+         <obj_property name="ElementShortName">sl1_tx_fifo_mode[1:0]</obj_property>
+         <obj_property name="ObjectShortName">sl1_tx_fifo_mode[1:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/ms1_rx_fifo_mode">
+         <obj_property name="ElementShortName">ms1_rx_fifo_mode[1:0]</obj_property>
+         <obj_property name="ObjectShortName">ms1_rx_fifo_mode[1:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/sl1_rx_fifo_mode">
+         <obj_property name="ElementShortName">sl1_rx_fifo_mode[1:0]</obj_property>
+         <obj_property name="ObjectShortName">sl1_rx_fifo_mode[1:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/ms1_tx_markbit">
+         <obj_property name="ElementShortName">ms1_tx_markbit[4:0]</obj_property>
+         <obj_property name="ObjectShortName">ms1_tx_markbit[4:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/sl1_tx_markbit">
+         <obj_property name="ElementShortName">sl1_tx_markbit[4:0]</obj_property>
+         <obj_property name="ObjectShortName">sl1_tx_markbit[4:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/ms1_gen1">
+         <obj_property name="ElementShortName">ms1_gen1</obj_property>
+         <obj_property name="ObjectShortName">ms1_gen1</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/sl1_gen1">
+         <obj_property name="ElementShortName">sl1_gen1</obj_property>
+         <obj_property name="ObjectShortName">sl1_gen1</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/ms1_lpbk">
+         <obj_property name="ElementShortName">ms1_lpbk</obj_property>
+         <obj_property name="ObjectShortName">ms1_lpbk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/sl1_lpbk">
+         <obj_property name="ElementShortName">sl1_lpbk</obj_property>
+         <obj_property name="ObjectShortName">sl1_lpbk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/ms1_dbi_en">
+         <obj_property name="ElementShortName">ms1_dbi_en</obj_property>
+         <obj_property name="ObjectShortName">ms1_dbi_en</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/sl1_dbi_en">
+         <obj_property name="ElementShortName">sl1_dbi_en</obj_property>
+         <obj_property name="ObjectShortName">sl1_dbi_en</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/i_m1">
+         <obj_property name="ElementShortName">i_m1[31:0]</obj_property>
+         <obj_property name="ObjectShortName">i_m1[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/i_s1">
+         <obj_property name="ElementShortName">i_s1[31:0]</obj_property>
+         <obj_property name="ObjectShortName">i_s1[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/device_detect">
+         <obj_property name="ElementShortName">device_detect</obj_property>
+         <obj_property name="ObjectShortName">device_detect</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/por">
+         <obj_property name="ElementShortName">por</obj_property>
+         <obj_property name="ObjectShortName">por</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/DWIDTH">
+         <obj_property name="ElementShortName">DWIDTH[31:0]</obj_property>
+         <obj_property name="ObjectShortName">DWIDTH[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/TOTAL_CHNL_NUM">
+         <obj_property name="ElementShortName">TOTAL_CHNL_NUM[31:0]</obj_property>
+         <obj_property name="ObjectShortName">TOTAL_CHNL_NUM[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/AVMM_CYCLE">
+         <obj_property name="ElementShortName">AVMM_CYCLE[31:0]</obj_property>
+         <obj_property name="ObjectShortName">AVMM_CYCLE[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/OSC_CYCLE">
+         <obj_property name="ElementShortName">OSC_CYCLE[31:0]</obj_property>
+         <obj_property name="ObjectShortName">OSC_CYCLE[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/M_PAD_NUM">
+         <obj_property name="ElementShortName">M_PAD_NUM[31:0]</obj_property>
+         <obj_property name="ObjectShortName">M_PAD_NUM[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/S_PAD_NUM">
+         <obj_property name="ElementShortName">S_PAD_NUM[31:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PAD_NUM[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/DATAWIDTH">
+         <obj_property name="ElementShortName">DATAWIDTH[31:0]</obj_property>
+         <obj_property name="ObjectShortName">DATAWIDTH[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/dut_master1/ACTIVE_CHNLS">
+         <obj_property name="ElementShortName">ACTIVE_CHNLS[31:0]</obj_property>
+         <obj_property name="ObjectShortName">ACTIVE_CHNLS[31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group3810">
+      <obj_property name="label">avmm_m1</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/avmm_if_m1/clk">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/avmm_if_m1/rst_n">
+         <obj_property name="ElementShortName">rst_n</obj_property>
+         <obj_property name="ObjectShortName">rst_n</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/avmm_if_m1/address">
+         <obj_property name="ElementShortName">address[16:0]</obj_property>
+         <obj_property name="ObjectShortName">address[16:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/avmm_if_m1/read">
+         <obj_property name="ElementShortName">read</obj_property>
+         <obj_property name="ObjectShortName">read</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/avmm_if_m1/write">
+         <obj_property name="ElementShortName">write</obj_property>
+         <obj_property name="ObjectShortName">write</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/avmm_if_m1/writedata">
+         <obj_property name="ElementShortName">writedata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">writedata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/avmm_if_m1/byteenable">
+         <obj_property name="ElementShortName">byteenable[3:0]</obj_property>
+         <obj_property name="ObjectShortName">byteenable[3:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/avmm_if_m1/readdata">
+         <obj_property name="ElementShortName">readdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">readdata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/avmm_if_m1/readdatavalid">
+         <obj_property name="ElementShortName">readdatavalid</obj_property>
+         <obj_property name="ObjectShortName">readdatavalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/avmm_if_m1/waitrequest">
+         <obj_property name="ElementShortName">waitrequest</obj_property>
+         <obj_property name="ObjectShortName">waitrequest</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/avmm_if_m1/AVMM_WIDTH">
+         <obj_property name="ElementShortName">AVMM_WIDTH[31:0]</obj_property>
+         <obj_property name="ObjectShortName">AVMM_WIDTH[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/avmm_if_m1/BYTE_WIDTH">
+         <obj_property name="ElementShortName">BYTE_WIDTH[31:0]</obj_property>
+         <obj_property name="ObjectShortName">BYTE_WIDTH[31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group3823">
+      <obj_property name="label">avmm_s1</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/avmm_if_s1/clk">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/avmm_if_s1/rst_n">
+         <obj_property name="ElementShortName">rst_n</obj_property>
+         <obj_property name="ObjectShortName">rst_n</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/avmm_if_s1/address">
+         <obj_property name="ElementShortName">address[16:0]</obj_property>
+         <obj_property name="ObjectShortName">address[16:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/avmm_if_s1/read">
+         <obj_property name="ElementShortName">read</obj_property>
+         <obj_property name="ObjectShortName">read</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/avmm_if_s1/write">
+         <obj_property name="ElementShortName">write</obj_property>
+         <obj_property name="ObjectShortName">write</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/avmm_if_s1/writedata">
+         <obj_property name="ElementShortName">writedata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">writedata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/avmm_if_s1/byteenable">
+         <obj_property name="ElementShortName">byteenable[3:0]</obj_property>
+         <obj_property name="ObjectShortName">byteenable[3:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/avmm_if_s1/readdata">
+         <obj_property name="ElementShortName">readdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">readdata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/avmm_if_s1/readdatavalid">
+         <obj_property name="ElementShortName">readdatavalid</obj_property>
+         <obj_property name="ObjectShortName">readdatavalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/avmm_if_s1/waitrequest">
+         <obj_property name="ElementShortName">waitrequest</obj_property>
+         <obj_property name="ObjectShortName">waitrequest</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/avmm_if_s1/AVMM_WIDTH">
+         <obj_property name="ElementShortName">AVMM_WIDTH[31:0]</obj_property>
+         <obj_property name="ObjectShortName">AVMM_WIDTH[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/aximm_aib_dut/aib_model_inst/avmm_if_s1/BYTE_WIDTH">
+         <obj_property name="ElementShortName">BYTE_WIDTH[31:0]</obj_property>
+         <obj_property name="ObjectShortName">BYTE_WIDTH[31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group3853">
+      <obj_property name="label">adapt_cfg_rdl_intf</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+   </wvobject>
+</wave_config>

@@ -124,9 +124,9 @@ module calib_master_fsm #(
                 duts_wakeup_start = 1'b1;
                 if (duts_wakeup_done) begin
                     if (GEN2_MODE) begin 
-                        next_state = PHASE_ADJUST;
+                        next_state = CAL_DONE;
                     end else begin
-                        next_state = PHASE_ADJUST;
+                        next_state = CAL_DONE;
                     end
                 end
             end

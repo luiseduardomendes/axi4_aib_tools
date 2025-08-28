@@ -170,13 +170,15 @@ module top_aib_axi_bridge_master #(
 
     assign avmm_if_m1.rst_n = avmm_rst_n;
 
-    aib_phy_top #(
-        .ACTIVE_CHNLS(ACTIVE_CHNLS)
+    // Corrected instantiation of the aib_model_top module
+aib_model_top #(
+        // Assuming default parameters are acceptable.
+        // If not, they can be specified here.
+        // .MAX_SCAN_LEN(200),
+        // .DATAWIDTH(40),
+        // .TOTAL_CHNL_NUM(24)
     ) dut_master1 (
-        .vddc1(vddc1),
-        .vddc2(vddc2),
-        .vddtx(vddtx),
-        .vss(vss),
+        // AIB IO Pad Connections (Channels 0-23)
         .iopad_ch0_aib (iopad_ch0_aib), 
         .iopad_ch1_aib (iopad_ch1_aib), 
         .iopad_ch2_aib (iopad_ch2_aib), 
@@ -201,68 +203,51 @@ module top_aib_axi_bridge_master #(
         .iopad_ch21_aib(iopad_ch21_aib),
         .iopad_ch22_aib(iopad_ch22_aib),
         .iopad_ch23_aib(iopad_ch23_aib),
-        //IO pads, AUX channel
-    
+        
+        // IO pads, AUX channel
         .iopad_device_detect(iopad_device_detect),
         .iopad_power_on_reset(iopad_power_on_reset),
         
-        .data_in_f(data_in_f),						
+        // Data Interface
+        .data_in_f(data_in_f),                      
         .data_out_f(data_out_f),                     
-        .data_in(data_in), //output data to pad      
+        .data_in(data_in), 
         .data_out(data_out),                         
                 
-        .m_ns_fwd_clk(intf_m1.m_ns_fwd_clk), //output data clock	 
+        // Clock Interface
+        .m_ns_fwd_clk(intf_m1.m_ns_fwd_clk),
         .m_ns_rcv_clk(intf_m1.m_ns_rcv_clk),                         
         .m_fs_rcv_clk(intf_m1.m_fs_rcv_clk),                         
         .m_fs_fwd_clk(intf_m1.m_fs_fwd_clk),                         
-                                                            
         .m_wr_clk(intf_m1.m_wr_clk),                              
         .m_rd_clk(intf_m1.m_rd_clk),
+        .tclk_phy(), // This output was missing in the original instantiation
 
-        .ns_adapter_rstn(intf_m1.ns_adapter_rstn),	
-        // sent from MAC to AIB, resets the AIB
+        // Control and Status Signals
+        .ns_adapter_rstn(intf_m1.ns_adapter_rstn),  
         .ns_mac_rdy(intf_m1.ns_mac_rdy),       
-        // sent from MAC to AIB, indicates that the MAC is ready for transfer      
         .fs_mac_rdy(intf_m1.fs_mac_rdy),  
-        // sent from AIB to MAC, indicates that the AIB on the far side is ready for transfer
-
         .i_conf_done(intf_m1.i_conf_done),
-        // sent from MAC to AIB, also resets the AIB
+        .i_osc_clk(intf_m1.osc_clk),   //Only for master mode       
         
-        // ======== Outputs from AIB ========
-        // ==================================
-        // sent from AIB master to AIB slave, requests the DCC DLL calibration
-        .ms_rx_dcc_dll_lock_req(intf_m1.ms_rx_dcc_dll_lock_req),
-        .ms_tx_dcc_dll_lock_req(intf_m1.ms_tx_dcc_dll_lock_req),         
-
-        // sent from AIB slave to AIB master, requests the DCC DLL calibration
-        .sl_rx_dcc_dll_lock_req({24{1'b1}}),                        
-        .sl_tx_dcc_dll_lock_req({24{1'b1}}),                        
-        
-        // sent from AIB master to AIB slave, indicates that the 
-        // Leader is ready for transfer and for receiving
-        //.ms_tx_transfer_en(intf_m1.ms_tx_transfer_en),                   
-        //.ms_rx_transfer_en(intf_m1.ms_rx_transfer_en),                   
-        .ms_tx_transfer_en(intf_m1.ms_tx_transfer_en),                   
-        .ms_rx_transfer_en(intf_m1.ms_rx_transfer_en),                   
-
-        // sent from AIB slave to AIB master, indicates that the
-        // Follower is ready for transfer and for receiving
-        .sl_tx_transfer_en(intf_m1.sl_tx_transfer_en),
-        .sl_rx_transfer_en(intf_m1.sl_rx_transfer_en),
-
-        .sr_ms_tomac(intf_m1.ms_sideband),			
+        // Handshake and Sideband Signals
+        .ms_rx_dcc_dll_lock_req(intf_m1.ms_rx_dcc_dll_lock_req), // Input to AIB
+        .ms_tx_dcc_dll_lock_req(intf_m1.ms_tx_dcc_dll_lock_req), // Input to AIB
+        .sl_tx_dcc_dll_lock_req({24{1'b1}}), // Input to AIB, tied off
+        .sl_rx_dcc_dll_lock_req({24{1'b1}}), // Input to AIB, tied off
+        .ms_tx_transfer_en(intf_m1.ms_tx_transfer_en), // Output from AIB
+        .ms_rx_transfer_en(intf_m1.ms_rx_transfer_en), // Output from AIB
+        .sl_tx_transfer_en(intf_m1.sl_tx_transfer_en), // Output from AIB
+        .sl_rx_transfer_en(intf_m1.sl_rx_transfer_en), // Output from AIB
+        .m_rx_align_done(intf_m1.m_rx_align_done),   
+        .sr_ms_tomac(intf_m1.ms_sideband),          
         .sr_sl_tomac(intf_m1.sl_sideband),           
         
-        .m_rx_align_done(intf_m1.m_rx_align_done),   
-        // ==================================
-        
+        // Mode Select
         .dual_mode_select(1'b1),
         .m_gen2_mode(GEN2_MODE),
 
-        .i_osc_clk(intf_m1.osc_clk),   //Only for master mode		
-
-        //AVMM interface
+        // AVMM Interface
         .i_cfg_avmm_clk(avmm_if_m1.clk),
         .i_cfg_avmm_rst_n(avmm_if_m1.rst_n),
         .i_cfg_avmm_addr(avmm_if_m1.address),
@@ -270,58 +255,47 @@ module top_aib_axi_bridge_master #(
         .i_cfg_avmm_read(avmm_if_m1.read),
         .i_cfg_avmm_write(avmm_if_m1.write),
         .i_cfg_avmm_wdata(avmm_if_m1.writedata),
-
         .o_cfg_avmm_rdatavld(avmm_if_m1.readdatavalid),
         .o_cfg_avmm_rdata(avmm_if_m1.readdata),
         .o_cfg_avmm_waitreq(avmm_if_m1.waitrequest),
 
-        /*
-        .ns_fwd_clk_div(),
-        .fs_fwd_clk_div(),
-        .ns_fwd_clk(),
-        .fs_fwd_clk(),
-        .vddc1(HI),
-        .vddc2(HI),
-        .vddtx(HI),
-        .vss(LO),
-        */
-
-        .m_por_ovrd(intf_m1.m_por_ovrd),
-        .m_device_detect(intf_m1.m_device_detect),
+        // Aux Channel
+        .m_por_ovrd(1'b0),
         .m_device_detect_ovrd(1'b0),
         .i_m_power_on_reset(1'b0),
+        .m_device_detect(intf_m1.m_device_detect), // Output from AIB
         .o_m_power_on_reset(intf_m1.o_m_power_on_reset),
 
-        //JTAG ports
+        // JTAG Ports
         .i_jtag_clkdr(1'b0),
         .i_jtag_clksel(1'b0),
-        .o_jtag_tdo(),
         .i_jtag_intest(1'b0),
         .i_jtag_mode(1'b0),
-        .i_jtag_rstb(1'b0),
+        .i_jtag_rstb(1'b1), // JTAG reset is typically active low
         .i_jtag_rstb_en(1'b0),
+        .i_jtag_tdi(1'b0),
+        .i_jtag_tx_scanen(1'b0),
         .i_jtag_weakpdn(1'b0),
         .i_jtag_weakpu(1'b0),
-        .i_jtag_tx_scanen(1'b0),
-        .i_jtag_tdi(1'b0),
-        
-        //ATPG
+        .o_jtag_tdo(), // Unconnected output
+
+        // ATPG Scan Ports
         .i_scan_clk(1'b0),
         .i_scan_clk_500m(1'b0),
         .i_scan_clk_1000m(1'b0),
         .i_scan_en(1'b0),
         .i_scan_mode(1'b0),
-        //.i_scan_din({241'b0}),
-        .i_scan_din({24{200'b0}}),
-        .i_scan_dout(),
+        .i_scan_din('0), // Tie all scan inputs to 0
+        .i_scan_dout(), // Unconnected output
 
-        .sl_external_cntl_26_0({24{27'b0}}),
-        .sl_external_cntl_30_28({24{3'b0}}),
-        .sl_external_cntl_57_32({24{26'b0}}),
-
-        .ms_external_cntl_4_0({24{5'b0}}),
-        .ms_external_cntl_65_8({24{58'b0}})
+        // External Control Signals (Tied off)
+        .sl_external_cntl_26_0('0),
+        .sl_external_cntl_30_28('0),
+        .sl_external_cntl_57_32('0),
+        .ms_external_cntl_4_0('0),
+        .ms_external_cntl_65_8('0)
     );
+
 
     axi_mm_master_top  aximm_leader(
         .clk_wr              (clk_wr ),
@@ -352,7 +326,7 @@ module top_aib_axi_bridge_master #(
         
         .user_wid            (user_axi_if.wid     ),
         .user_wdata          (user_axi_if.wdata   ),
-        .user_wstrb          (user_axi_if.wstrb[7:0]   ),
+        .user_wstrb          (user_axi_if.wstrb[15:0]   ),
         .user_wlast          (user_axi_if.wlast   ),
         .user_wvalid         (user_axi_if.wvalid  ),
         .user_wready         (user_axi_if.wready  ),

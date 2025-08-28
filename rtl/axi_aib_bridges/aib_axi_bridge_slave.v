@@ -143,8 +143,8 @@ module top_aib_axi_bridge_slave #(
 
     dut_if_mac #(.DWIDTH (DWIDTH)) intf_s1 (
         .wr_clk(m_wr_clk), 
-        .rd_clk(m_rd_clk), 
-        .fwd_clk(m_fwd_clk), 
+        .rd_clk(m_wr_clk), 
+        .fwd_clk(m_wr_clk), 
         .osc_clk(i_osc_clk)
     );
 
@@ -165,13 +165,11 @@ module top_aib_axi_bridge_slave #(
 
     assign avmm_if_s1.rst_n = avmm_rst_n;
 
-    aib_phy_top #(
-        .ACTIVE_CHNLS(ACTIVE_CHNLS)
+    // Corrected instantiation for the slave device
+aib_model_top #(
+        // Assuming default parameters are acceptable.
     ) dut_slave1 (
-        .vddc1(vddc1),
-        .vddc2(vddc2),
-        .vddtx(vddtx),
-        .vss(vss),
+        // AIB IO Pad Connections (Channels 0-23)
         .iopad_ch0_aib(iopad_ch0_aib),
         .iopad_ch1_aib(iopad_ch1_aib),
         .iopad_ch2_aib(iopad_ch2_aib),
@@ -197,49 +195,50 @@ module top_aib_axi_bridge_slave #(
         .iopad_ch22_aib(iopad_ch22_aib),
         .iopad_ch23_aib(iopad_ch23_aib), 
         
-        //IO pads, AUX channel
+        // IO pads, AUX channel
         .iopad_device_detect(iopad_device_detect),
         .iopad_power_on_reset(iopad_power_on_reset),
 
-        //Control/status from/to MAC 
+        // Data Interface
         .data_in_f(intf_s1.data_in_f),
         .data_out_f(intf_s1.data_out_f),
-        .data_in(intf_s1.data_in), //output data to pad
+        .data_in(intf_s1.data_in),
         .data_out(intf_s1.data_out),
 
-        .m_ns_fwd_clk(intf_s1.m_ns_fwd_clk), //output data clock
+        // Clock Interface
+        .m_ns_fwd_clk(intf_s1.m_ns_fwd_clk), 
         .m_ns_rcv_clk(intf_s1.m_ns_rcv_clk),
         .m_fs_rcv_clk(intf_s1.m_fs_rcv_clk),
         .m_fs_fwd_clk(intf_s1.m_fs_fwd_clk),
-
         .m_wr_clk(intf_s1.m_wr_clk),
         .m_rd_clk(intf_s1.m_rd_clk),
+        .tclk_phy(), // This output was missing
 
+        // Control and Status Signals
         .ns_adapter_rstn(intf_s1.ns_adapter_rstn),
         .ns_mac_rdy(intf_s1.ns_mac_rdy),
         .fs_mac_rdy(intf_s1.fs_mac_rdy),
-
         .i_conf_done(intf_s1.i_conf_done),
+        .i_osc_clk(1'b0), // Slave does not drive oscillator clock
         
+        // Handshake and Sideband Signals
         .ms_rx_dcc_dll_lock_req({24{1'b1}}),
         .ms_tx_dcc_dll_lock_req({24{1'b1}}),
         .sl_rx_dcc_dll_lock_req(intf_s1.sl_rx_dcc_dll_lock_req),
         .sl_tx_dcc_dll_lock_req(intf_s1.sl_tx_dcc_dll_lock_req),
-
         .ms_tx_transfer_en(intf_s1.ms_tx_transfer_en),
         .ms_rx_transfer_en(intf_s1.ms_rx_transfer_en),
         .sl_tx_transfer_en(intf_s1.sl_tx_transfer_en),
         .sl_rx_transfer_en(intf_s1.sl_rx_transfer_en),
-
         .sr_ms_tomac(intf_s1.ms_sideband),
         .sr_sl_tomac(intf_s1.sl_sideband),
-        
         .m_rx_align_done(intf_s1.m_rx_align_done),
         
-        .dual_mode_select(1'b0),
+        // Mode Select
+        .dual_mode_select(1'b0), // Slave mode
         .m_gen2_mode(GEN2_MODE),
 
-        //AVMM interface
+        // AVMM Interface
         .i_cfg_avmm_clk(avmm_if_s1.clk),
         .i_cfg_avmm_rst_n(avmm_if_s1.rst_n),
         .i_cfg_avmm_addr(avmm_if_s1.address),
@@ -247,55 +246,47 @@ module top_aib_axi_bridge_slave #(
         .i_cfg_avmm_read(avmm_if_s1.read),
         .i_cfg_avmm_write(avmm_if_s1.write),
         .i_cfg_avmm_wdata(avmm_if_s1.writedata),
-
         .o_cfg_avmm_rdatavld(avmm_if_s1.readdatavalid),
         .o_cfg_avmm_rdata(avmm_if_s1.readdata),
         .o_cfg_avmm_waitreq(avmm_if_s1.waitrequest),
 
-        //BCA extra port
-        /*
-        .ns_fwd_clk_div(),
-        .fs_fwd_clk_div(),
-        .ns_fwd_clk(),
-        .fs_fwd_clk(),
-        */
-
-        //Aux channel signals from MAC
+        // Aux Channel
         .m_por_ovrd(1'b0),
-        .m_device_detect(intf_s1.m_device_detect),
-        .m_device_detect_ovrd(intf_s1.m_device_detect_ovrd),
+        .m_device_detect_ovrd(1'b0),
         .i_m_power_on_reset(intf_s1.i_m_power_on_reset),
-        .o_m_power_on_reset(),
+        .m_device_detect(intf_s1.m_device_detect), // Output from AIB
+        .o_m_power_on_reset(), // Unconnected output
 
-        //JTAG ports
+        // JTAG Ports
         .i_jtag_clkdr(1'b0),
         .i_jtag_clksel(1'b0),
-        .o_jtag_tdo(),
         .i_jtag_intest(1'b0),
         .i_jtag_mode(1'b0),
-        .i_jtag_rstb(1'b0),
+        .i_jtag_rstb(1'b1),
         .i_jtag_rstb_en(1'b0),
+        .i_jtag_tdi(1'b0),
+        .i_jtag_tx_scanen(1'b0),
         .i_jtag_weakpdn(1'b0),
         .i_jtag_weakpu(1'b0),
-        .i_jtag_tx_scanen(1'b0),
-        .i_jtag_tdi(1'b0),
+        .o_jtag_tdo(),
         
-        //ATPG
+        // ATPG Scan Ports
         .i_scan_clk(1'b0),
         .i_scan_clk_500m(1'b0),
         .i_scan_clk_1000m(1'b0),
         .i_scan_en(1'b0),
         .i_scan_mode(1'b0),
-        .i_scan_din({241'b0}),
+        .i_scan_din('0),
         .i_scan_dout(),
 
-        .sl_external_cntl_26_0({24{27'b0}}),
-        .sl_external_cntl_30_28({24{3'b0}}),
-        .sl_external_cntl_57_32({24{26'b0}}),
-
-        .ms_external_cntl_4_0({24{5'b0}}),
-        .ms_external_cntl_65_8({24{58'b0}})
+        // External Control Signals (Tied off)
+        .sl_external_cntl_26_0('0),
+        .sl_external_cntl_30_28('0),
+        .sl_external_cntl_57_32('0),
+        .ms_external_cntl_4_0('0),
+        .ms_external_cntl_65_8('0)
     );
+
 
     axi_mm_slave_top  aximm_follower(
         .clk_wr              (clk_wr ),
@@ -325,7 +316,7 @@ module top_aib_axi_bridge_slave #(
         
         .user_wid            (user_axi_if.wid     ),
         .user_wdata          (user_axi_if.wdata   ),
-        .user_wstrb          (user_axi_if.wstrb[7:0]   ),
+        .user_wstrb          (user_axi_if.wstrb[15:0]   ),
         .user_wlast          (user_axi_if.wlast   ),
         .user_wvalid         (user_axi_if.wvalid  ),
         .user_wready         (user_axi_if.wready  ),
