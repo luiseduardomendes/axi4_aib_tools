@@ -25,9 +25,9 @@ module sl_write_csr_adapt_fsm #(
     input  bit                        transaction_done
 );
     localparam RX_0 = 32'h0600_0000;
-    localparam RX_1 = 32'h0000_0001;
-    localparam TX_0 = 32'h4000_0000;
-    localparam R_AIB_CSR7 = 32'h4000_0000;
+    localparam RX_1 = 32'h0000_0006;
+    localparam TX_0 = 32'h6060_0000;
+    localparam R_AIB_CSR7 = 32'h0000_0000;
 
     // FSM State Definitions
     typedef enum logic [4:0] {

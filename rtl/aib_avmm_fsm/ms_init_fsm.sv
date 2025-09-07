@@ -14,7 +14,7 @@ module calib_master_fsm #(
     parameter CLK_FREQ_MHZ   = 100,
     parameter AVMM_WIDTH     = 32,
     parameter BYTE_WIDTH     = 4,
-    parameter ADDR_WIDTH     = 16,
+    parameter ADDR_WIDTH     = 17,
     parameter GEN2_MODE      = 1'b1
 ) (
     // Clock and Reset
@@ -110,7 +110,7 @@ module calib_master_fsm #(
         case (current_state)
             IDLE: begin
                 // Can add a start condition if needed, otherwise starts automatically
-                next_state = RESET_DUTS;
+                next_state = WRITE_CSR;
             end
             RESET_DUTS: begin
                 reset_duts_start = 1'b1;

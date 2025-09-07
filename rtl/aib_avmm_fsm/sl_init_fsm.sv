@@ -20,7 +20,7 @@ module calib_slave_fsm #(
     parameter CLK_FREQ_MHZ   = 100,
     parameter AVMM_WIDTH     = 32,
     parameter BYTE_WIDTH     = 4,
-    parameter ADDR_WIDTH     = 16,
+    parameter ADDR_WIDTH     = 17,
     parameter GEN2_MODE      = 1'b1
 ) (
     // Clock and Reset
@@ -130,7 +130,7 @@ module calib_slave_fsm #(
         
         case (current_state)
             IDLE: begin
-                next_state = RESET_DUTS;
+                next_state = WRITE_CSR;
             end
             RESET_DUTS: begin
                 reset_duts_start = 1'b1;
@@ -138,7 +138,7 @@ module calib_slave_fsm #(
             end
             WRITE_CSR: begin
                 write_csr_start = 1'b1;
-                if (write_csr_done) next_state = DUTS_WAKEUP;
+                if (write_csr_done) next_state = CAL_DONE;
             end
             DUTS_WAKEUP: begin
                 duts_wakeup_start = 1'b1;
