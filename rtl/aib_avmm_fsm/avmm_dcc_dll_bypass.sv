@@ -29,7 +29,7 @@ module avmm_multi_write_fsm #(
     input  logic                       transaction_done
 );
 
-    typedef enum logic [2:0] {
+    /*typedef enum logic [2:0] {
         IDLE,
         LOOP_START,
         SEQ_SETUP,
@@ -152,6 +152,6 @@ module avmm_multi_write_fsm #(
 
             default: next_state = IDLE;
         endcase
-    end
+    end*/
 
 endmodule
